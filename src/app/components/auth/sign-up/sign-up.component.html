@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h3>SignUp</h3>
+            <form [formGroup]="signUpForm" (ngSubmit)="onSignUpSubmit()">
+            <hr>
+
+            <div class="mb-3">
+                <label for="">FirstName</label>
+                <input type="text" class="form-control" formControlName="firstName">
+                <div *ngIf="signUpForm.get('firstName').touched && !signUpForm.get('firstName').valid">
+                    <!-- <div *ngIf="signUpForm.get('email').errors.required">Email is required </div>
+                    <div *ngIf="signUpForm.get('email').errors.email">Email is invalid </div> -->
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="">LastName</label>
+                <input type="text" class="form-control" formControlName="lastName">
+                <div *ngIf="signUpForm.get('lastName').touched && !signUpForm.get('lastName').valid">
+                    <!-- <div *ngIf="signUpForm.get('email').errors.required">Email is required </div>
+                    <div *ngIf="signUpForm.get('email').errors.email">Email is invalid </div> -->
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="">Email</label>
+                <input type="text" class="form-control" formControlName="email">
+                <div *ngIf="signUpForm.get('email').touched && !signUpForm.get('email').valid">
+                    <!-- <div *ngIf="signUpForm.get('email').errors.required">Email is required </div>
+                    <div *ngIf="signUpForm.get('email').errors.email">Email is invalid </div> -->
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="">Password</label>
+                <input type="password" class="form-control" formControlName="password">
+                <div *ngIf="signUpForm.get('password').touched && !signUpForm.get('password').valid">
+                    <!-- <div *ngIf="signUpForm.get('password').errors.required">password is required </div> -->
+                </div>
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-primary" type="submit" [disabled]="!signUpForm.valid"> SignUp</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
