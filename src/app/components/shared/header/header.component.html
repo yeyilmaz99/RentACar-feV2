@@ -1,30 +1,66 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" routerLink="/" aria-current="page">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="counter" >Counter</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="posts" >post</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="auth" *ngIf="!(isAuthenticated | async)" >Login</a>
-          </li>
-          <li class="nav-item" *ngIf="!(isAuthenticated | async)">
-            <a class="nav-link"  routerLink="auth/signup" >Sign up</a>
-          </li>
-          <li class="nav-item"  *ngIf="isAuthenticated | async">
-            <a class="nav-link" href="#" (click)="onLogout($event)" >Logout</a>
-          </li>
-        </ul>
+
+    <!-- Pre Header -->
+    <div id="pre-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <span>Suspendisse laoreet magna vel diam lobortis imperdiet</span>
+          </div>
+        </div>
       </div>
     </div>
-  </nav>
+
+    <!-- Navigation -->
+    <div class="container">
+      <div class="row justify-content-center mt-4 " style="text-align: center;">
+        <div class="col">
+          <a class="navbar-brand" href=""><img src="assets/images/header-logo.png" alt=""></a>
+        </div>
+      </div>
+    </div>
+    <hr style="margin-top: 30px;">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <ul class="nav justify-content-center">
+            <li class="nav-item">
+              <a class="nav-link" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" [routerLink]="'/'">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/cars']" >Cars</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/brand']" >Brands</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/about']" >About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/contact']">Contact Us</a>
+            </li>
+            <!-- <li class="nav-item" *ngIf="!isLoggedIn()">
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/login']">Login</a>
+            </li> -->
+            <!-- <li class="nav-item" *ngIf="isLoggedIn()"> -->
+              <div class="dropdown-center">
+                <button class="btn btn-secondary dropdown-toggle" style="font-size: 0px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <span class="material-symbols-outlined" style="font-size: 23px;">
+                    person
+                    </span>
+                </button>
+                <ul class="dropdown-menu" >
+                  <li><a class="dropdown-item" routerLink="/user">Profil</a></li>
+                  <li><a class="dropdown-item" routerLink="/favorites">Favorites</a></li>
+                  <li><a class="dropdown-item" routerLink="/user/rentals">Rentals</a></li>
+                  <!-- <li><a class="dropdown-item" *ngIf="isAdmin()" routerLink="/admin">Admin Page</a></li> -->
+                  <!-- <li><a class="dropdown-item" (click)="logOut()">Log Out</a></li> -->
+                </ul>
+              </div>
+            <!-- </li> -->
+          </ul>
+        </div>
+      </div>
+    </div>
+
+<hr>
+
