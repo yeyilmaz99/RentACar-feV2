@@ -14,3 +14,7 @@ export const isAuthenticated = createSelector(getAuthState, state => {
 export const getToken = createSelector(getAuthState, state => {
     return state.user ? state.user.token : null;
 })
+
+export const isAdmin = createSelector(getAuthState, state => {
+    return state.admin ? true : false;
+})
