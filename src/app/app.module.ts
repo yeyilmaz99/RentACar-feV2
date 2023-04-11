@@ -26,6 +26,7 @@ import { HeaderComponent } from './components/shared/header/header.component';
 import { LoadingSpinnerComponent } from './components/shared/loading-spinner/loading-spinner.component';
 import { ToastrModule } from 'ngx-toastr';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { FooterComponent } from './components/shared/footer/footer.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -39,7 +40,8 @@ export function tokenGetter() {
     AddDetailsComponent,
     HomeComponent,
     HeaderComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    FooterComponent
   ],
   imports: [
     ReactiveFormsModule,
