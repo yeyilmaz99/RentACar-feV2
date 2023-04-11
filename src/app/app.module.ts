@@ -7,7 +7,6 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { SignUpComponent } from './components/auth/sign-up/sign-up.component';
 import { CarsComponent } from './components/car/cars/cars.component';
 import { AddCarComponent } from './components/car/add-car/add-car.component';
-import { AddDetailsComponent } from './components/car/add-details/add-details.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
@@ -35,9 +34,6 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
-    CarsComponent,
-    AddCarComponent,
-    AddDetailsComponent,
     HomeComponent,
     HeaderComponent,
     LoadingSpinnerComponent,
