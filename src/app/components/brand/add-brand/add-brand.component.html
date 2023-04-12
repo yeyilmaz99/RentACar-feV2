@@ -1,0 +1,70 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 card">
+          <div class="row justify-content-center mt-2" style="text-align: center;">
+            <h1>Add a Brand</h1>
+          </div>
+            <form [formGroup]="brandForm">
+                <div class="mb-3 mt-2">
+                  <label for="brandName" class="form-label">Enter Brand Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="brandName"
+                    formControlName="brandName"
+                  />
+                </div>
+                <button type="submit" (click)="addBrand()" class="btn btn-primary mb-3">Submit</button>
+              </form>
+        </div>
+    </div>
+
+    <!-- <div class="row justify-content-center">
+      <div class="col-md-6 card mt-5">
+        <div class="row justify-content-center mt-2" style="text-align: center;">
+          <h1>Update Brand</h1>
+        </div>
+        <h4 class="mt-2">Select Brand To Update</h4>
+        <form [formGroup]="brandToUpdateForm">
+          <select
+            id="brandId"
+            formControlName="brandId"
+            class="form-select"
+            aria-label="Default select example"
+          >
+            <option *ngFor="let brand of brands" ngValue="{{ brand.brandId }}">
+              {{ brand.brandName }}
+            </option>
+          </select>
+          <h4 class="mt-3">New Brand Name</h4>
+          <input
+            type="text"
+            class="form-control "
+            id="brandName"
+            formControlName="brandName"
+          />
+          <button type="submit" (click)="updateBrand()" class="btn btn-primary mt-3 mb-3">
+            Submit
+          </button>
+        </form>
+      </div>
+    </div> -->
+
+
+    <!-- <div class="row justify-content-center">
+      <div class="col-md-6 card mt-5">
+        <div class="row justify-content-center mt-2" style="text-align: center;">
+        <h1>Delete a Brand</h1>
+        </div>
+        <h4>Select a Brand To Delete</h4>
+        <form [formGroup]="brandToDeleteForm">
+          <select id="brandId" formControlName="brandId" class="form-select">
+            <option *ngFor="let brand of brands" ngValue="{{ brand.brandId}}"> {{brand.brandName}} </option>
+          </select>
+          <button type="submit" class="btn btn-danger mt-3 mb-3" (click)="deleteBrand()"> Delete </button>
+        </form>
+      </div>
+    </div> -->
+</div>
+
+
