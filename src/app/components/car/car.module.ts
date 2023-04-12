@@ -6,7 +6,6 @@ import { CarDetailsComponent } from './car-details/car-details.component';
 import { EffectsModule } from "@ngrx/effects";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
-import { Car } from "src/app/models/car.model";
 import { CarEffects } from "./state/car.effects";
 import { StoreModule } from "@ngrx/store";
 import { CAR_STATE_NAME } from "./state/car.selector";
@@ -30,14 +29,6 @@ const routes: Routes = [
     }
 
 ]
-
-
-  function sortByName(a:Car, b:Car){
-    let compare = a.carName.localeCompare(b.carName);
-    // if(compare>0) {return 1;}
-    // if(compare<0) {return -1;}
-    return compare
-  }   
 
 
 
