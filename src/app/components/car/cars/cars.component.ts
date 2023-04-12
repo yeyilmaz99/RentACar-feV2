@@ -20,7 +20,7 @@ export class CarsComponent implements OnInit {
   cars:Car[];
   carsSlice: Car[];
   filterText: string = '';
-  constructor(private store:Store<AppState>,private orderByPipe:OrderByPipe,private cdRef:ChangeDetectorRef,private formBuilder: FormBuilder, ) { }
+  constructor(private store:Store<AppState>,private orderByPipe:OrderByPipe,private formBuilder: FormBuilder, ) { }
 
   ngOnInit(): void {
     this.getCars();
