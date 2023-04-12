@@ -3,7 +3,7 @@
       <div class="col-md-3">
         <div class="card">
           <div class="card-body">
-            <!-- <form [formGroup]="carFilterForm">
+            <form [formGroup]="carFilterForm">
               <label for="brandId"><h3>Select Brand</h3></label>
               <select
                 class="form-select"
@@ -11,9 +11,9 @@
                 formControlName="brandId"
                 aria-label="Default select example"
               >
-                <option *ngFor="let brand of brands" [ngValue]=brand.brandId>
+                <!-- <option *ngFor="let brand of brands" [ngValue]=brand.brandId>
                   {{ brand.brandName }}
-                </option>
+                </option> -->
               </select>
               <label for="colorId"><h3>Select Color</h3></label>
               <select
@@ -22,20 +22,20 @@
                 formControlName="colorId"
                 aria-label="Default select example"
               >
-                <option *ngFor="let color of colors" [ngValue]= color.colorId >
+                <!-- <option *ngFor="let color of colors" [ngValue]= color.colorId >
                   {{ color.colorName }}
-                </option>
+                </option> -->
               </select>
-            </form> -->
+            </form>
           </div>
           <div class="card-footer">
-            <!-- <button class="btn btn-fill btn-primary" (click)="filter()">
+            <button class="btn btn-fill btn-primary" (click)="filter()">
               Filtrele
-            </button> -->
+            </button>
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6 mt-5">
         <div class="card">
           <div class="card-body">
               <label><h3>Search For a Car</h3></label>
