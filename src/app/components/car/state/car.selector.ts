@@ -15,6 +15,6 @@ export const getCars = createSelector(getCarState, (state) => {
     return state.cars;
 })
 
-export const getPostById = createSelector(getCars,getCurrentRoute,(cars:any,route:RouterStateUrl) => {
+export const getCarById = createSelector(getCars,getCurrentRoute,(cars:any,route:RouterStateUrl) => {
     return cars ? cars.find((car:any) => car.id === route.params['id']) : null;
 })
