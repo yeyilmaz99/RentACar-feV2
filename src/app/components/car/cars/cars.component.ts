@@ -7,6 +7,7 @@ import { AppState } from 'src/app/store/app.state';
 import { loadCars } from '../state/car.actions';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { OrderByPipe } from 'src/app/pipes/order-by.pipe';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-cars',
@@ -15,20 +16,24 @@ import { OrderByPipe } from 'src/app/pipes/order-by.pipe';
 })
 export class CarsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  carFilterForm: FormGroup;
   cars:Car[];
   carsSlice: Car[];
   filterText: string = '';
-  constructor(private store:Store<AppState>,private orderByPipe:OrderByPipe,private cdRef:ChangeDetectorRef ) { }
+  constructor(private store:Store<AppState>,private orderByPipe:OrderByPipe,private cdRef:ChangeDetectorRef,private formBuilder: FormBuilder, ) { }
 
   ngOnInit(): void {
-    this.getCars()
+    this.getCars();
+    this.createCarFilterForm();
   }
 
   getCars(){
     this.store.dispatch(loadCars());
     this.store.select(getCars).subscribe(response => {
       this.cars = response
-      this.carsSlice = response.slice(0,12)
+      if(response){
+        this.carsSlice = response.slice(0,12)
+      }
     })
   }
 
@@ -63,6 +68,18 @@ export class CarsComponent implements OnInit {
       endIndex = this.cars.length;
     }
     this.carsSlice = this.cars.slice(startIndex, endIndex);
+  }
+
+
+
+  filter() {
+  }
+
+  createCarFilterForm() {
+    this.carFilterForm = this.formBuilder.group({
+      colorId: ['', Validators.required],
+      brandId: ['', Validators.required],
+    });
   }
 
 
