@@ -4,7 +4,7 @@ import { CarsComponent } from "./cars/cars.component";
 import { AddCarComponent } from "./add-car/add-car.component";
 import { CarDetailsComponent } from './car-details/car-details.component';
 import { EffectsModule } from "@ngrx/effects";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { Car } from "src/app/models/car.model";
 import { CarEffects } from "./state/car.effects";
@@ -51,6 +51,8 @@ const routes: Routes = [
 
     imports: [
         CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
         MatPaginatorModule,
         RouterModule.forChild(routes),
         EffectsModule.forFeature([CarEffects]),
