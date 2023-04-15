@@ -1,1 +1,183 @@
-<p>car-details works!</p>
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <!-- <div
+          id="carouselExampleControls"
+          class="carousel slide"
+          data-bs-ride="carousel"
+        >
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img
+                src="assets/images/{{ carImages[0]?.imagePath }}"
+                class="d-block w-100"
+                alt="..."
+              />
+            </div>
+            <div class="carousel-item">
+              <img
+                src="assets/images/{{ carImages[1]?.imagePath }}"
+                class="d-block w-100"
+                alt="..."
+              />
+            </div>
+            <div class="carousel-item">
+              <img
+                src="assets/images/{{ carImages[2]?.imagePath }}"
+                class="d-block w-100"
+                alt="..."
+              />
+            </div>
+            <div class="carousel-item">
+
+              <img
+                src="assets/images/{{ carImages[3]?.imagePath }}"
+                class="d-block w-100"
+                alt="..."
+              />
+            </div>
+            <div class="carousel-item">
+              <img
+                src="assets/images/{{ carImages[4]?.imagePath }}"
+                class="d-block w-100"
+                alt="..."
+              />
+            </div>
+          </div>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExampleControls"
+            data-bs-slide="prev"
+          >
+            <span
+              id="slideButton"
+              class="carousel-control-prev-icon"
+              aria-hidden="true"
+            ></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExampleControls"
+            data-bs-slide="next"
+          >
+            <span
+              id="slideButton"
+              class="carousel-control-next-icon"
+              aria-hidden="true"
+            ></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div> -->
+      </div>
+  
+      <div class="col-md-5" *ngIf="car |async as carData" >
+        <div class="right-content">
+          <div class="card" style="width: 18rem">
+            <div class="card-body">
+              <div class="row mt-2 mb-2">
+                <div class="col">
+                  <h1  class="card-title">{{ carData?.carName }}</h1>
+                </div>
+              </div>
+  
+              <p class="card-text">
+                Some quick example text to build on the card title and make up the
+                bulk of the card's content.
+              </p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Marka : {{ carData?.brandName }}</li>
+              <li class="list-group-item">Renk :{{ carData?.colorName }}</li>
+              <li class="list-group-item">Fiyat : {{ carData?.dailyPrice }}</li>
+            </ul>
+            <!-- <div class="card-body">
+              <button class="btn btn-success" [ngClass]="{'disabled' : !checkIfCarIsReturnedClass}"  routerLink="/cars/car/{{ this.carId }}/rental">
+                Kirala
+              </button>
+              <button [ngClass]="{'d-none' : !checkIfAlreadyAddedToFav}" class="btn btn-danger" *ngIf="isLoggedIn()"  (click)="addToFavorites()" style="padding-bottom: 0px; margin-left: 30px;">
+                <span class="material-symbols-outlined">
+                  favorite
+                  </span>
+              </button>
+              <button [ngClass]="{'d-none' : checkIfAlreadyAddedToFav}" class="btn btn-danger" *ngIf="isLoggedIn()" (click)="deleteFromFavorites()" style="padding-bottom: 0px; margin-left: 30px;">
+                <span class="material-symbols-outlined">
+                  heart_broken
+                  </span>
+              </button>
+  
+  
+  
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <!-- <div class="col-md-1">
+        <div class="col" *ngIf="isAdmin()">
+          <button class="btn btn-primary" (click)="editForm()" style="float: right;">Edit</button>
+        </div>
+      </div> -->
+    </div>
+  </div>
+  
+  
+  
+  <!-- <div class="container mt-5" *ngIf="edit">
+    <div class="row">
+      <div class="col-md-6 card">
+        <h1>Update</h1>
+        <form [formGroup]="updateForm">
+          <div>
+            <h4>Enter New Car Name</h4>
+            <div class="input-group mb-3">
+              <input type="text" id="carName" formControlName="carName" class="form-control" placeholder="Enter Car Name">
+            </div>
+            <h4>Select Color</h4>
+            <select
+              id="colorId"
+              formControlName="colorId"
+              class="form-select mb-3"
+              aria-label="Default select example"
+            >
+              <option *ngFor="let color of colors" [ngValue]="color?.colorId">
+                {{ color?.colorName }}
+              </option>
+            </select>
+            <h4>Select Brand</h4>
+            <select
+                id="brandId"
+                formControlName="brandId"
+                class="form-select mb-3"
+                aria-label="Default select example"
+              >
+                <option *ngFor="let brand of brands" [ngValue]="brand?.brandId">
+                  {{ brand?.brandName }}
+                </option>
+              </select>
+              <h4>Enter Model Year</h4>
+              <div class="input-group mt-3 mb-3">
+                <input id="modelYear" formControlName="modelYear" type="number" class="form-control" placeholder="Model Year">
+              </div>
+              <h4>Enter Daily Price</h4>
+              <div class="input-group mt-3 mb-3">
+                <input id="dailyPrice" formControlName="dailyPrice" type="number" class="form-control" placeholder="Daily Price">
+              </div>
+              <h4>Enter Findeks Point</h4>
+              <div class="input-group mt-3 mb-3">
+                <input id="findeksPoint" formControlName="findeksPoint" type="number" class="form-control" placeholder="Findeks Point">
+              </div>
+              <h4>Enter Description</h4>
+              <div class="input-group">
+                <textarea id="description" formControlName="description" class="form-control" aria-label="With textarea" placeholder="Description"></textarea>
+              </div>
+  
+              <button class="btn btn-primary mt-2" (click)="update()"> Update</button>
+              <button class="btn btn-danger mt-2" style="float: right;" (click)="delete()"> Delete This Car</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div> -->
+  
