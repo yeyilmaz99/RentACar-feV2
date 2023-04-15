@@ -4,6 +4,9 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import { Brand } from 'src/app/models/brand.model';
 import { getBrands } from '../state/brand.selector';
+import { loadColors } from '../../color/state/color.actions';
+import { Color } from 'src/app/models/color.model';
+import { getColors } from '../../color/state/color.selector';
 
 @Component({
   selector: 'app-brands',
@@ -12,10 +15,12 @@ import { getBrands } from '../state/brand.selector';
 })
 export class BrandsComponent implements OnInit {
   brands:Brand[];
+  colors:Color[];
   constructor(private store:Store<AppState>, ) { }
 
   ngOnInit(): void {
     this.getBrands();
+    this.getColors();
   }
 
 
@@ -23,6 +28,13 @@ export class BrandsComponent implements OnInit {
     this.store.dispatch(loadBrands());
     this.store.select(getBrands).subscribe(response => {
       this.brands = response
+    })
+  }
+
+  getColors(){
+    this.store.dispatch(loadColors());
+    this.store.select(getColors).subscribe(response => {
+      this.colors = response
     })
   }
 
