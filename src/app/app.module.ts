@@ -28,6 +28,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { FooterComponent } from './components/shared/footer/footer.component';
 import { BrandsComponent } from './components/brand/brands/brands.component';
 import { AddBrandComponent } from './components/brand/add-brand/add-brand.component';
+import { ColorEffects } from './components/color/state/color.effects';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -49,7 +50,7 @@ export function tokenGetter() {
     ToastrModule.forRoot(),
     StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({logOnly:environment.production}),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects,ColorEffects]),
     EntityDataModule.forRoot({}),
     AppRoutingModule,
     StoreRouterConnectingModule.forRoot({ serializer: CustomSerializer }),
