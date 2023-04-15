@@ -21,10 +21,8 @@ const routes: Routes = [
     {
         path: '', children: [
             {path:'',pathMatch:"full",redirectTo:'cars'},
-            { path: 'cars', component: CarsComponent },
-            { path: 'add-car', component: AddCarComponent },
-            { path: 'car-details', component: CarDetailsComponent }
-
+            { path: '', component: CarsComponent },
+            { path: 'add-car', component: AddCarComponent }
         ]
     }
 
