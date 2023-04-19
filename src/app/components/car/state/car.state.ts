@@ -7,5 +7,5 @@ export interface CarState {
 }
 
 export const initialState:CarState = {
-    cars:null
+    cars:null,
 }
