@@ -86,7 +86,7 @@
                   class="card-img-top"
                   alt="..."
                 />
-                <div routerLink="/cars/car/{{ car.carId }}" class="card-body">
+                <div [routerLink]="['cars/car', car.carId]" class="card-body">
                   <h5 class="card-title text-truncate">{{ car.carName }}</h5>
                   <p class="card-text text-truncate">{{ car.brandName }}</p>
                 </div>
