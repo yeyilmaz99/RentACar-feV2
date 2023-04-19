@@ -7,6 +7,8 @@ import { AppState } from "src/app/store/app.state";
 import { loadCars, loadCarsSuccess } from "./car.actions";
 import { CarService } from "src/app/services/car/car.service";
 import { setLoadingSpinner } from "src/app/store/shared/shared.actions";
+import { ROUTER_NAVIGATION, RouterNavigatedAction } from "@ngrx/router-store";
+import { Car } from "src/app/models/car.model";
 
 @Injectable()
 export class CarEffects {
@@ -23,6 +25,25 @@ export class CarEffects {
                 return loadCarsSuccess({ cars })
             }))
         }))
+    })
+
+
+
+    getSingleCar$ = createEffect(() => {
+        return this.actions$.pipe(ofType(ROUTER_NAVIGATION), filter((r: RouterNavigatedAction) => {
+            return r.payload.routerState.url.startsWith('/cars/car')
+        }), map((r: RouterNavigatedAction) => {
+            return r.payload.routerState['params']['id'];
+        }), switchMap((id) => {
+            return this.carService.getCarById(id).pipe(map((response) => {
+                const cars: Car[] = [];
+                const car = response.data
+                cars.push(car);
+                console.log(cars);
+                return loadCarsSuccess({ cars })
+            }))
+        })
+        )
     })
 
 }
