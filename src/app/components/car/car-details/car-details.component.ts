@@ -17,7 +17,6 @@ export class CarDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.car = this.store.select(getCarById);
-    this.store.dispatch(setLoadingSpinner({status:false}))
   }
 }
 
