@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { initialState } from "./brand.state";
-import { loadBrandsSuccess } from "./brand.actions";
+import { deleteBrand, deleteBrandSuccess, loadBrandsSuccess } from "./brand.actions";
 
 
 
@@ -12,7 +12,18 @@ const _brandReducer = createReducer(initialState,
             ...state,
             brands: action.brands
         }
-    })    
+    }), on(deleteBrandSuccess, (state,action) => {
+        const updatedBrands = state.brands.filter(brand => {
+            console.log(action.id)
+            console.log(brand.brandId)
+            return brand.brandId != action.id
+        })
+        console.log(updatedBrands);
+        return {
+            ...state,
+            brands: updatedBrands,
+        }
+    })   
     
     )
 
