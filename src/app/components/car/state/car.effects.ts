@@ -58,7 +58,6 @@ export class CarEffects {
             return this.carService.getCarImagesByCarId(id).pipe(map((response) => {
                 this.store.dispatch(setLoadingSpinner({status:false}))
                 const carImages = response.data
-                console.log(carImages)
                 return loadCarImagesSuccess({ carImages })
             }))
         })
