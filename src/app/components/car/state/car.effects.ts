@@ -35,11 +35,12 @@ export class CarEffects {
         }), map((r: RouterNavigatedAction) => {
             return r.payload.routerState['params']['id'];
         }), switchMap((id) => {
+            this.store.dispatch(setLoadingSpinner({status:true}))
             return this.carService.getCarById(id).pipe(map((response) => {
                 const cars: Car[] = [];
+                this.store.dispatch(setLoadingSpinner({status:false}))
                 const car = response.data
                 cars.push(car);
-                console.log(cars);
                 return loadCarsSuccess({ cars })
             }))
         })
