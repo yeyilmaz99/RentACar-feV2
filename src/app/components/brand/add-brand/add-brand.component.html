@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <!-- <div class="row justify-content-center">
+    <div class="row justify-content-center">
       <div class="col-md-6 card mt-5">
         <div class="row justify-content-center mt-2" style="text-align: center;">
           <h1>Update Brand</h1>
@@ -31,8 +31,10 @@
             formControlName="brandId"
             class="form-select"
             aria-label="Default select example"
+            *ngIf="brands as brandData"
           >
-            <option *ngFor="let brand of brands" ngValue="{{ brand.brandId }}">
+          <option selected value="">Select a Brand</option>
+            <option *ngFor="let brand of brandData" ngValue="{{ brand.brandId }}">
               {{ brand.brandName }}
             </option>
           </select>
@@ -48,23 +50,24 @@
           </button>
         </form>
       </div>
-    </div> -->
+    </div>
 
 
-    <!-- <div class="row justify-content-center">
+    <div class="row justify-content-center">
       <div class="col-md-6 card mt-5">
         <div class="row justify-content-center mt-2" style="text-align: center;">
         <h1>Delete a Brand</h1>
         </div>
         <h4>Select a Brand To Delete</h4>
         <form [formGroup]="brandToDeleteForm">
-          <select id="brandId" formControlName="brandId" class="form-select">
-            <option *ngFor="let brand of brands" ngValue="{{ brand.brandId}}"> {{brand.brandName}} </option>
+          <select id="brandId" formControlName="brandId" class="form-select" *ngIf="brands as brandData">
+            <option selected value="">Select a Brand</option>
+            <option *ngFor="let brand of brandData"  ngValue="{{ brand.brandId}}"> {{brand.brandName}} </option>
           </select>
           <button type="submit" class="btn btn-danger mt-3 mb-3" (click)="deleteBrand()"> Delete </button>
         </form>
       </div>
-    </div> -->
+    </div>
 </div>
 
 
