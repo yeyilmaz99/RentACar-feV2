@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { initialState } from "./car.state";
-import { loadCarsSuccess } from "./car.actions";
+import { loadCarImagesSuccess, loadCarsSuccess } from "./car.actions";
 
 
 
@@ -10,6 +10,11 @@ const _carReducer = createReducer(initialState,
         return {
             ...state,
             cars: action.cars
+        }
+    }), on(loadCarImagesSuccess, (state, action) => {
+        return {
+            ...state,
+            carImages:action.carImages
         }
     }))
 
