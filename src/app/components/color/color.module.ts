@@ -33,7 +33,7 @@ const routes: Routes = [
         FormsModule,
         MatPaginatorModule,
         RouterModule.forChild(routes),
-        EffectsModule.forFeature([ColorEffects]),
+        EffectsModule.forFeature([]),
         FormsModule,
         StoreModule.forFeature(COLOR_STATE_NAME,colorReducer)
     ],
