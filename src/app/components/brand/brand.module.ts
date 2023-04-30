@@ -40,7 +40,7 @@ const routes: Routes = [
         FormsModule,
         MatPaginatorModule,
         RouterModule.forChild(routes),
-        EffectsModule.forFeature([BrandEffects]),
+        EffectsModule.forFeature([]),
         FormsModule,
         StoreModule.forFeature(BRAND_STATE_NAME,brandReducer)
     ],
