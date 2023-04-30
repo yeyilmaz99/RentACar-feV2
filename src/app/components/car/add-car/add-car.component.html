@@ -1,1 +1,88 @@
-<p>add-car works!</p>
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form [formGroup]="carAddForm">
+          <div class="mb-3">
+            <h4>Select Brand</h4>
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              id="brandId"
+              formControlName="brandId"
+            >
+            <option *ngFor="let brand of brands" [ngValue]="brand.brandId">
+                {{ brand.brandName }}
+              </option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <h4>Select Color</h4>
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              id="colorId"
+              formControlName="colorId"
+            >
+              <option *ngFor="let color of colors" [ngValue]="color.colorId">
+                {{ color.colorName }}
+              </option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="carName" class="form-label">Enter Car Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="carName"
+              formControlName="carName"
+              placeholder="ex. Volvo"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="modelYear" class="form-label">Enter Model Year</label>
+            <input
+              type="number"
+              class="form-control"
+              id="modelYear"
+              formControlName="modelYear"
+              placeholder="ex. 1999"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="dailyPrice" class="form-label">Enter Daily Price</label>
+            <input
+              type="number"
+              class="form-control"
+              id="dailyPrice"
+              formControlName="dailyPrice"
+              placeholder="ex. 1500$"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Enter Description</label>
+            <input
+              type="text"
+              class="form-control"
+              id="description"
+              formControlName="description"
+              placeholder="ex. family car"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="findeksPoint" class="form-label">Enter Findeks Point</label>
+            <input
+              type="text"
+              class="form-control"
+              id="findeksPoint"
+              formControlName="findeksPoint"
+              placeholder="ex. 500"
+            />
+          </div>
+          <button type="submit" (click)="addCar()" class="btn btn-primary">
+            Add Car
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
