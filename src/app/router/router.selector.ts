@@ -7,3 +7,7 @@ export const getRouterState = createFeatureSelector<RouterReducerState<RouterSta
 export const getCurrentRoute = createSelector(getRouterState, router => {
     return router.state;
 })
+
+export const getCurrentId = createSelector(getRouterState,router => {
+    return router.state.params['id']
+})
