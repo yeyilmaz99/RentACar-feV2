@@ -6,15 +6,6 @@
           class="carousel slide"
           data-bs-ride="carousel"
         >
-          <!-- <div class="carousel-inner"*ngIf="carImages | async as carImagesData">
-            <div class="carousel-item active" *ngFor="let carImage of carImagesData" >
-              <img 
-                src="assets/images/{{ carImage.imagePath }}"
-                class="d-block w-100"
-                alt="..."
-              />
-            </div>
-          </div> -->
           <div class="carousel-inner"*ngIf="carImages | async as carImagesData">
             <div class="carousel-item active" >
               <!-- <img src="{{product?.photos[0].path}}" class="d-block w-100" alt="..."> -->
@@ -127,17 +118,17 @@
           </div>
         </div>
       </div>
-      <!-- <div class="col-md-1">
+      <div class="col-md-1">
         <div class="col" *ngIf="isAdmin()">
           <button class="btn btn-primary" (click)="editForm()" style="float: right;">Edit</button>
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
   
   
   
-  <!-- <div class="container mt-5" *ngIf="edit">
+  <div class="container mt-5" *ngIf="edit">
     <div class="row">
       <div class="col-md-6 card">
         <h1>Update</h1>
@@ -186,11 +177,11 @@
                 <textarea id="description" formControlName="description" class="form-control" aria-label="With textarea" placeholder="Description"></textarea>
               </div>
   
-              <button class="btn btn-primary mt-2" (click)="update()"> Update</button>
+              <button class="btn btn-primary mt-2" (click)="updateCar()"> Update</button>
               <button class="btn btn-danger mt-2" style="float: right;" (click)="delete()"> Delete This Car</button>
           </div>
         </form>
       </div>
     </div>
-  </div> -->
+  </div>
   
