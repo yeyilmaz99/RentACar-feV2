@@ -4,7 +4,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { catchError, filter, map, mergeMap, of, switchMap, tap } from "rxjs";
 import { AppState } from "src/app/store/app.state";
-import { addCar, addCarSuccess, loadCarImages, loadCarImagesSuccess, loadCars, loadCarsSuccess } from "./car.actions";
+import { addCar, addCarSuccess, deleteCarAction, deleteCarSuccess, loadCarImages, loadCarImagesSuccess, loadCars, loadCarsSuccess, updateCarAction, updateCarSuccess } from "./car.actions";
 import { CarService } from "src/app/services/car/car.service";
 import { setErrorMessage, setLoadingSpinner } from "src/app/store/shared/shared.actions";
 import { ROUTER_NAVIGATION, RouterNavigatedAction } from "@ngrx/router-store";
@@ -80,5 +80,28 @@ export class CarEffects {
             }))
         }))
     },)
+
+    deleteCar$ = createEffect(() => {
+        return this.actions$.pipe(ofType(deleteCarAction), switchMap((action) => {
+            return this.carService.deleteCar(action.carToDelete).pipe(map((response) => {
+                const message = response.message
+                return deleteCarSuccess({message})
+            }))
+        }))
+    })
+
+
+    //delete redirect yaz adamı sinir etme!!!!!
+
+    updateCar$ = createEffect(() => {
+        return this.actions$.pipe(ofType(updateCarAction), switchMap((action => {
+            return this.carService.updateCar(action.car).pipe(map(response => {
+                return updateCarSuccess({car:action.car})
+            }))
+        })))
+    })
+
+
+
 
 }
