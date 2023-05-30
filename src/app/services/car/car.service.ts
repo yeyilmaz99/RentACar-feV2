@@ -21,6 +21,7 @@ export class CarService {
   }
 
   getCarById(id:number):Observable<SingleResponseModel<Car>>{
+    console.log(id + "tıklandı")
     let newPath = this.apiUrl + "Cars/getcardetails?carId=";
     return this.httpClient.get<SingleResponseModel<Car>>(newPath+id);
   }
