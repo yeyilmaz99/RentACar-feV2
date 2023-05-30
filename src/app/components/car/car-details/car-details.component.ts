@@ -18,7 +18,7 @@ import { getBrands } from '../../brand/state/brand.selector';
 import { getColors } from '../../color/state/color.selector';
 import { loadBrands } from '../../brand/state/brand.actions';
 import { loadColors } from '../../color/state/color.actions';
-// import Swal from 'sweetalert2/dist/sweetalert2.js';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-car-details',
@@ -92,37 +92,35 @@ export class CarDetailsComponent implements OnInit {
   }
 
 
-  // delete(){
-  //   Swal.fire({
-  //     title: 'Are you sure?',
-  //     text: "You won't be able to revert this!",
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonColor: '#3085d6',
-  //     cancelButtonColor: '#d33',
-  //     confirmButtonText: 'Yes, delete it!'
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       Swal.fire(
-  //         'Deleted!',
-  //         'Your file has been deleted.',
-  //         'success'
-  //       )
-  //       let carToDelete: CarDelete = {id:this.carId,brandId:0,carName:'',colorId:0,dailyPrice:0,description:'',modelYear:0}
-  //       this.carService.deleteCar(carToDelete).subscribe(response => {
-  //         this.toastrService.warning(response.message)
-  //       })
-  //       this.router.navigate(['cars'])
-  //     }
-  //   })
-  // }
-
   delete(){
-    let carToDelete: CarDelete = {id:this.carId,brandId:0,carName:'',colorId:0,dailyPrice:0,description:'',modelYear:0}
-    console.log(this.carId);
-    this.store.dispatch(deleteCarAction({carToDelete}))
-    this.router.navigate(['cars'])
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+        let carToDelete: CarDelete = {id:this.carId,brandId:0,carName:'',colorId:0,dailyPrice:0,description:'',modelYear:0}
+        this.store.dispatch(deleteCarAction({carToDelete}))
+        this.router.navigate(['cars'])
+      }
+    })
   }
+
+  // delete(){
+  //   let carToDelete: CarDelete = {id:this.carId,brandId:0,carName:'',colorId:0,dailyPrice:0,description:'',modelYear:0}
+  //   console.log(this.carId);
+  //   this.store.dispatch(deleteCarAction({carToDelete}))
+  //   this.router.navigate(['cars'])
+  // }
 
 
   updateCar(){
