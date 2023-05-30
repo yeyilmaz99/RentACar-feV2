@@ -28,7 +28,7 @@ const _carReducer = createReducer(initialState,
 
     }), on(updateCarSuccess, (state, action) => {
         const updatedCars = state.cars.map(car => {
-            return action.car.carId === car.carId? action.car : car;
+            return action.car.carId === car.carId ? action.car : car;
         })
         return {
             ...state,
