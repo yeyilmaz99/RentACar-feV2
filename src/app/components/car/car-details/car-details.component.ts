@@ -10,7 +10,7 @@ import { isAdmin } from '../../auth/state/auth.selector';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CarDelete } from 'src/app/models/carDelete';
 import { getCurrentId } from 'src/app/router/router.selector';
-import { deleteCarAction, updateCarAction } from '../state/car.actions';
+import { deleteCarAction, loadCars, updateCarAction } from '../state/car.actions';
 import { Router } from '@angular/router';
 import { Brand } from 'src/app/models/brand.model';
 import { Color } from 'src/app/models/color.model';
@@ -36,8 +36,7 @@ export class CarDetailsComponent implements OnInit {
   constructor(private store:Store<AppState>, private formBuilder:FormBuilder, private router:Router) { }
 
   ngOnInit(): void {
-    this.car = this.store.select(getCarById);
-    this.carImages = this.store.select(getCarImages);
+    this.getCar();
     this.createUpdateForm();
     this.store.select(getCurrentId).subscribe(response =>
       this.carId = response
@@ -50,11 +49,19 @@ export class CarDetailsComponent implements OnInit {
   isAdmin(){
     return this.store.select(isAdmin);
   }
+
+  getCar(){
+    this.car = this.store.select(getCarById);
+    this.carImages = this.store.select(getCarImages);
+  }
+
+
+
   createUpdateForm(){
     this.updateForm = this.formBuilder.group({
       carName: ["",Validators.required],
-      colorId: ["",Validators.required],
-      brandId: ["",Validators.required],
+      colorIdandName: ["",Validators.required],
+      brandIdandName: ["",Validators.required],
       modelYear: ["",Validators.required],
       dailyPrice: ["", Validators.required],
       description: ["",Validators.required],
@@ -78,10 +85,6 @@ export class CarDetailsComponent implements OnInit {
     });
     this.store.dispatch(loadColors());
   }
-
-
-
-
 
 
   editForm(){
@@ -125,10 +128,14 @@ export class CarDetailsComponent implements OnInit {
   updateCar(){
     if(this.updateForm.valid){
       let car = Object.assign({},this.updateForm.value);
-      car.carId = this.carId;
-      console.log(car);
-      console.log("tıklandı")
-      this.store.dispatch(updateCarAction({car}))
+      car.Id = +this.carId;
+      car.carId = +this.carId
+      car.colorName = car.colorIdandName.colorName;
+      car.colorId = car.colorIdandName.colorId;
+      car.brandName = car.brandIdandName.brandName;
+      car.brandId = car.brandIdandName.brandId;
+      this.store.dispatch(updateCarAction({car}));
+      this.edit = false;
     }
   } 
 }
