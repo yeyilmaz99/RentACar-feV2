@@ -140,23 +140,23 @@
             </div>
             <h4>Select Color</h4>
             <select
-              id="colorId"
-              formControlName="colorId"
+              id="colorIdandName"
+              formControlName="colorIdandName"
               class="form-select mb-3"
               aria-label="Default select example"
             >
-              <option *ngFor="let color of colors" [ngValue]="color?.colorId">
+              <option *ngFor="let color of colors" [ngValue]="{colorId: color?.colorId, colorName: color.colorName}" >
                 {{ color?.colorName }}
               </option>
             </select>
             <h4>Select Brand</h4>
             <select
-                id="brandId"
-                formControlName="brandId"
+                id="brandIdandName"
+                formControlName="brandIdandName"
                 class="form-select mb-3"
                 aria-label="Default select example"
               >
-                <option *ngFor="let brand of brands" [ngValue]="brand?.brandId">
+                <option *ngFor="let brand of brands" [ngValue]="{brandId: brand?.brandId, brandName: brand.brandName}">
                   {{ brand?.brandName }}
                 </option>
               </select>
