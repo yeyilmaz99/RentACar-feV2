@@ -18,7 +18,7 @@ export class BrandEffects{
     loadBrands$ = createEffect(() => {
         return this.actions$.pipe(ofType(loadBrands), mergeMap((action) => {
             return this.brandService.getBrands().pipe(map((response) => {
-                // this.store.dispatch(setLoadingSpinner({status:false}))
+                this.store.dispatch(setLoadingSpinner({status:false}))
                 const brands = response.data
                 return loadBrandsSuccess({ brands })
             }))
