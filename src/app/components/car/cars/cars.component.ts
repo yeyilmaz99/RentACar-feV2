@@ -28,11 +28,14 @@ export class CarsComponent implements OnInit {
   }
 
   getCars(){
-    this.store.dispatch(loadCars());
     this.store.select(getCars).subscribe(response => {
       this.cars = response
       if(response){
         this.carsSlice = response.slice(0,12)
+      }
+      if(this.cars == null){
+
+        this.store.dispatch(loadCars());
       }
     })
   }
