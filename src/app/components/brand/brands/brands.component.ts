@@ -15,7 +15,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./brands.component.css']
 })
 export class BrandsComponent implements OnInit {
-  brands:Observable<Brand[]>;
+  brands:Brand[];
   colors:Color[];
   constructor(private store:Store<AppState>, ) { }
 
@@ -24,17 +24,24 @@ export class BrandsComponent implements OnInit {
     this.getColors();
   }
 
-
   getBrands(){
-    this.brands = this.store.select(getBrands)
-    this.store.dispatch(loadBrands());
+    this.store.select(getBrands).subscribe(response => {
+      this.brands = response
+      if(this.brands == null ) {
+        this.store.dispatch(loadBrands());
+      }
+    })
+
   }
 
   getColors(){
-    this.store.dispatch(loadColors());
     this.store.select(getColors).subscribe(response => {
       this.colors = response
+      if(this.colors == null) {
+        this.store.dispatch(loadColors());
+      }
     })
+
   }
 
 
