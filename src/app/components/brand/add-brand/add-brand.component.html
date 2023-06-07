@@ -60,9 +60,9 @@
         </div>
         <h4>Select a Brand To Delete</h4>
         <form [formGroup]="brandToDeleteForm">
-          <select id="brandId" formControlName="brandId" class="form-select" *ngIf="brands as brandData">
+          <select id="brandId" formControlName="brandId" class="form-select" *ngIf="brands">
             <option selected value="">Select a Brand</option>
-            <option *ngFor="let brand of brandData"  ngValue="{{ brand.brandId}}"> {{brand.brandName}} </option>
+            <option *ngFor="let brand of brands"  ngValue="{{ brand.brandId}}"> {{brand.brandName}} </option>
           </select>
           <button type="submit" class="btn btn-danger mt-3 mb-3" (click)="deleteBrand()"> Delete </button>
         </form>
