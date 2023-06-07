@@ -38,8 +38,11 @@ export class AddBrandComponent implements OnInit {
   getBrands(){
     this.store.select(getBrands).subscribe(response => {
       this.brands = response
+      if(this.brands == null){
+        this.store.dispatch(loadBrands());
+      }
     });
-    this.store.dispatch(loadBrands());
+
   }
 
 
