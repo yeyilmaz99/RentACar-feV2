@@ -85,13 +85,21 @@ export class CarEffects {
         return this.actions$.pipe(ofType(deleteCarAction), switchMap((action) => {
             return this.carService.deleteCar(action.carToDelete).pipe(map((response) => {
                 const message = response.message
-                return deleteCarSuccess({message})
+                return deleteCarSuccess({message ,redirect:true})
             }))
         }))
     })
 
+    // deleteRedirect$ = createEffect(() => {
+    //     return this.actions$.pipe(ofType(...[deleteCarSuccess]),tap((action) => {
+    //         this.store.dispatch(setErrorMessage({message:''}))
+    //         if(action.redirect){
+    //             this.router.navigate(['/cars'])
+    //         }
+    //     }))
+    // })
 
-    //delete redirect yaz adamı sinir etme!!!!!
+
 
     updateCar$ = createEffect(() => {
         return this.actions$.pipe(ofType(updateCarAction), switchMap((action => {
