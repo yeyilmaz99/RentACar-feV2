@@ -55,7 +55,7 @@ export class CarEffects {
         }), map((r: RouterNavigatedAction) => {
             return r.payload.routerState['params']['id'];
         }), switchMap((id) => {
-            // this.store.dispatch(setLoadingSpinner({status:true}))
+            this.store.dispatch(setLoadingSpinner({status:true}))
             return this.carService.getCarImagesByCarId(id).pipe(map((response) => {
                 this.store.dispatch(setLoadingSpinner({status:false}))
                 const carImages = response.data
