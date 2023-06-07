@@ -1,4 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Brand } from 'src/app/models/brand.model';
+import { Color } from 'src/app/models/color.model';
+import { AppState } from 'src/app/store/app.state';
+import { getBrands } from '../brand/state/brand.selector';
+import { loadBrands } from '../brand/state/brand.actions';
+import { getColors } from '../color/state/color.selector';
+import { loadColors } from '../color/state/color.actions';
 
 @Component({
   selector: 'app-home',
@@ -6,10 +14,35 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  brands:Brand[];
+  colors:Color[];
+  constructor(private store:Store<AppState>, ) { }
 
-  constructor() { }
 
   ngOnInit(): void {
+    this.getBrands();
+    this.getColors();
   }
+
+  getBrands(){
+    this.store.select(getBrands).subscribe(response => {
+      this.brands = response
+      if(this.brands == null ) {
+        this.store.dispatch(loadBrands());
+      }
+    })
+
+  }
+
+  getColors(){
+    this.store.select(getColors).subscribe(response => {
+      this.colors = response
+      if(this.colors == null) {
+        this.store.dispatch(loadColors());
+      }
+    })
+
+  }
+
 
 }
