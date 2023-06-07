@@ -8,6 +8,12 @@ import { loadCars } from '../state/car.actions';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { OrderByPipe } from 'src/app/pipes/order-by.pipe';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Brand } from 'src/app/models/brand.model';
+import { Color } from 'src/app/models/color.model';
+import { getBrands } from '../../brand/state/brand.selector';
+import { getColors } from '../../color/state/color.selector';
+import { loadBrands } from '../../brand/state/brand.actions';
+import { loadColors } from '../../color/state/color.actions';
 
 @Component({
   selector: 'app-cars',
@@ -18,14 +24,20 @@ export class CarsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   carFilterForm: FormGroup;
   cars:Car[];
+  brands:Brand[];
+  colors:Color[];
   carsSlice: Car[];
   filterText: string = '';
   constructor(private store:Store<AppState>,private orderByPipe:OrderByPipe,private formBuilder: FormBuilder, ) { }
 
   ngOnInit(): void {
     this.getCars();
+    this.getBrands();
+    this.getColors();
     this.createCarFilterForm();
   }
+
+
 
   getCars(){
     this.store.select(getCars).subscribe(response => {
@@ -36,6 +48,25 @@ export class CarsComponent implements OnInit {
       if(this.cars == null){
 
         this.store.dispatch(loadCars());
+      }
+    })
+  }
+
+  getBrands(){
+    this.store.select(getBrands).subscribe(response => {
+      this.brands = response
+      if(this.brands == null ) {
+        this.store.dispatch(loadBrands());
+      }
+    })
+
+  }
+
+  getColors(){
+    this.store.select(getColors).subscribe(response => {
+      this.colors = response
+      if(this.colors == null) {
+        this.store.dispatch(loadColors());
       }
     })
   }
