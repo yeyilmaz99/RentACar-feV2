@@ -28,10 +28,18 @@ const _carReducer = createReducer(initialState,
     }), on(loadCarDetailsSuccess, (state, action) => {
         return {
             ...state,
-            selectedCar: action.car
+            selec: action.car
         }
 
-    }),
+    }), on(deleteCarSuccess, (state,action) => {
+        const updatedCars = state.cars.filter(car => {
+            return car.carId !== action.carId
+        })
+        return {
+            ...state,
+            cars:updatedCars
+        }
+    })
 
     // on delete yaz !!!
     // }),on(deleteCarSuccess, (state,action) => {
@@ -41,7 +49,7 @@ const _carReducer = createReducer(initialState,
     //     return {
     //         ...state,
 
-    //     }
+    //     })
     )
 
 
