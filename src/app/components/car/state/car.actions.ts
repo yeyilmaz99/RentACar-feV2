@@ -23,7 +23,7 @@ export const UPDATE_CAR_ACTION ='[car page] update car action';
 export const UPDATE_CAR_SUCCESS = '[car page] update car success';
 
 
-export const LOAD_CAR_DETAILS_SUCCESS = '[car page] load car details';
+export const LOAD_CAR_DETAILS_SUCCESS = '[car page] load car details success';
 
 
 export const loadCars = createAction(LOAD_CARS);
