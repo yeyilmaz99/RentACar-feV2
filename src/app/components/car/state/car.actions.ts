@@ -28,12 +28,10 @@ export const LOAD_CAR_DETAILS_SUCCESS = '[car page] load car details';
 
 export const loadCars = createAction(LOAD_CARS);
 export const loadCarsSuccess = createAction(LOAD_CARS_SUCCESS, props<{cars:Car[]}>());
-export const loadCarDetails = createAction(LOAD_CAR_DETAILS_SUCCESS, props<{car:Car}>());
+export const loadCarDetailsSuccess = createAction(LOAD_CAR_DETAILS_SUCCESS, props<{car:Car}>());
 
 export const loadCarImages = createAction(LOAD_CAR_IMAGES);
 export const loadCarImagesSuccess = createAction(LOAD_CAR_IMAGES_SUCCESS, props<{carImages:CarImage[]}>())
-
-
 
 export const addCar = createAction(ADD_CAR, props<{car:any}>());
 export const addCarSuccess= createAction(ADD_CAR_SUCCESS, props<{message:string}>());
