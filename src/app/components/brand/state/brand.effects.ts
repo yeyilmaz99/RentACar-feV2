@@ -39,7 +39,8 @@ export class BrandEffects{
     deleteBrand$ = createEffect(() => {
         return this.actions$.pipe(ofType(deleteBrand), switchMap((action) => {
             return this.brandService.deleteBrand(action.brand).pipe(map((data) => {
-                return deleteBrandSuccess({ id:action.brand.brandId })
+                const message = data.message;
+                return deleteBrandSuccess({ id:action.brand.brandId, message })
             }))
         }))
     })
