@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { initialState } from "./car.state";
-import { deleteCarSuccess, loadCarImagesSuccess, loadCarsSuccess, updateCarSuccess } from "./car.actions";
+import { deleteCarSuccess, loadCarDetailsSuccess, loadCarImagesSuccess, loadCarsSuccess, updateCarSuccess } from "./car.actions";
 
 
 
@@ -16,15 +16,6 @@ const _carReducer = createReducer(initialState,
             ...state,
             carImages:action.carImages
         }
-// on delete yaz !!!
-    // }),on(deleteCarSuccess, (state,action) => {
-    //     const updatedCars = state.cars.filter(car => {
-    //         return car.carId !== action.
-    //     })
-    //     return {
-    //         ...state,
-
-    //     }
 
     }), on(updateCarSuccess, (state, action) => {
         const updatedCars = state.cars.map(car => {
@@ -34,7 +25,23 @@ const _carReducer = createReducer(initialState,
             ...state,
             cars:updatedCars
         }
-    })
+    }), on(loadCarDetailsSuccess, (state, action) => {
+        return {
+            ...state,
+            selectedCar: action.car
+        }
+
+    }),
+
+    // on delete yaz !!!
+    // }),on(deleteCarSuccess, (state,action) => {
+    //     const updatedCars = state.cars.filter(car => {
+    //         return car.carId !== action.
+    //     })
+    //     return {
+    //         ...state,
+
+    //     }
     )
 
 
