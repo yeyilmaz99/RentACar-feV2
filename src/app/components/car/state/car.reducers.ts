@@ -28,7 +28,7 @@ const _carReducer = createReducer(initialState,
     }), on(loadCarDetailsSuccess, (state, action) => {
         return {
             ...state,
-            selec: action.car
+            selectedCar: action.car
         }
 
     }), on(deleteCarSuccess, (state,action) => {
