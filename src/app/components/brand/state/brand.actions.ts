@@ -20,4 +20,4 @@ export const addBrand = createAction(ADD_BRAND_ACTION, props<{brand:Brand}>());
 export const addBrandSuccess = createAction(ADD_BRAND_SUCCESS, props<{message:string}>())
 
 export const deleteBrand = createAction(DELETE_BRAND_ACTION, props<{brand:Brand}>())
-export const deleteBrandSuccess = createAction(DELETE_BRAND_SUCCESS, props<{id:number}>())
+export const deleteBrandSuccess = createAction(DELETE_BRAND_SUCCESS, props<{id:number, message:string}>())
