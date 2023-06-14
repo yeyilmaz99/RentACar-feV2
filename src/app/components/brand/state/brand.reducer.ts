@@ -14,8 +14,6 @@ const _brandReducer = createReducer(initialState,
         }
     }), on(deleteBrandSuccess, (state,action) => {
         const updatedBrands = state.brands.filter(brand => {
-            console.log(action.id)
-            console.log(brand.brandId)
             return brand.brandId != action.id
         })
         console.log(updatedBrands);
