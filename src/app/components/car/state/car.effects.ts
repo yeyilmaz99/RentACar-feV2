@@ -39,10 +39,7 @@ export class CarEffects {
         }), switchMap((id) => {
             this.store.dispatch(setLoadingSpinner({status:true}))
             return this.carService.getCarById(id).pipe(map((response) => {
-                const cars: Car[] = [];
-                this.store.dispatch(setLoadingSpinner({status:false}))
-                const car = response.data
-                cars.push(car);
+                const cars = [{...response.data, id}]
                 return loadCarsSuccess({ cars })
             }))
         })
