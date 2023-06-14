@@ -4,7 +4,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { catchError, filter, map, mergeMap, of, switchMap, tap } from "rxjs";
 import { AppState } from "src/app/store/app.state";
-import { addCar, addCarSuccess, deleteCarAction, deleteCarSuccess, loadCarImages, loadCarImagesSuccess, loadCars, loadCarsSuccess, updateCarAction, updateCarSuccess } from "./car.actions";
+import { addCar, addCarSuccess, deleteCarAction, deleteCarSuccess, loadCarDetailsSuccess, loadCarImages, loadCarImagesSuccess, loadCars, loadCarsSuccess, updateCarAction, updateCarSuccess } from "./car.actions";
 import { CarService } from "src/app/services/car/car.service";
 import { setErrorMessage, setLoadingSpinner } from "src/app/store/shared/shared.actions";
 import { ROUTER_NAVIGATION, RouterNavigatedAction } from "@ngrx/router-store";
@@ -39,8 +39,8 @@ export class CarEffects {
         }), switchMap((id) => {
             this.store.dispatch(setLoadingSpinner({status:true}))
             return this.carService.getCarById(id).pipe(map((response) => {
-                const cars = [{...response.data, id}]
-                return loadCarsSuccess({ cars })
+                const car = response.data
+                return loadCarDetailsSuccess({ car })
             }))
         })
         )
