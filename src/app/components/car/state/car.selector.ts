@@ -16,6 +16,10 @@ export const getCars = createSelector(getCarState, (state) => {
     return state.cars;
 })
 
+export const getCarDetails = createSelector(getCarState, (state) => {
+    return state.selectedCar
+})
+
 export const getCarById = createSelector(getCars,getCurrentRoute,(cars:Car[],route:RouterStateUrl) => {
     return cars ? cars.find((car:Car) => car.carId == route.params['id']) : null;
 })
