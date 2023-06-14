@@ -82,7 +82,8 @@ export class CarEffects {
         return this.actions$.pipe(ofType(deleteCarAction), switchMap((action) => {
             return this.carService.deleteCar(action.carToDelete).pipe(map((response) => {
                 const message = response.message
-                return deleteCarSuccess({message ,redirect:true})
+                const carId = action.carToDelete.id
+                return deleteCarSuccess({message ,redirect:true, carId})
             }))
         }))
     })
