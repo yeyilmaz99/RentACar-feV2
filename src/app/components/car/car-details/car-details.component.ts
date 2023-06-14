@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Car } from 'src/app/models/car.model';
 import { AppState } from 'src/app/store/app.state';
-import { getCarById, getCarImages } from '../state/car.selector';
+import { getCarById, getCarDetails, getCarImages } from '../state/car.selector';
 import { setLoadingSpinner } from 'src/app/store/shared/shared.actions';
 import { CarImage } from 'src/app/models/carImage';
 import { isAdmin } from '../../auth/state/auth.selector';
@@ -51,7 +51,7 @@ export class CarDetailsComponent implements OnInit {
   }
 
   getCar(){
-    this.car = this.store.select(getCarById);
+    this.car = this.store.select(getCarDetails);
     this.carImages = this.store.select(getCarImages);
   }
 
