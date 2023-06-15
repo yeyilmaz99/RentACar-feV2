@@ -12,6 +12,9 @@ export const ADD_COLOR_SUCCESS = '[color] add color success';
 export const DELETE_COLOR_ACTION ='[color] delete color';
 export const DELETE_COLOR_SUCCESS ='[color] delete color success';
 
+export const UPDATE_COLOR_ACTION = '[color] update color';
+export const UPDATE_COLOR_SUCCESS = '[color] update color success';
+
 export const loadColors = createAction(LOAD_COLORS);
 export const loadColorsSuccess = createAction(LOAD_COLORS_SUCCESS, props<{colors: Color[]}>())
 
@@ -20,3 +23,6 @@ export const addColorSuccess = createAction(ADD_COLOR_SUCCESS, props<{color:Colo
 
 export const deleteColor = createAction(DELETE_COLOR_ACTION, props<{color:Color}>());
 export const deleteColorSuccess = createAction(DELETE_COLOR_SUCCESS, props<{id:number, message:string}>())
+
+export const updateColor = createAction(UPDATE_COLOR_ACTION, props<{color:Color}>());
+export const updateColorSuccess = createAction(UPDATE_COLOR_SUCCESS, props<{color:Color}>())
