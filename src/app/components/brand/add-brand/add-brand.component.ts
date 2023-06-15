@@ -8,6 +8,7 @@ import { setLoadingSpinner } from 'src/app/store/shared/shared.actions';
 import { BrandService } from 'src/app/services/brand/brand.service';
 import { getBrands } from '../state/brand.selector';
 import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-brand',
@@ -20,7 +21,7 @@ export class AddBrandComponent implements OnInit {
   brandToUpdateForm:FormGroup;
   brands:Brand[];
   brandValue:string
-  constructor(private formBuilder:FormBuilder, private store:Store<AppState> ,private brandService:BrandService) { }
+  constructor(private formBuilder:FormBuilder, private store:Store<AppState> ,private brandService:BrandService, private toastrService:ToastrService) { }
 
   ngOnInit(): void {
     this.createAddBrandForm();
@@ -53,7 +54,6 @@ export class AddBrandComponent implements OnInit {
     // this.store.dispatch(setLoadingSpinner({status:true}))
     const brand = Object.assign({},this.brandForm.value)
     this.store.dispatch(addBrand({brand}))
-    this.store.dispatch(loadBrands());
   }
 
 
@@ -71,12 +71,18 @@ export class AddBrandComponent implements OnInit {
 
 
   deleteBrand(){
-    if(this.brandToDeleteForm.valid){
+    if(!this.brandToDeleteForm.valid){
+      this.toastrService.error("An unexpected error occurred, Please try again")
+      this.store.dispatch(loadBrands());
+      this.store.select(getBrands).subscribe(response => {
+        this.brands = response
+      })
+      return;
+    }
       let brand : Brand = Object.assign({}, this.brandToDeleteForm.value);
       this.store.dispatch(deleteBrand({brand}));
       this.brandToDeleteForm.reset();
-    }
-    this.getBrands();
+      this.toastrService.success("Successfuly Deleted")
   }
   updateBrand(){}
 
