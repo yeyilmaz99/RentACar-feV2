@@ -24,6 +24,7 @@ import { ColorEffects } from './components/color/state/color.effects';
 import { BrandEffects } from './components/brand/state/brand.effects';
 import { BrandsComponent } from './components/brand/brands/brands.component';
 
+
 export function tokenGetter() {
   return localStorage.getItem("token");
 }
