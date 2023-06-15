@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Color } from 'src/app/models/color.model';
 import { getColors } from '../state/color.selector';
-import { deleteColor, loadColors } from '../state/color.actions';
+import { addColor, deleteColor, loadColors } from '../state/color.actions';
 import { AppState } from 'src/app/store/app.state';
 import { Store } from '@ngrx/store';
 import { getBrands } from '../../brand/state/brand.selector';
 import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-color-add',
@@ -18,7 +19,7 @@ export class ColorAddComponent implements OnInit {
   colorUpdateForm:FormGroup
   colors:Color[];
   colorToDeleteForm:FormGroup;
-  constructor( private formBuilder:FormBuilder, private store:Store<AppState> ) { }
+  constructor( private formBuilder:FormBuilder, private store:Store<AppState>, private toastrService:ToastrService ) { }
 
   ngOnInit(): void {
     this.createColorForm();
@@ -35,14 +36,35 @@ export class ColorAddComponent implements OnInit {
       }
     })
   }
+  addColor(){
+    if(!this.colorForm.valid){
+      return;
+    }
+    // this.store.dispatch(setLoadingSpinner({status:true}))
+    const color = Object.assign({},this.colorForm.value)
+    this.store.dispatch(addColor({color}))
+    this.resetForms();
+  }
 
   deleteColor(){
-    if(this.colorToDeleteForm.valid){
-      let color : Color = Object.assign({}, this.colorToDeleteForm.value);
-      this.store.dispatch(deleteColor({color}));
-      this.colorToDeleteForm.reset();
+    if(!this.colorToDeleteForm.valid){
+      this.toastrService.error("An unexpected error occurred, Please try again")
+      this.store.dispatch(loadColors());
+      this.store.select(getColors).subscribe(response => {
+        this.colors = response
+      })
+      return;
     }
-    this.getColors();
+    let color : Color = Object.assign({}, this.colorToDeleteForm.value);
+    this.store.dispatch(deleteColor({color}));
+    this.toastrService.success("Successfuly Deleted")
+    this.resetForms();
+  }
+
+  resetForms(){
+    this.colorForm.reset();
+    this.colorToDeleteForm.reset();
+    this.colorUpdateForm.reset();
   }
 
 
