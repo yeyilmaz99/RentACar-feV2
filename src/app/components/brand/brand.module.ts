@@ -35,12 +35,9 @@ const routes: Routes = [
         CommonModule,
         ReactiveFormsModule,
         FormsModule,
-        ReactiveFormsModule,
-        FormsModule,
         MatPaginatorModule,
         RouterModule.forChild(routes),
         EffectsModule.forFeature([]),
-        FormsModule,
         StoreModule.forFeature(BRAND_STATE_NAME,brandReducer)
     ],
     providers:[]
