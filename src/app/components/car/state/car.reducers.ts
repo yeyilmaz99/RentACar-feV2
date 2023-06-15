@@ -23,7 +23,8 @@ const _carReducer = createReducer(initialState,
         })
         return {
             ...state,
-            cars:updatedCars
+            cars:updatedCars,
+            selectedCar: action.car
         }
     }), on(loadCarDetailsSuccess, (state, action) => {
         return {
