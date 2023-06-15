@@ -12,7 +12,7 @@ import { getBrands } from '../../brand/state/brand.selector';
 import { loadBrands } from '../../brand/state/brand.actions';
 import { getColors } from '../../color/state/color.selector';
 import { loadColors } from '../../color/state/color.actions';
-import { addCar } from '../state/car.actions';
+import { addCar, loadCars } from '../state/car.actions';
 
 @Component({
   selector: 'app-add-car',
@@ -66,6 +66,7 @@ export class AddCarComponent implements OnInit {
     if (this.carAddForm.valid) {
       const car = Object.assign({},this.carAddForm.value)
       this.store.dispatch(addCar({car}))
+      this.store.dispatch(loadCars());
       this.carAddForm.reset();
     }
   }
