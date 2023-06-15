@@ -41,15 +41,6 @@ const _carReducer = createReducer(initialState,
         }
     })
 
-    // on delete yaz !!!
-    // }),on(deleteCarSuccess, (state,action) => {
-    //     const updatedCars = state.cars.filter(car => {
-    //         return car.carId !== action.
-    //     })
-    //     return {
-    //         ...state,
-
-    //     })
     )
 
 
