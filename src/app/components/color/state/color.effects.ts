@@ -5,15 +5,16 @@ import { Store } from "@ngrx/store"
 import { ToastrService } from "ngx-toastr"
 import { ColorService } from "src/app/services/color.service"
 import { AppState } from "src/app/store/app.state"
-import { loadColors, loadColorsSuccess } from "./color.actions"
-import { mergeMap,map } from "rxjs"
+import { addColor, addColorSuccess, deleteColor, deleteColorSuccess, loadColors, loadColorsSuccess } from "./color.actions"
+import { mergeMap,map, switchMap, concatMap } from "rxjs"
+import { merge } from "lodash"
 
 
 @Injectable()
 export class ColorEffects{
     constructor(private actions$:Actions, private colorService:ColorService, private store:Store<AppState>, private router:Router, private toastrService:ToastrService){}
 
-    loadBrands$ = createEffect(() => {
+    loadColors$ = createEffect(() => {
         return this.actions$.pipe(ofType(loadColors), mergeMap((action) => {
 
             return this.colorService.getColors().pipe(map((response) => {
@@ -23,6 +24,28 @@ export class ColorEffects{
             }))
         }))
     })
+
+    addColor$ = createEffect(() => {
+        return this.actions$.pipe(ofType(addColor), mergeMap(action => {
+            return this.colorService.addColor(action.color).pipe(map(response => {
+                const message = response.message
+                this.toastrService.success(message)
+                return addColorSuccess({ message });
+            }))
+        }))
+      },)
+
+
+      deleteColor$ = createEffect(() => {
+        return this.actions$.pipe(ofType(deleteColor), mergeMap((action) => {
+            return this.colorService.deleteColor(action.color).pipe(map((data) => {
+                const message = data.message;
+                const id = action.color.colorId
+                return deleteColorSuccess({ id:id, message })
+            }))
+        }))
+    })
+
 
 
 }
