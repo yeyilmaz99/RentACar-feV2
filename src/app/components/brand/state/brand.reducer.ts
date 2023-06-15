@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { initialState } from "./brand.state";
-import { deleteBrand, deleteBrandSuccess, loadBrandsSuccess } from "./brand.actions";
+import { addBrandSuccess, deleteBrand, deleteBrandSuccess, loadBrandsSuccess } from "./brand.actions";
 
 
 
@@ -21,7 +21,13 @@ const _brandReducer = createReducer(initialState,
             ...state,
             brands: updatedBrands,
         }
-    })   
+    }), on(addBrandSuccess, (state,action) =>{
+        let brand = {...action.brand};
+        return{
+            ...state,
+            brands: [...state.brands, brand]
+        }
+    } )   
     
     )
 
