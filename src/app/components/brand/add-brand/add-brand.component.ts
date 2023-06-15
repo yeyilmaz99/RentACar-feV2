@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Brand } from 'src/app/models/brand.model';
 import { AppState } from 'src/app/store/app.state';
-import { addBrand, deleteBrand, loadBrands } from '../state/brand.actions';
+import { addBrand, deleteBrand, loadBrands, updateBrand } from '../state/brand.actions';
 import { setLoadingSpinner } from 'src/app/store/shared/shared.actions';
 import { BrandService } from 'src/app/services/brand/brand.service';
 import { getBrands } from '../state/brand.selector';
@@ -84,7 +84,20 @@ export class AddBrandComponent implements OnInit {
       this.brandToDeleteForm.reset();
       this.toastrService.success("Successfuly Deleted")
   }
-  updateBrand(){}
+  updateBrand(){
+    if(!this.brandToUpdateForm.valid){
+      this.toastrService.error("An unexpected error occurred, Please try again");
+      this.store.dispatch(loadBrands());
+      this.store.select(getBrands).subscribe(response => {
+        this.brands = response
+      })
+      return;
+    }
+    let brand: Brand = Object.assign({}, this.brandToUpdateForm.value);
+    this.store.dispatch(updateBrand({brand}));
+    this.brandToDeleteForm.reset();
+    this.toastrService.success("Successfuly Updated");
+  }
 
 
 
