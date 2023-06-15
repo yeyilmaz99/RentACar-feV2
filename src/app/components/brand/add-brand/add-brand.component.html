@@ -31,10 +31,10 @@
             formControlName="brandId"
             class="form-select"
             aria-label="Default select example"
-            *ngIf="brands as brandData"
+            *ngIf="brands"
           >
           <option selected value="">Select a Brand</option>
-            <option *ngFor="let brand of brandData" ngValue="{{ brand.brandId }}">
+            <option *ngFor="let brand of brands" ngValue="{{ brand.brandId }}">
               {{ brand.brandName }}
             </option>
           </select>
