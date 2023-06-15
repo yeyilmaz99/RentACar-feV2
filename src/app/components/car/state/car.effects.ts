@@ -65,10 +65,11 @@ export class CarEffects {
 
     addCar$ = createEffect(() => {
         return this.actions$.pipe(ofType(addCar), mergeMap(action => {
-            return this.carService.addCar(action.car).pipe(map(response => {
+            return this.carService.addCar(action.car).pipe(mergeMap(response => {
                 const message = response.message
                 this.toastrService.success(response.message);
-                return addCarSuccess({message});
+                const addCarSuccessAction = addCarSuccess({message});
+                return of(addCarSuccessAction, loadCars());
             }),catchError(errResp => {
                 const errorMessage = errResp.error;
                 this.toastrService.error(errResp.error.message,errResp.error.message)
@@ -79,11 +80,12 @@ export class CarEffects {
     },)
 
     deleteCar$ = createEffect(() => {
-        return this.actions$.pipe(ofType(deleteCarAction), switchMap((action) => {
-            return this.carService.deleteCar(action.carToDelete).pipe(map((response) => {
+        return this.actions$.pipe(ofType(deleteCarAction), mergeMap((action) => {
+            return this.carService.deleteCar(action.carToDelete).pipe(mergeMap((response) => {
                 const message = response.message
                 const carId = action.carToDelete.id
-                return deleteCarSuccess({message ,redirect:true, carId})
+                const deleteCarSuccessAction = deleteCarSuccess({message, redirect:true, carId})
+                return of(deleteCarSuccessAction, loadCars())
             }))
         }))
     })
@@ -102,9 +104,10 @@ export class CarEffects {
 
 
     updateCar$ = createEffect(() => {
-        return this.actions$.pipe(ofType(updateCarAction), switchMap((action => {
-            return this.carService.updateCar(action.car).pipe(map(response => {
-                return updateCarSuccess({car:action.car})
+        return this.actions$.pipe(ofType(updateCarAction), mergeMap((action => {
+            return this.carService.updateCar(action.car).pipe(mergeMap(response => {
+                const updateCarSuccessAction = updateCarSuccess({car:action.car});
+                return of (updateCarSuccessAction, loadCars())
             }))
         })))
     })
