@@ -43,7 +43,7 @@ export class CarDetailsComponent implements OnInit {
     );
     this.getBrands();
     this.getColors();
-
+    this.getCars()
   }
 
   isAdmin(){
@@ -53,6 +53,9 @@ export class CarDetailsComponent implements OnInit {
   getCar(){
     this.car = this.store.select(getCarDetails);
     this.carImages = this.store.select(getCarImages);
+  }
+  getCars(){
+    this.store.dispatch(loadCars())
   }
 
 
