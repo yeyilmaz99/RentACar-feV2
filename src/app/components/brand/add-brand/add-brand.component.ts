@@ -53,6 +53,7 @@ export class AddBrandComponent implements OnInit {
     // this.store.dispatch(setLoadingSpinner({status:true}))
     const brand = Object.assign({},this.brandForm.value)
     this.store.dispatch(addBrand({brand}))
+    this.store.dispatch(loadBrands());
   }
 
 
@@ -73,15 +74,9 @@ export class AddBrandComponent implements OnInit {
     if(this.brandToDeleteForm.valid){
       let brand : Brand = Object.assign({}, this.brandToDeleteForm.value);
       this.store.dispatch(deleteBrand({brand}));
-      this.store.dispatch(loadBrands());
-
-      this.store.dispatch(loadBrands());
-      this.store.select(getBrands).subscribe(response => {
-        this.brands = response
-      })
-      this.brandForm.value === null ;
-      this.brandValue = '';
+      this.brandToDeleteForm.reset();
     }
+    this.getBrands();
   }
   updateBrand(){}
 
