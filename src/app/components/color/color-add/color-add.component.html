@@ -34,9 +34,9 @@
             aria-label="Default select example"
           >
           <option selected value="">Select a Color</option>
-            <!-- <option *ngFor="let color of colors" ngValue="{{ color.colorId }}">
+            <option *ngFor="let color of colors" ngValue="{{ color.colorId }}">
               {{ color.colorName }}
-            </option> -->
+            </option>
           </select>
           <h4 class="mt-3">Enter New Color Name</h4>
           <input
@@ -45,9 +45,9 @@
             id="colorName"
             formControlName="colorName"
           />
-          <!-- <button type="submit" (click)="updateColor()" class="btn btn-primary mt-3 mb-3">
+          <button type="submit" (click)="updateColor()" class="btn btn-primary mt-3 mb-3">
             Submit
-          </button> -->
+          </button>
         </form>
       </div>
     </div>
