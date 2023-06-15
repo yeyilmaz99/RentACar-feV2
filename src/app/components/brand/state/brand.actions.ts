@@ -17,7 +17,7 @@ export const loadBrandsSuccess = createAction(LOAD_BRANDS_SUCCESS,props<{brands:
 
 
 export const addBrand = createAction(ADD_BRAND_ACTION, props<{brand:Brand}>());
-export const addBrandSuccess = createAction(ADD_BRAND_SUCCESS, props<{message:string}>())
+export const addBrandSuccess = createAction(ADD_BRAND_SUCCESS, props<{message:string, brand:Brand}>())
 
 export const deleteBrand = createAction(DELETE_BRAND_ACTION, props<{brand:Brand}>())
 export const deleteBrandSuccess = createAction(DELETE_BRAND_SUCCESS, props<{id:number, message:string}>())
