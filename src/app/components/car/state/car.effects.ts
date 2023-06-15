@@ -88,14 +88,16 @@ export class CarEffects {
         }))
     })
 
-    // deleteRedirect$ = createEffect(() => {
-    //     return this.actions$.pipe(ofType(...[deleteCarSuccess]),tap((action) => {
-    //         this.store.dispatch(setErrorMessage({message:''}))
-    //         if(action.redirect){
-    //             this.router.navigate(['/cars'])
-    //         }
-    //     }))
-    // })
+    deleteRedirect$ = createEffect(() => {
+        return this.actions$.pipe(ofType(...[deleteCarSuccess]),tap((action) => {
+            this.store.dispatch(setErrorMessage({message:''}))
+            if(action.redirect){
+                this.router.navigate(['/cars'])
+            }
+        }))
+    },
+    {dispatch:false}
+    )
 
 
 
