@@ -6,7 +6,7 @@ import { ToastrService } from "ngx-toastr"
 import { ColorService } from "src/app/services/color.service"
 import { AppState } from "src/app/store/app.state"
 import { addColor, addColorSuccess, deleteColor, deleteColorSuccess, loadColors, loadColorsSuccess } from "./color.actions"
-import { mergeMap,map, switchMap, concatMap } from "rxjs"
+import { mergeMap,map, switchMap, concatMap, of } from "rxjs"
 import { merge } from "lodash"
 
 
@@ -25,15 +25,32 @@ export class ColorEffects{
         }))
     })
 
+    // addColor$ = createEffect(() => {
+    //     return this.actions$.pipe(ofType(addColor), mergeMap(action => {
+    //         return this.colorService.addColor(action.color).pipe(map(response => {
+    //             const message = response.message
+    //             const color = action.color
+    //             this.toastrService.success(message)
+    //             return addColorSuccess({ message, color });
+    //         }))
+    //     }))
+    //   },)
     addColor$ = createEffect(() => {
-        return this.actions$.pipe(ofType(addColor), mergeMap(action => {
-            return this.colorService.addColor(action.color).pipe(map(response => {
-                const message = response.message
-                this.toastrService.success(message)
-                return addColorSuccess({ message });
-            }))
-        }))
-      },)
+        return this.actions$.pipe(
+          ofType(addColor),
+          mergeMap((action) => {
+            return this.colorService.addColor(action.color).pipe(
+              mergeMap((response) => {
+                const message = response.message;
+                const color = action.color;
+                this.toastrService.success(message);
+                const addColorSuccessAction = addColorSuccess({ message, color });
+                return of(addColorSuccessAction, loadColors()); // loadColors eylemini çağırın
+              })
+            );
+          })
+        );
+      });
 
 
       deleteColor$ = createEffect(() => {
@@ -44,7 +61,7 @@ export class ColorEffects{
                 return deleteColorSuccess({ id:id, message })
             }))
         }))
-    })
+    },)
 
 
 
