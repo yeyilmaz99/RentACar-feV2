@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { initialState } from "./color.state";
-import { addColorSuccess, deleteColorSuccess, loadColorsSuccess } from "./color.actions";
+import { addColorSuccess, deleteColorSuccess, loadColorsSuccess, updateColorSuccess } from "./color.actions";
 
 
 
@@ -26,7 +26,16 @@ const _colorReducer = createReducer(initialState,
             ...state,
             colors: [...state.colors, color]
         }
-    }))
+    }), on(updateColorSuccess, (state,action) => {
+        const updatedColors = state.colors.map(color => {
+            return action.color.colorId === color.colorId ? action.color : color;
+        })
+        return {
+            ...state,
+            color:updatedColors
+        }
+    })
+    )
 
 
     export function colorReducer(state:any, action:any){
