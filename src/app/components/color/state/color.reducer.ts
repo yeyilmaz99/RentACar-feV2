@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { initialState } from "./color.state";
-import { loadColorsSuccess } from "./color.actions";
+import { deleteColorSuccess, loadColorsSuccess } from "./color.actions";
 
 
 
@@ -11,6 +11,14 @@ const _colorReducer = createReducer(initialState,
         return {
             ...state,
             colors:action.colors
+        }
+    }), on(deleteColorSuccess, (state,action)=> {
+        const updatedColors = state.colors.filter(color => {
+            return color.colorId != action.id
+        })
+        return {
+            ...state,
+            colors:updatedColors
         }
     }))
 
