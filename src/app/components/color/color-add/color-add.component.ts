@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Color } from 'src/app/models/color.model';
 import { getColors } from '../state/color.selector';
-import { addColor, deleteColor, loadColors } from '../state/color.actions';
+import { addColor, deleteColor, loadColors, updateColor } from '../state/color.actions';
 import { AppState } from 'src/app/store/app.state';
 import { Store } from '@ngrx/store';
 import { getBrands } from '../../brand/state/brand.selector';
@@ -67,6 +67,20 @@ export class ColorAddComponent implements OnInit {
     this.colorUpdateForm.reset();
   }
 
+  updateColor(){
+    if(!this.colorUpdateForm.valid){
+      this.toastrService.error("An unexpected error occurred, Please try again")
+      this.store.dispatch(loadColors());
+      this.store.select(getColors).subscribe(response => {
+        this.colors = response
+      })
+      return;
+    }
+    let color :Color = Object.assign({}, this.colorUpdateForm.value);
+    this.store.dispatch(updateColor({color}))
+    this.toastrService.success("Successfuly Updated")
+    this.resetForms();
+  }
 
 
   createColorForm(){
