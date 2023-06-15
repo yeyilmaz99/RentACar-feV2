@@ -30,8 +30,9 @@ export class BrandEffects{
       return this.actions$.pipe(ofType(addBrand), mergeMap(action => {
           return this.brandService.addBrand(action.brand).pipe(map(response => {
               const message = response.message
+              const brand = action.brand
               this.toastrService.success(message)
-              return addBrandSuccess({ message });
+              return addBrandSuccess({ message, brand });
           }))
       }))
     },)
