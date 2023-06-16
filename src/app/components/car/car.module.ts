@@ -45,7 +45,7 @@ const routes: Routes = [
         FormsModule,
         MatPaginatorModule,
         RouterModule.forChild(routes),
-        EffectsModule.forFeature([CarEffects]),
+        EffectsModule.forFeature([]),
         FormsModule,
         StoreModule.forFeature(CAR_STATE_NAME,carReducer)
     ],
