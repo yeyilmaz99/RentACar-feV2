@@ -1,0 +1,122 @@
+<div class="container py-3">
+    <main>
+      <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+        <div class="col">
+          <div class="card mb-4 rounded-3 shadow-sm">
+            <div class="card-header py-3">
+              <h4 routerLink="/admin/car-list"  class="my-0 fw-normal pointer">Cars</h4>
+            </div>
+            <div class="card-body">
+              <div class="container">
+                <div class="row justify-content-center" *ngIf="!cars">
+                  <div
+                    class="spinner-border text-primary"
+                    style="width: 30px; height: 30px"
+                    role="status"
+                  >
+                    <span class="sr-only"></span>
+                  </div>
+                </div>
+              </div>
+              <h1 *ngIf="cars" class="card-title pricing-card-title">
+                {{cars.length}}
+              </h1>
+              <ul class="list-unstyled mt-3 mb-4">
+                <li>Currently Avaible</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- rentals -->
+
+        <!-- <div class="col">
+          <div  class="card mb-4 rounded-3 shadow-sm">
+            <div class="card-header py-3">
+              <h4 routerLink="/admin/rental-list" class="my-0 fw-normal pointer">Rentals</h4>
+            </div>
+            <div class="card-body">
+              <div class="container">
+                <div class="row justify-content-center" *ngIf="!rentalsDataLoaded">
+                  <div
+                    class="spinner-border text-primary"
+                    style="width: 30px; height: 30px"
+                    role="status"
+                  >
+                    <span class="sr-only"></span>
+                  </div>
+                </div>
+              </div>
+              <h1 *ngIf="rentalsDataLoaded" class="card-title pricing-card-title">
+                {{rentals.length}}
+              </h1>
+              <ul class="list-unstyled mt-3 mb-4">
+                <li>Rentals Currently</li>
+              </ul>
+            </div>
+          </div>
+        </div> -->
+ 
+        <!-- user -->
+        
+        <!-- <div class="col">
+          <div class="card mb-4 rounded-3 shadow-sm">
+            <div class="card-header py-3">
+              <h4 routerLink="/admin/user-list" class="my-0 fw-normal pointer">Users</h4>
+            </div>
+            <div class="card-body">
+              <div class="container">
+                <div class="row justify-content-center" *ngIf="!usersDataLoaded">
+                  <div
+                    class="spinner-border text-primary"
+                    style="width: 30px; height: 30px"
+                    role="status"
+                  >
+                    <span class="sr-only"></span>
+                  </div>
+                </div>
+              </div>
+              <h1 *ngIf="usersDataLoaded" class="card-title pricing-card-title">
+                {{users.length}}
+              </h1>
+              <ul class="list-unstyled mt-3 mb-4">
+                <li>Users</li>
+              </ul>
+            </div>
+          </div>
+        </div> -->
+
+
+        <div class="col">
+          <div  class="card mb-4 rounded-3 shadow-sm" >
+            <div class="card-header py-3">
+              <h4 routerLink="/admin/brand-list" class="my-0 fw-normal pointer">Brands</h4>
+            </div>
+            <div class="card-body">
+              <div class="container">
+                <div class="row justify-content-center" *ngIf="!brands">
+                  <div
+                    class="spinner-border text-primary"
+                    style="width: 30px; height: 30px"
+                    role="status"
+                  >
+                    <span class="sr-only"></span>
+                  </div>
+                </div>
+              </div>
+              <h1 *ngIf="brands" class="card-title pricing-card-title">
+                {{brands.length}}
+              </h1>
+              <ul class="list-unstyled mt-3 mb-4">
+                <li>Brands Currently</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    
+  </div>
+  
