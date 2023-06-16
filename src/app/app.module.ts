@@ -23,6 +23,8 @@ import { FooterComponent } from './components/shared/footer/footer.component';
 import { ColorEffects } from './components/color/state/color.effects';
 import { BrandEffects } from './components/brand/state/brand.effects';
 import { BrandsComponent } from './components/brand/brands/brands.component';
+import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+import { CarEffects } from './components/car/state/car.effects';
 
 
 export function tokenGetter() {
@@ -46,7 +48,7 @@ export function tokenGetter() {
     ToastrModule.forRoot(),
     StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({logOnly:environment.production}),
-    EffectsModule.forRoot([AuthEffects,ColorEffects,BrandEffects]),
+    EffectsModule.forRoot([AuthEffects,ColorEffects,BrandEffects,CarEffects]),
     EntityDataModule.forRoot({}),
     AppRoutingModule,
     StoreRouterConnectingModule.forRoot({ serializer: CustomSerializer }),
