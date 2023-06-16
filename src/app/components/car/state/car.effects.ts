@@ -84,7 +84,7 @@ export class CarEffects {
             return this.carService.deleteCar(action.carToDelete).pipe(mergeMap((response) => {
                 const message = response.message
                 const carId = action.carToDelete.id
-                const deleteCarSuccessAction = deleteCarSuccess({message, redirect:true, carId})
+                const deleteCarSuccessAction = deleteCarSuccess({message, redirect:action.redirect, carId})
                 return of(deleteCarSuccessAction, loadCars())
             }))
         }))
