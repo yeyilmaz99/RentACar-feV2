@@ -66,7 +66,6 @@ export class AddCarComponent implements OnInit {
     if (this.carAddForm.valid) {
       const car = Object.assign({},this.carAddForm.value)
       this.store.dispatch(addCar({car}))
-      this.store.dispatch(loadCars());
       this.carAddForm.reset();
     }
   }
