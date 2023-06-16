@@ -36,7 +36,7 @@ export const loadCarImagesSuccess = createAction(LOAD_CAR_IMAGES_SUCCESS, props<
 export const addCar = createAction(ADD_CAR, props<{car:any}>());
 export const addCarSuccess= createAction(ADD_CAR_SUCCESS, props<{message:string}>());
 
-export const deleteCarAction = createAction(DELETE_CAR_ACTION, props<{carToDelete:CarDelete}>());
+export const deleteCarAction = createAction(DELETE_CAR_ACTION, props<{carToDelete:CarDelete, redirect:boolean}>());
 export const deleteCarSuccess = createAction(DELETE_CAR_SUCCESS, props<{message:string, redirect:boolean, carId:number}>());
 
 export const updateCarAction = createAction(UPDATE_CAR_ACTION, props<{car:Car}>());
