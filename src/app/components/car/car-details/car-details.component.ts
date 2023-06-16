@@ -112,7 +112,7 @@ export class CarDetailsComponent implements OnInit {
           'success'
         )
         let carToDelete: CarDelete = {id:this.carId,brandId:0,carName:'',colorId:0,dailyPrice:0,description:'',modelYear:0}
-        this.store.dispatch(deleteCarAction({carToDelete}))
+        this.store.dispatch(deleteCarAction({carToDelete, redirect:true}))
       }
     })
   }
