@@ -17,8 +17,9 @@ export class CarEffects {
     }
 
     loadCar$ = createEffect(() => {
-        this.store.dispatch(setLoadingSpinner({status:true}))
+
         return this.actions$.pipe(ofType(loadCars), mergeMap((action) => {
+            this.store.dispatch(setLoadingSpinner({status:true}))
             return this.carService.getCars().pipe(map((response) => {
                 this.store.dispatch(setLoadingSpinner({status:false}))
                 const cars = response.data
