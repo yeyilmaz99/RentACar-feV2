@@ -13,6 +13,8 @@ import { loadBrands } from '../../brand/state/brand.actions';
 import { getColors } from '../../color/state/color.selector';
 import { loadColors } from '../../color/state/color.actions';
 import { addCar, loadCars } from '../state/car.actions';
+import { CarImage } from 'src/app/models/carImage';
+import { CarAndImageDto } from 'src/app/models/carAndImageDto';
 
 @Component({
   selector: 'app-add-car',
@@ -21,17 +23,19 @@ import { addCar, loadCars } from '../state/car.actions';
 })
 export class AddCarComponent implements OnInit {
   carAddForm : FormGroup;
+  carImageForm: FormGroup;
+  selectedImages: File | null;
   brands:Brand[];
   colors:Color[];
   constructor( private store:Store<AppState>,private formBuilder:FormBuilder, private carService:CarService, private toastrService:ToastrService) { }
 
   ngOnInit(): void {
   this.createCarAddForm();
+  this.createCarImagesAddForm();
     this.getBrands();
     this.getColors();
 
   }
-
 
   getBrands(){
     this.store.select(getBrands).subscribe(response => {
@@ -49,6 +53,19 @@ export class AddCarComponent implements OnInit {
   }
 
 
+  createCarImagesAddForm(){
+    this.selectedImages = null; // selectedImages değişkenini başlatma
+    this.carImageForm = this.formBuilder.group({
+      carImages: [null, Validators.required]
+    });
+  }
+
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    this.selectedImages = file;
+  }
+
+
 
   createCarAddForm() {
     this.carAddForm = this.formBuilder.group({
@@ -63,13 +80,22 @@ export class AddCarComponent implements OnInit {
   }
 
   addCar() {
-    if (this.carAddForm.valid) {
-      const car = Object.assign({},this.carAddForm.value)
-      this.store.dispatch(addCar({car}))
-      this.carAddForm.reset();
+    if (this.carAddForm.valid && this.selectedImages) {
+      const formData: FormData = new FormData();
+      formData.append('id', '0');
+      formData.append('brandId', this.carAddForm.value.brandId);
+      formData.append('colorId', this.carAddForm.value.colorId);
+      formData.append('carName', this.carAddForm.value.carName);
+      formData.append('modelYear', this.carAddForm.value.modelYear);
+      formData.append('dailyPrice', this.carAddForm.value.dailyPrice);
+      formData.append('description', this.carAddForm.value.description);
+      formData.append('findeksPoint', this.carAddForm.value.findeksPoint);
+      formData.append('image', this.selectedImages);
+  
+      this.store.dispatch(addCar({ formData }));
     }
   }
-
+  
 
 
 }
