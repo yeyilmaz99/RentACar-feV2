@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ActiveUser } from 'src/app/models/activeUser';
 import { AppState } from 'src/app/store/app.state';
-import { loadActiveUsers, loadUsers } from '../store/admin.actions';
+import { loadActiveUsers, loadUsers, updateUser } from '../store/admin.actions';
 import { getActiveUsers, getUsers } from '../store/admin.selector';
 import { UserList } from 'src/app/models/userList';
 
@@ -31,7 +31,6 @@ export class AdminUserListComponent implements OnInit {
     this.store.select(getUsers).subscribe(response => {
       this.users = response;
     })
-    console.log("hello1")
   }
 
   getActiveUsers(){
@@ -39,7 +38,7 @@ export class AdminUserListComponent implements OnInit {
     this.store.select(getActiveUsers).subscribe(response => {
       this.activeUsers = response
       })
-      console.log("hello2")
   }
+
 
 }
