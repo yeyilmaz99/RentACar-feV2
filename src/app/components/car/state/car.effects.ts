@@ -64,21 +64,31 @@ export class CarEffects {
     },)
 
 
+
+
     addCar$ = createEffect(() => {
-        return this.actions$.pipe(ofType(addCar), mergeMap(action => {
-            return this.carService.addCar(action.car).pipe(mergeMap(response => {
-                const message = response.message
+        return this.actions$.pipe(
+          ofType(addCar),
+          mergeMap(action => {
+            return this.carService.addCar(action.formData).pipe(
+              mergeMap(response => {
+                const message = response.message;
                 this.toastrService.success(response.message);
-                const addCarSuccessAction = addCarSuccess({message});
+                const addCarSuccessAction = addCarSuccess({ message });
                 return of(addCarSuccessAction, loadCars());
-            }),catchError(errResp => {
+              }),
+              catchError(errResp => {
                 const errorMessage = errResp.error;
-                this.toastrService.error(errResp.error.message,errResp.error.message)
-                this.store.dispatch(setLoadingSpinner({ status: false }));
+                this.toastrService.error(errResp.error.message, errResp.error.message);
                 return of(setErrorMessage({ message: errorMessage }));
-            }))
-        }))
-    },)
+              })
+            );
+          })
+        );
+      });
+
+
+
 
     deleteCar$ = createEffect(() => {
         return this.actions$.pipe(ofType(deleteCarAction), mergeMap((action) => {
