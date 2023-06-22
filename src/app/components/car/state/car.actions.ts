@@ -1,5 +1,6 @@
 import { createAction, props } from "@ngrx/store";
 import { Car } from "src/app/models/car.model";
+import { CarAndImageDto } from "src/app/models/carAndImageDto";
 import { CarDelete } from "src/app/models/carDelete";
 import { CarImage } from "src/app/models/carImage";
 
@@ -33,7 +34,7 @@ export const loadCarDetailsSuccess = createAction(LOAD_CAR_DETAILS_SUCCESS, prop
 export const loadCarImages = createAction(LOAD_CAR_IMAGES);
 export const loadCarImagesSuccess = createAction(LOAD_CAR_IMAGES_SUCCESS, props<{carImages:CarImage[]}>())
 
-export const addCar = createAction(ADD_CAR, props<{car:any}>());
+export const addCar = createAction(ADD_CAR, props<{ formData: FormData }>());
 export const addCarSuccess= createAction(ADD_CAR_SUCCESS, props<{message:string}>());
 
 export const deleteCarAction = createAction(DELETE_CAR_ACTION, props<{carToDelete:CarDelete, redirect:boolean}>());
