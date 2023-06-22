@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Car } from 'src/app/models/car.model';
+import { CarAndImageDto } from 'src/app/models/carAndImageDto';
 import { CarImage } from 'src/app/models/carImage';
 import { ListResponseModel } from 'src/app/models/listResponseModel';
 import { ResponseModel } from 'src/app/models/responseModel';
@@ -25,14 +26,13 @@ export class CarService {
     return this.httpClient.get<SingleResponseModel<Car>>(newPath+id);
   }
 
-
   getCarImagesByCarId(carId:number):Observable<ListResponseModel<CarImage>>{
     let newPath = this.apiUrl + 'CarImages/getall?carId=' + carId;
     return this.httpClient.get<ListResponseModel<CarImage>>(newPath);
   }
 
-  addCar(car:any):Observable<ResponseModel>{
-    return this.httpClient.post<ResponseModel>(this.apiUrl+"Cars/add",car)
+  addCar(formData: FormData): Observable<ResponseModel> {
+    return this.httpClient.post<ResponseModel>(this.apiUrl + "Cars/add", formData);
   }
 
   deleteCar(car:any):Observable<ResponseModel>{
@@ -42,6 +42,12 @@ export class CarService {
   updateCar(car:Car):Observable<ResponseModel>{
     return this.httpClient.patch<ResponseModel>(this.apiUrl+'Cars/update',car);
   }
+
+  addCarImages(carId:number, formData:FormData ):Observable<ResponseModel>{
+    return this.httpClient.post<ResponseModel>(this.apiUrl+'CarImages/add', {body: carId, formData})
+  }
+
+
 
 
 }
