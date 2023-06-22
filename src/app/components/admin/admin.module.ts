@@ -19,6 +19,7 @@ import { adminReducer } from "./store/admin.reducer";
 import { EffectsModule } from "@ngrx/effects";
 import { CarEffects } from "../car/state/car.effects";
 import { AdminEffects } from "./store/admin.effects";
+import { AdminBrandListComponent } from './admin-brand-list/admin-brand-list.component';
 
 
 
@@ -30,7 +31,9 @@ const routes: Routes = [
             {path:'',pathMatch:"full",redirectTo:'dashboard'},
             {path: 'dashboard', component:AdminDashboardComponent},
             {path: 'car-list', component:AdminCarListComponent},
-            {path: 'user-list', component:AdminUserListComponent}
+            {path: 'user-list', component:AdminUserListComponent},
+            {path: 'rental-list', component:AdminRentalListComponent},
+            {path: 'brand-list', component:AdminBrandListComponent}
         ]
     }
 
@@ -47,7 +50,8 @@ const routes: Routes = [
         AdminCarListComponent,
         AdminUserListComponent,
         AdminRentalListComponent,
-        AdminColorListComponent
+        AdminColorListComponent,
+        AdminBrandListComponent
     ],
 
     imports: [
