@@ -6,48 +6,15 @@
           class="carousel slide"
           data-bs-ride="carousel"
         >
-          <div class="carousel-inner"*ngIf="carImages | async as carImagesData">
-            <div class="carousel-item active" >
-              <!-- <img src="{{product?.photos[0].path}}" class="d-block w-100" alt="..."> -->
-              <img
-              src="assets/images/DefaultImage.jpg"
-                class="d-block w-100"
-                alt="..."
-              />
-            </div>
-            <div class="carousel-item">
-              <!-- <img src="{{product?.photos[1].path}}" class="d-block w-100" alt="..."> -->
-              <img
-                src="assets/images/DefaultImage.jpg"
-                class="d-block w-100"
-                alt="..."
-              />
-            </div>
-            <div class="carousel-item" *ngIf="carImagesData[2]">
-              <!-- <img src="{{product?.photos[2].path}}" class="d-block w-100" alt="..."> -->
-              <img
-              src="assets/images/DefaultImage.jpg"
-                class="d-block w-100"
-                alt="..."
-              />
-            </div>
-            <div class="carousel-item" *ngIf="carImagesData[3]">
-              <!-- <img src="{{product?.photos[3].path}}" class="d-block w-100" alt="..."> -->
-              <img
-              src="assets/images/DefaultImage.jpg"
-                class="d-block w-100"
-                alt="..."
-              />
-            </div>
-            <div class="carousel-item" *ngIf="carImagesData[4]">
-              <!-- <img src="{{product?.photos[3].path}}" class="d-block w-100" alt="..."> -->
-              <img
-              src="assets/images/DefaultImage.jpg"
-                class="d-block w-100"
-                alt="..."
-              />
-            </div>
+        <div class="carousel-inner" *ngIf="carImages | async as carImagesData">
+          <div class="carousel-item" *ngFor="let carImage of carImagesData; let i = index" [class.active]="i === 0">
+            <img
+              [src]="'assets/images/' + carImage?.imagePath"
+              class="d-block w-100"
+              alt="..."
+            />
           </div>
+        </div>
           <button
             class="carousel-control-prev"
             type="button"
