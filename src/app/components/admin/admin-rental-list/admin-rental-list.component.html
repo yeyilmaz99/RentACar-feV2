@@ -1,1 +1,25 @@
-<p>admin-rental-list works!</p>
+<h2>Rentals</h2>
+<div class="table-responsive">
+  <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th scope="col">CarId</th>
+        <th scope="col">Brand</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Return Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rental of rentals">
+        <td>{{ rental.carId }}</td>
+        <td>{{ rental.brandName }}</td>
+        <td>{{ rental.firstName }}</td>
+        <td>{{ rental.lastName }}</td>
+        <td>{{ rental.returnDate }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="container">
+  </div>
+</div>
