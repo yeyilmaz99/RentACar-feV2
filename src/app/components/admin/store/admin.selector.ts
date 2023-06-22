@@ -18,3 +18,7 @@ export const getUsers = createSelector(getAdminPanelState, (state)=> {
 export const getActiveUsers = createSelector(getAdminPanelState, (state)=> {
     return state.activeUsers
 })
+
+export const getRentals = createSelector(getAdminPanelState, (state) => {
+    return state.rentals
+})
