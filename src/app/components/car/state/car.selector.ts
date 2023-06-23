@@ -27,3 +27,7 @@ export const getCarById = createSelector(getCars,getCurrentRoute,(cars:Car[],rou
 export const getCarImages = createSelector(getCarState, (state) => {
     return state.carImages;
 })
+
+export const getFavorites = createSelector(getCarState, (state) => {
+    return state.favorites;
+})
