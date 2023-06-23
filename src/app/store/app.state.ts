@@ -12,6 +12,9 @@ import { colorReducer } from "../components/color/state/color.reducer";
 import { BRAND_STATE_NAME } from "../components/brand/state/brand.selector";
 import { BrandState } from "../components/brand/state/brand.state";
 import { brandReducer } from "../components/brand/state/brand.reducer";
+import { CAR_STATE_NAME } from "../components/car/state/car.selector";
+import { CarState } from "../components/car/state/car.state";
+import { carReducer } from "../components/car/state/car.reducers";
 
 
 
@@ -20,6 +23,7 @@ export interface AppState {
     [SHARED_STATE_NAME]:SharedState;
     [COLOR_STATE_NAME]:ColorState;
     [BRAND_STATE_NAME]:BrandState;
+    [CAR_STATE_NAME]:CarState;
     router:RouterReducerState;
 }
 
@@ -28,5 +32,6 @@ export const appReducer = {
     [AUTH_STATE_NAME]:AuthReducer,
     [COLOR_STATE_NAME]:colorReducer,
     [BRAND_STATE_NAME]:brandReducer,
+    [CAR_STATE_NAME]:carReducer,
     router:routerReducer
 }
