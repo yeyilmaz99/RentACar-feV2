@@ -3,6 +3,7 @@ import { Car } from "src/app/models/car.model";
 import { CarAndImageDto } from "src/app/models/carAndImageDto";
 import { CarDelete } from "src/app/models/carDelete";
 import { CarImage } from "src/app/models/carImage";
+import { Favorite } from "src/app/models/favorite";
 
 
 
@@ -23,13 +24,19 @@ export const DELETE_CAR_SUCCESS = '[car page] delete car success';
 export const UPDATE_CAR_ACTION ='[car page] update car action';
 export const UPDATE_CAR_SUCCESS = '[car page] update car success';
 
-
 export const LOAD_CAR_DETAILS_SUCCESS = '[car page] load car details success';
+
+export const LOAD_FAVORITE_CARS = '[car page] load favorite cars';
+export const LOAD_FAVORITE_CARS_SUCCESS = '[car page] load favorite cars success';
 
 
 export const loadCars = createAction(LOAD_CARS);
 export const loadCarsSuccess = createAction(LOAD_CARS_SUCCESS, props<{cars:Car[]}>());
 export const loadCarDetailsSuccess = createAction(LOAD_CAR_DETAILS_SUCCESS, props<{car:Car}>());
+
+export const loadFavoriteCars = createAction(LOAD_FAVORITE_CARS, props<{id:number}>());
+export const loadFavoriteCarsSuccess = createAction(LOAD_FAVORITE_CARS_SUCCESS, props<{favorites:Favorite[]}>());
+
 
 export const loadCarImages = createAction(LOAD_CAR_IMAGES);
 export const loadCarImagesSuccess = createAction(LOAD_CAR_IMAGES_SUCCESS, props<{carImages:CarImage[]}>())
