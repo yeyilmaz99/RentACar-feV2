@@ -4,17 +4,24 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { catchError, filter, map, mergeMap, of, switchMap, tap } from "rxjs";
 import { AppState } from "src/app/store/app.state";
-import { addCar, addCarSuccess, deleteCarAction, deleteCarSuccess, loadCarDetailsSuccess, loadCarImages, loadCarImagesSuccess, loadCars, loadCarsSuccess, updateCarAction, updateCarSuccess } from "./car.actions";
+import { addCar, addCarSuccess, deleteCarAction, deleteCarSuccess, loadCarDetailsSuccess, loadCarImages, loadCarImagesSuccess, loadCars, loadCarsSuccess, loadFavoriteCars, loadFavoriteCarsSuccess, updateCarAction, updateCarSuccess } from "./car.actions";
 import { CarService } from "src/app/services/car/car.service";
 import { setErrorMessage, setLoadingSpinner } from "src/app/store/shared/shared.actions";
 import { ROUTER_NAVIGATION, RouterNavigatedAction } from "@ngrx/router-store";
 import { Car } from "src/app/models/car.model";
 import { ToastrService } from "ngx-toastr";
+import { FavoriteService } from "src/app/services/favorite/favorite.service";
 
 @Injectable()
 export class CarEffects {
-    constructor(private actions$: Actions, private carService: CarService, private store: Store<AppState>, private router: Router, private toastrService:ToastrService) {
-    }
+    constructor(
+        private actions$: Actions, 
+        private carService: CarService, 
+        private store: Store<AppState>, 
+        private router: Router, 
+        private toastrService:ToastrService,
+        private favoriteService:FavoriteService
+        ) {    }
 
     loadCar$ = createEffect(() => {
 
@@ -28,10 +35,18 @@ export class CarEffects {
         }))
     })
 
+    loadFavorite$ = createEffect(() => {
+        return this.actions$.pipe(ofType(loadFavoriteCars), mergeMap((action) => {
+            this.store.dispatch(setLoadingSpinner({status:true}))
+            return this.favoriteService.getFavorites(action.id).pipe(map((response)=> {
+                this.store.dispatch(setLoadingSpinner({status:false}))
+                const favorites = response.data
+                return loadFavoriteCarsSuccess({favorites})
+            }))
+        }))
+    })
+
     
-
-
-
     getSingleCar$ = createEffect(() => {
         return this.actions$.pipe(ofType(ROUTER_NAVIGATION), filter((r: RouterNavigatedAction) => {
             return r.payload.routerState.url.startsWith('/cars/car')
