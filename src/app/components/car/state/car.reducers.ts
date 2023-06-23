@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { initialState } from "./car.state";
-import { deleteCarSuccess, loadCarDetailsSuccess, loadCarImagesSuccess, loadCarsSuccess, updateCarSuccess } from "./car.actions";
+import { deleteCarSuccess, loadCarDetailsSuccess, loadCarImagesSuccess, loadCarsSuccess, loadFavoriteCarsSuccess, updateCarSuccess } from "./car.actions";
 
 
 
@@ -39,6 +39,11 @@ const _carReducer = createReducer(initialState,
         return {
             ...state,
             cars:updatedCars
+        }
+    }), on(loadFavoriteCarsSuccess, (state,action)=> {
+        return {
+            ...state,
+            favorites:action.favorites
         }
     })
 
