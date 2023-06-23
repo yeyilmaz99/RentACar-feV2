@@ -25,6 +25,7 @@ import { BrandEffects } from './components/brand/state/brand.effects';
 import { BrandsComponent } from './components/brand/brands/brands.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { CarEffects } from './components/car/state/car.effects';
+import { FavoriteComponent } from './components/favorite/favorite.component';
 
 
 export function tokenGetter() {
@@ -39,6 +40,7 @@ export function tokenGetter() {
     HeaderComponent,
     LoadingSpinnerComponent,
     FooterComponent,
+    FavoriteComponent,
   ],
   imports: [
     ReactiveFormsModule,
