@@ -50,7 +50,7 @@ export function tokenGetter() {
     ToastrModule.forRoot(),
     StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({logOnly:environment.production}),
-    EffectsModule.forRoot([AuthEffects,ColorEffects,BrandEffects]),
+    EffectsModule.forRoot([AuthEffects,ColorEffects,BrandEffects,CarEffects]),
     EntityDataModule.forRoot({}),
     AppRoutingModule,
     StoreRouterConnectingModule.forRoot({ serializer: CustomSerializer }),
