@@ -33,6 +33,8 @@ export class CarDetailsComponent implements OnInit {
   updateForm:FormGroup;
   brands:Brand[];
   colors:Color[];
+  checkIfAlreadyAddedToFav:Boolean;
+  checkIfCarIsReturnedClass:Boolean;
   constructor(private store:Store<AppState>, private formBuilder:FormBuilder, private router:Router) { }
 
   ngOnInit(): void {
@@ -123,6 +125,18 @@ export class CarDetailsComponent implements OnInit {
   //   this.store.dispatch(deleteCarAction({carToDelete}))
   //   this.router.navigate(['cars'])
   // }
+
+  isLoggedIn(){
+
+  }
+
+  addToFavorites(){
+  
+  }
+
+  deleteFromFavorites(){
+    
+  }
 
 
   updateCar(){
