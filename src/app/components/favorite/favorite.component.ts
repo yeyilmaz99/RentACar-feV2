@@ -93,7 +93,6 @@ export class FavoriteComponent implements OnInit {
         )
         this.store.dispatch(deleteFavoriteAction({userId,carId}))
       }
-
     })
   }
 
