@@ -8,7 +8,7 @@ import { FavoriteService } from 'src/app/services/favorite/favorite.service';
 import { AppState } from 'src/app/store/app.state';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { getUserId, isAuthenticated } from '../auth/state/auth.selector';
-import { loadFavoriteCars } from '../car/state/car.actions';
+import { deleteFavoriteAction, loadFavoriteCars } from '../car/state/car.actions';
 import { getFavorites } from '../car/state/car.selector';
 @Component({
   selector: 'app-favorite',
@@ -40,8 +40,8 @@ export class FavoriteComponent implements OnInit {
 
   getFavorites(){
     if(this.isAuthenticated){
-      const id = this.userId
-      this.store.dispatch(loadFavoriteCars({id}))
+      const userId = this.userId
+      this.store.dispatch(loadFavoriteCars({userId}))
       this.store.select(getFavorites).subscribe(response => {
         this.favorites = response
       })
@@ -75,7 +75,7 @@ export class FavoriteComponent implements OnInit {
   // }
 
   deleteFromFavorites(carId:number){
-
+    const userId = this.userId
     Swal.fire({
       title: 'Are you sure?',
       text: "Do you really want to remove this car from favorites?",
@@ -91,19 +91,10 @@ export class FavoriteComponent implements OnInit {
           'Removed from your favorites',
           'success'
         )
-        // let favoriteToDelete:Favorite = {brandName:"",carName:"",carId:carId,colorName:"",dailyPrice:0,description:"",userId:this.claims.userId,userName:""}
-        // this.favoriteService.deleteFromFavorites(favoriteToDelete).subscribe(response=>{
-        //   this.toastrService.error(response.message,"Deleted From Favorites")
-        //   // this.getFavoritesByUserId();
-        // },responseError=>{
-        //   this.toastrService.error(responseError.error.message);
-        // })
+        this.store.dispatch(deleteFavoriteAction({userId,carId}))
       }
 
     })
-
-
-
   }
 
 
