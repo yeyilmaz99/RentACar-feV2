@@ -28,9 +28,9 @@ export class FavoriteService {
     return this.httpClient.get<ResponseModel>(newPath);
   }
 
-  deleteFromFavorites(favoriteToDelete:Favorite):Observable<ResponseModel>{
-    let newPath = this.apiUrl + "delete";
-    return this.httpClient.delete<ResponseModel>(newPath , {body:favoriteToDelete})
+  deleteFromFavorites(userId:number, carId:number):Observable<ResponseModel>{
+    let newPath = this.apiUrl + "delete?userId=" + userId + "&carId=" + carId;
+    return this.httpClient.delete<ResponseModel>(newPath)
   }
   getRecentFavoritesByUserId(userId:number):Observable<ListResponseModel<Favorite>>{
     let newPath = this.apiUrl + "getrecent?userId="
