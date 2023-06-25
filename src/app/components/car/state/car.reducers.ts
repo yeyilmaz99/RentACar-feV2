@@ -1,6 +1,7 @@
 import { createReducer, on } from "@ngrx/store";
 import { initialState } from "./car.state";
-import { deleteCarSuccess, loadCarDetailsSuccess, loadCarImagesSuccess, loadCarsSuccess, loadFavoriteCarsSuccess, updateCarSuccess } from "./car.actions";
+import { addFavoriteActionSuccess, deleteCarSuccess, loadCarDetailsSuccess, loadCarImagesSuccess, loadCarsSuccess, loadFavoriteCarsSuccess, updateCarSuccess } from "./car.actions";
+import { act } from "@ngrx/effects";
 
 
 
