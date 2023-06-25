@@ -29,6 +29,9 @@ export const LOAD_CAR_DETAILS_SUCCESS = '[car page] load car details success';
 export const LOAD_FAVORITE_CARS = '[car page] load favorite cars';
 export const LOAD_FAVORITE_CARS_SUCCESS = '[car page] load favorite cars success';
 
+export const ADD_FAVORITE_ACTION = '[car page] add favorite action';
+export const ADD_FAVORITE_SUCCESS = '[car page] add favorite action success';
+
 export const DELETE_FAVORITE_ACTION = '[car page] delete favorite action';
 export const DELETE_FAVORITE_SUCCESS = '[car page] delete favorite action success';
 
@@ -51,6 +54,9 @@ export const deleteCarSuccess = createAction(DELETE_CAR_SUCCESS, props<{message:
 
 export const updateCarAction = createAction(UPDATE_CAR_ACTION, props<{car:Car}>());
 export const updateCarSuccess = createAction(UPDATE_CAR_SUCCESS, props<{car:Car}>());
+
+export const addFavoriteAction = createAction(ADD_FAVORITE_ACTION, props<{carId:number, userId:number}>())
+export const addFavoriteActionSuccess = createAction(ADD_FAVORITE_SUCCESS, props<{message:string, carId:number}>())
 
 export const deleteFavoriteAction = createAction(DELETE_FAVORITE_ACTION, props<{userId:number, carId:number}>());
 export const deleteFavoriteActionSuccess = createAction(DELETE_FAVORITE_SUCCESS, props<{message:string, carId:number}>());
