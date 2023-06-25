@@ -1,16 +1,17 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { Actions, createEffect, ofType } from "@ngrx/effects";
+import { Actions, act, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { catchError, filter, map, mergeMap, of, switchMap, tap } from "rxjs";
 import { AppState } from "src/app/store/app.state";
-import { addCar, addCarSuccess, deleteCarAction, deleteCarSuccess, loadCarDetailsSuccess, loadCarImages, loadCarImagesSuccess, loadCars, loadCarsSuccess, loadFavoriteCars, loadFavoriteCarsSuccess, updateCarAction, updateCarSuccess } from "./car.actions";
+import { addCar, addCarSuccess, deleteCarAction, deleteCarSuccess, deleteFavoriteAction, deleteFavoriteActionSuccess, loadCarDetailsSuccess, loadCarImages, loadCarImagesSuccess, loadCars, loadCarsSuccess, loadFavoriteCars, loadFavoriteCarsSuccess, updateCarAction, updateCarSuccess } from "./car.actions";
 import { CarService } from "src/app/services/car/car.service";
 import { setErrorMessage, setLoadingSpinner } from "src/app/store/shared/shared.actions";
 import { ROUTER_NAVIGATION, RouterNavigatedAction } from "@ngrx/router-store";
 import { Car } from "src/app/models/car.model";
 import { ToastrService } from "ngx-toastr";
 import { FavoriteService } from "src/app/services/favorite/favorite.service";
+import { merge } from "lodash";
 
 @Injectable()
 export class CarEffects {
@@ -38,7 +39,7 @@ export class CarEffects {
     loadFavorite$ = createEffect(() => {
         return this.actions$.pipe(ofType(loadFavoriteCars), mergeMap((action) => {
             this.store.dispatch(setLoadingSpinner({status:true}))
-            return this.favoriteService.getFavorites(action.id).pipe(map((response)=> {
+            return this.favoriteService.getFavorites(action.userId).pipe(map((response)=> {
                 this.store.dispatch(setLoadingSpinner({status:false}))
                 const favorites = response.data
                 return loadFavoriteCarsSuccess({favorites})
@@ -112,6 +113,18 @@ export class CarEffects {
                 const carId = action.carToDelete.id
                 const deleteCarSuccessAction = deleteCarSuccess({message, redirect:action.redirect, carId})
                 return of(deleteCarSuccessAction, loadCars())
+            }))
+        }))
+    })
+
+    deleteFavorite$ =createEffect(() => {
+        return this.actions$.pipe(ofType(deleteFavoriteAction), mergeMap((action) => {
+            return this.favoriteService.deleteFromFavorites(action.userId,action.carId).pipe(mergeMap((response) => {
+                const message = response.message
+                const carId = action.carId
+                const userId = action.userId
+                const deleteFavoriteSuccess = deleteFavoriteActionSuccess({message, carId})
+                return of (deleteFavoriteSuccess, loadFavoriteCars({userId}))
             }))
         }))
     })
