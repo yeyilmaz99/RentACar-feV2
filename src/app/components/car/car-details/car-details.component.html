@@ -68,12 +68,12 @@
               <button class="btn btn-success" [ngClass]="{'disabled' : !checkIfCarIsReturnedClass}"  routerLink="/cars/car/{{ this.carId }}/rental">
                 Kirala
               </button>
-              <button [ngClass]="{'d-none' : !checkIfAlreadyAddedToFav}" class="btn btn-danger" *ngIf="isLoggedIn()"  (click)="addToFavorites()" style="padding-bottom: 0px; margin-left: 30px;">
+              <button [ngClass]="{'d-none' : checkIfAlreadyAddedToFav}" class="btn btn-danger" *ngIf="isAuthenticated"  (click)="addToFavorites()" style="padding-bottom: 0px; margin-left: 30px;">
                 <span class="material-symbols-outlined">
                   favorite
                   </span>
               </button>
-              <button [ngClass]="{'d-none' : checkIfAlreadyAddedToFav}" class="btn btn-danger" *ngIf="isLoggedIn()" (click)="deleteFromFavorites()" style="padding-bottom: 0px; margin-left: 30px;">
+              <button [ngClass]="{'d-none' : !checkIfAlreadyAddedToFav}" class="btn btn-danger" *ngIf="isAuthenticated" (click)="deleteFromFavorites(carId)" style="padding-bottom: 0px; margin-left: 30px;">
                 <span class="material-symbols-outlined">
                   heart_broken
                   </span>
