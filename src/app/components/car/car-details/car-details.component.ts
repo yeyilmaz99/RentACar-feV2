@@ -10,7 +10,7 @@ import { getUserId, isAdmin, isAuthenticated } from '../../auth/state/auth.selec
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CarDelete } from 'src/app/models/carDelete';
 import { getCurrentId } from 'src/app/router/router.selector';
-import { deleteCarAction, deleteFavoriteAction, loadCars, loadFavoriteCars, updateCarAction } from '../state/car.actions';
+import { addFavoriteAction, deleteCarAction, deleteFavoriteAction, loadCars, loadFavoriteCars, updateCarAction } from '../state/car.actions';
 import { Router } from '@angular/router';
 import { Brand } from 'src/app/models/brand.model';
 import { Color } from 'src/app/models/color.model';
@@ -43,29 +43,32 @@ export class CarDetailsComponent implements OnInit {
   constructor(private store:Store<AppState>, private formBuilder:FormBuilder, private router:Router) { }
 
   ngOnInit(): void {
-    this.isAuthenticated = this.store.select(isAuthenticated);
-    this.store.select(getFavorites).subscribe(response => {
-      this.favorites = response
-    })
-    this.store.select(getUserId).subscribe(response => {
-      this.userId = response;
-    });
+    this.getUserId()
     this.isLoggedIn();
     this.getCar();
     this.createUpdateForm();
-    this.store.select(getCurrentId).subscribe(response =>
-      this.carId = response
-    );
+    this.getCurrentCarId()
     this.getBrands();
     this.getColors();
     this.getCars();
+  }
 
+  getCurrentCarId(){
+    this.store.select(getCurrentId).subscribe(response =>
+      this.carId = response
+    );
+  }
 
+  getUserId(){
+    this.store.select(getUserId).subscribe(response => {
+      this.userId = response;
+    });
   }
 
   isAdmin(){
     return this.store.select(isAdmin);
   }
+
   isLoggedIn() {
     this.isAuthenticated = this.store.select(isAuthenticated);
     if (this.isAuthenticated) {
@@ -99,8 +102,6 @@ export class CarDetailsComponent implements OnInit {
       findeksPoint: ["",Validators.required],
     })
   }
-
-æ
 
 
 
@@ -147,16 +148,9 @@ export class CarDetailsComponent implements OnInit {
     })
   }
 
-  // delete(){
-  //   let carToDelete: CarDelete = {id:this.carId,brandId:0,carName:'',colorId:0,dailyPrice:0,description:'',modelYear:0}
-  //   console.log(this.carId);
-  //   this.store.dispatch(deleteCarAction({carToDelete}))
-  //   this.router.navigate(['cars'])
-  // }
-
-
   addToFavorites(){
-  
+    let newFavorite = {carId : this.carId, userId:this.userId}
+    this.store.dispatch(addFavoriteAction(newFavorite));
   }
 
   deleteFromFavorites(carId:number){
@@ -178,7 +172,6 @@ export class CarDetailsComponent implements OnInit {
         )
         this.store.dispatch(deleteFavoriteAction({userId,carId}))
       }
-
     })
   }
 
