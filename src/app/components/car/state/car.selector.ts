@@ -31,3 +31,7 @@ export const getCarImages = createSelector(getCarState, (state) => {
 export const getFavorites = createSelector(getCarState, (state) => {
     return state.favorites;
 })
+
+export const checkFavorites = createSelector(getCarState,(state) =>{
+    return state.favorites.some(c => c.carId === state.selectedCar.carId)
+} )
