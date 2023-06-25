@@ -4,7 +4,7 @@ import { Actions, act, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { catchError, filter, map, mergeMap, of, switchMap, tap } from "rxjs";
 import { AppState } from "src/app/store/app.state";
-import { addCar, addCarSuccess, deleteCarAction, deleteCarSuccess, deleteFavoriteAction, deleteFavoriteActionSuccess, loadCarDetailsSuccess, loadCarImages, loadCarImagesSuccess, loadCars, loadCarsSuccess, loadFavoriteCars, loadFavoriteCarsSuccess, updateCarAction, updateCarSuccess } from "./car.actions";
+import { addCar, addCarSuccess, addFavoriteAction, addFavoriteActionSuccess, deleteCarAction, deleteCarSuccess, deleteFavoriteAction, deleteFavoriteActionSuccess, loadCarDetailsSuccess, loadCarImages, loadCarImagesSuccess, loadCars, loadCarsSuccess, loadFavoriteCars, loadFavoriteCarsSuccess, updateCarAction, updateCarSuccess } from "./car.actions";
 import { CarService } from "src/app/services/car/car.service";
 import { setErrorMessage, setLoadingSpinner } from "src/app/store/shared/shared.actions";
 import { ROUTER_NAVIGATION, RouterNavigatedAction } from "@ngrx/router-store";
@@ -128,6 +128,21 @@ export class CarEffects {
             }))
         }))
     })
+
+    addFavorite$ = createEffect(()=> {
+        return this.actions$.pipe(ofType(addFavoriteAction), mergeMap((action) => {
+            let favorite = {carId:action.carId,userId:action.userId}
+            return this.favoriteService.addToFavorites(favorite).pipe(mergeMap((response)=> {
+                const message = response.message
+                const carId = action.carId;
+                const userId = action.userId
+                const addFavoritesSuccess = addFavoriteActionSuccess({message,carId});
+                return of (addFavoritesSuccess, loadFavoriteCars({userId}))
+            }))
+        }))
+    })
+
+
 
     deleteRedirect$ = createEffect(() => {
         return this.actions$.pipe(ofType(...[deleteCarSuccess]),tap((action) => {
