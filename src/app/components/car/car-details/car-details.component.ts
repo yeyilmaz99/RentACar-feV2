@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, distinctUntilChanged } from 'rxjs';
 import { Car } from 'src/app/models/car.model';
 import { AppState } from 'src/app/store/app.state';
-import { getCarById, getCarDetails, getCarImages } from '../state/car.selector';
+import { checkFavorites, getCarById, getCarDetails, getCarImages, getFavorites } from '../state/car.selector';
 import { setLoadingSpinner } from 'src/app/store/shared/shared.actions';
 import { CarImage } from 'src/app/models/carImage';
-import { isAdmin } from '../../auth/state/auth.selector';
+import { getUserId, isAdmin, isAuthenticated } from '../../auth/state/auth.selector';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CarDelete } from 'src/app/models/carDelete';
 import { getCurrentId } from 'src/app/router/router.selector';
-import { deleteCarAction, loadCars, updateCarAction } from '../state/car.actions';
+import { deleteCarAction, deleteFavoriteAction, loadCars, loadFavoriteCars, updateCarAction } from '../state/car.actions';
 import { Router } from '@angular/router';
 import { Brand } from 'src/app/models/brand.model';
 import { Color } from 'src/app/models/color.model';
@@ -19,6 +19,8 @@ import { getColors } from '../../color/state/color.selector';
 import { loadBrands } from '../../brand/state/brand.actions';
 import { loadColors } from '../../color/state/color.actions';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { Favorite } from 'src/app/models/favorite';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-car-details',
@@ -26,6 +28,8 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
   styleUrls: ['./car-details.component.css']
 })
 export class CarDetailsComponent implements OnInit {
+  isAuthenticated:Observable<boolean>;
+  userId:number;
   carId:number;
   car:Observable<Car>
   carImages:Observable<CarImage[]>
@@ -33,11 +37,20 @@ export class CarDetailsComponent implements OnInit {
   updateForm:FormGroup;
   brands:Brand[];
   colors:Color[];
+  favorites:Favorite[] = [];
   checkIfAlreadyAddedToFav:Boolean;
   checkIfCarIsReturnedClass:Boolean;
   constructor(private store:Store<AppState>, private formBuilder:FormBuilder, private router:Router) { }
 
   ngOnInit(): void {
+    this.isAuthenticated = this.store.select(isAuthenticated);
+    this.store.select(getFavorites).subscribe(response => {
+      this.favorites = response
+    })
+    this.store.select(getUserId).subscribe(response => {
+      this.userId = response;
+    });
+    this.isLoggedIn();
     this.getCar();
     this.createUpdateForm();
     this.store.select(getCurrentId).subscribe(response =>
@@ -45,11 +58,26 @@ export class CarDetailsComponent implements OnInit {
     );
     this.getBrands();
     this.getColors();
-    this.getCars()
+    this.getCars();
+
+
   }
 
   isAdmin(){
     return this.store.select(isAdmin);
+  }
+  isLoggedIn() {
+    this.isAuthenticated = this.store.select(isAuthenticated);
+    if (this.isAuthenticated) {
+        const userId = this.userId;
+        this.store.dispatch(loadFavoriteCars({ userId }));
+        this.store.select(getFavorites).subscribe(response => {
+          this.favorites = response
+          this.store.select(checkFavorites).subscribe(response => {
+            this.checkIfAlreadyAddedToFav = response;
+          });
+        })
+    }
   }
 
   getCar(){
@@ -59,8 +87,6 @@ export class CarDetailsComponent implements OnInit {
   getCars(){
     this.store.dispatch(loadCars())
   }
-
-
 
   createUpdateForm(){
     this.updateForm = this.formBuilder.group({
@@ -73,6 +99,8 @@ export class CarDetailsComponent implements OnInit {
       findeksPoint: ["",Validators.required],
     })
   }
+
+æ
 
 
 
@@ -126,16 +154,32 @@ export class CarDetailsComponent implements OnInit {
   //   this.router.navigate(['cars'])
   // }
 
-  isLoggedIn(){
-
-  }
 
   addToFavorites(){
   
   }
 
-  deleteFromFavorites(){
-    
+  deleteFromFavorites(carId:number){
+    const userId = this.userId
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you really want to remove this car from favorites?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, remove it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Deleted!',
+          'Removed from your favorites',
+          'success'
+        )
+        this.store.dispatch(deleteFavoriteAction({userId,carId}))
+      }
+
+    })
   }
 
 
