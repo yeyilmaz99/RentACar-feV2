@@ -1,6 +1,8 @@
 import { Car } from "src/app/models/car.model";
 import { CarImage } from "src/app/models/carImage";
 import { Favorite } from "src/app/models/favorite";
+import { Rental } from "src/app/models/rental";
+import { RentalDetails } from "src/app/models/rentalDetails";
 
 
 
@@ -9,6 +11,8 @@ export interface CarState {
     selectedCar:Car
     carImages:CarImage[];
     favorites:Favorite[];
+    userRentals:Rental[];
+    allRentals:RentalDetails[];
 }
 
 export const initialState:CarState = {
@@ -16,4 +20,6 @@ export const initialState:CarState = {
     selectedCar:null,
     carImages:null,
     favorites:null,
+    userRentals:null,
+    allRentals:null,
 }
