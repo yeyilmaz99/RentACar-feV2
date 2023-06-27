@@ -6,12 +6,7 @@
             <h1 style="font-size: 40px">Favorites</h1>
           </div>
           <div class="container">
-            <!-- <div class="row justify-content-center" *ngIf="!dataLoaded">
-              <div class="spinner-border text-primary" style="width: 300px; height: 300px;" role="status">
-                <span class="sr-only"></span>
-              </div>
-            </div> -->
-          <!-- <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-0 favorites">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-0 favorites">
             <div class="card shadow-sm" *ngFor="let favorite of favorites">
               <svg
                 class="bd-placeholder-img card-img-top"
@@ -40,19 +35,12 @@
                       routerLink="/cars/car/{{ favorite.carId }}">
                       View
                     </button>
-                    <button
-                      type="button"
-                      class="btn btn-sm btn-outline-danger"
-                      (click)="deleteFromFavorites(favorite.carId)"
-                    >
-                      Delete
-                    </button>
                   </div>
                   <small class="text-muted">9 mins</small>
                 </div>
               </div>
             </div>
-          </div> -->
+          </div>
         </div>
         <div style="text-align: center;" class="mt-1">
             <button type="button" routerLink="/favorites" class="btn btn-warning">See All</button>
