@@ -20,7 +20,7 @@ import { loadBrands } from '../../brand/state/brand.actions';
 import { loadColors } from '../../color/state/color.actions';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Favorite } from 'src/app/models/favorite';
-import { User } from 'src/app/models/user.model';
+import { RentalModel } from 'src/app/models/RentalModel';
 
 @Component({
   selector: 'app-car-details',
@@ -30,6 +30,7 @@ import { User } from 'src/app/models/user.model';
 export class CarDetailsComponent implements OnInit {
   isAuthenticated:Observable<boolean>;
   userId:number;
+  allRentals:RentalModel[];
   carId:number;
   car:Observable<Car>
   carImages:Observable<CarImage[]>
@@ -57,6 +58,10 @@ export class CarDetailsComponent implements OnInit {
     this.store.select(getCurrentId).subscribe(response =>
       this.carId = response
     );
+  }
+
+  getRentals(){
+    
   }
 
   getUserId(){
