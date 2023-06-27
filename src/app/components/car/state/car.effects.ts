@@ -4,7 +4,7 @@ import { Actions, act, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { catchError, filter, map, mergeMap, of, switchMap, tap } from "rxjs";
 import { AppState } from "src/app/store/app.state";
-import { addCar, addCarSuccess, addFavoriteAction, addFavoriteActionSuccess, deleteCarAction, deleteCarSuccess, deleteFavoriteAction, deleteFavoriteActionSuccess, loadCarDetailsSuccess, loadCarImages, loadCarImagesSuccess, loadCars, loadCarsSuccess, loadFavoriteCars, loadFavoriteCarsSuccess, updateCarAction, updateCarSuccess } from "./car.actions";
+import { addCar, addCarSuccess, addFavoriteAction, addFavoriteActionSuccess, deleteCarAction, deleteCarSuccess, deleteFavoriteAction, deleteFavoriteActionSuccess, loadCarDetailsSuccess, loadCarImages, loadCarImagesSuccess, loadCars, loadCarsSuccess, loadFavoriteCars, loadFavoriteCarsSuccess, loadUserRentals, loadUserRentalsSuccess, updateCarAction, updateCarSuccess } from "./car.actions";
 import { CarService } from "src/app/services/car/car.service";
 import { setErrorMessage, setLoadingSpinner } from "src/app/store/shared/shared.actions";
 import { ROUTER_NAVIGATION, RouterNavigatedAction } from "@ngrx/router-store";
@@ -12,6 +12,7 @@ import { Car } from "src/app/models/car.model";
 import { ToastrService } from "ngx-toastr";
 import { FavoriteService } from "src/app/services/favorite/favorite.service";
 import { merge } from "lodash";
+import { RentalService } from "src/app/services/rentalService/rental.service";
 
 @Injectable()
 export class CarEffects {
@@ -21,7 +22,8 @@ export class CarEffects {
         private store: Store<AppState>, 
         private router: Router, 
         private toastrService:ToastrService,
-        private favoriteService:FavoriteService
+        private favoriteService:FavoriteService,
+        private rentalService:RentalService
         ) {    }
 
     loadCar$ = createEffect(() => {
@@ -43,6 +45,15 @@ export class CarEffects {
                 this.store.dispatch(setLoadingSpinner({status:false}))
                 const favorites = response.data
                 return loadFavoriteCarsSuccess({favorites})
+            }))
+        }))
+    })
+
+    loadUserRentasl$ = createEffect(()=> {
+        return this.actions$.pipe(ofType(loadUserRentals), mergeMap((action)=> {
+            return this.rentalService.getRentalsByUserId(action.userId).pipe(map((response) => {
+                const rentals = response.data
+                return loadUserRentalsSuccess({rentals});
             }))
         }))
     })
