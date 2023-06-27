@@ -4,6 +4,7 @@ import { CarAndImageDto } from "src/app/models/carAndImageDto";
 import { CarDelete } from "src/app/models/carDelete";
 import { CarImage } from "src/app/models/carImage";
 import { Favorite } from "src/app/models/favorite";
+import { Rental } from "src/app/models/rental";
 
 
 
@@ -29,6 +30,9 @@ export const LOAD_CAR_DETAILS_SUCCESS = '[car page] load car details success';
 export const LOAD_FAVORITE_CARS = '[car page] load favorite cars';
 export const LOAD_FAVORITE_CARS_SUCCESS = '[car page] load favorite cars success';
 
+export const LOAD_USER_RENTALS = '[car page] load user rentals';
+export const LOAD_USER_RENTALS_SUCCESS = '[car page] load user rentals success';
+
 export const ADD_FAVORITE_ACTION = '[car page] add favorite action';
 export const ADD_FAVORITE_SUCCESS = '[car page] add favorite action success';
 
@@ -42,6 +46,8 @@ export const loadCarDetailsSuccess = createAction(LOAD_CAR_DETAILS_SUCCESS, prop
 export const loadFavoriteCars = createAction(LOAD_FAVORITE_CARS, props<{userId:number}>());
 export const loadFavoriteCarsSuccess = createAction(LOAD_FAVORITE_CARS_SUCCESS, props<{favorites:Favorite[]}>());
 
+export const loadUserRentals = createAction(LOAD_USER_RENTALS, props<{userId:number}>());
+export const loadUserRentalsSuccess = createAction(LOAD_USER_RENTALS_SUCCESS, props<{rentals:Rental[]}>());
 
 export const loadCarImages = createAction(LOAD_CAR_IMAGES);
 export const loadCarImagesSuccess = createAction(LOAD_CAR_IMAGES_SUCCESS, props<{carImages:CarImage[]}>())
