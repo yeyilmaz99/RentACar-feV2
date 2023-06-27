@@ -19,7 +19,8 @@ import { UserInfoComponent } from './user-info/user-info.component';
 export const UserRoutes:Routes = [
     {path: '' ,pathMatch:'full' ,redirectTo:'info'},
     {path: 'info', component:UserInfoComponent},
-    {path: 'settings', component:UserSettingsComponent}
+    {path: 'settings', component:UserSettingsComponent},
+    {path: 'rentals', component:UserRentalsComponent}
 ]
 
 
