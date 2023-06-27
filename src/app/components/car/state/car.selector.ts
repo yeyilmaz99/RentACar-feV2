@@ -35,3 +35,7 @@ export const getFavorites = createSelector(getCarState, (state) => {
 export const checkFavorites = createSelector(getCarState,(state) =>{
     return state.favorites.some(c => c.carId === state.selectedCar.carId)
 } )
+
+export const getUserRentals = createSelector(getCarState, (state) => {
+    return state.userRentals
+})
