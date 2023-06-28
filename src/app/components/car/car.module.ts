@@ -12,6 +12,10 @@ import { CAR_STATE_NAME } from "./state/car.selector";
 import { carReducer } from "./state/car.reducers";
 import { FilterPipe } from "src/app/pipes/filter.pipe";
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { RentComponent } from "./car-details/rent/rent.component";
+import { MatNativeDateModule } from "@angular/material/core";
 
 
 
@@ -23,7 +27,9 @@ const routes: Routes = [
             {path:'',pathMatch:"full",redirectTo:'cars'},
             { path: '', component: CarsComponent },
             { path: 'add-car', component: AddCarComponent },
-            { path: 'car/:id', component: CarDetailsComponent }
+            { path: 'car/:id', component: CarDetailsComponent , children:[
+             {path: 'rent/:id', component:RentComponent} 
+            ] }
         ]
     }
 
@@ -36,7 +42,8 @@ const routes: Routes = [
         CarsComponent,
         AddCarComponent,
         CarDetailsComponent,
-        FilterPipe
+        FilterPipe,
+        RentComponent,
     ],
 
     imports: [
@@ -44,6 +51,9 @@ const routes: Routes = [
         ReactiveFormsModule,
         FormsModule,
         MatPaginatorModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatFormFieldModule,
         RouterModule.forChild(routes),
         EffectsModule.forFeature([CarEffects]),
         FormsModule,
