@@ -39,6 +39,10 @@ export const ADD_FAVORITE_SUCCESS = '[car page] add favorite action success';
 export const DELETE_FAVORITE_ACTION = '[car page] delete favorite action';
 export const DELETE_FAVORITE_SUCCESS = '[car page] delete favorite action success';
 
+export const CHECK_IF_CAR_IS_RETURNED_ACTION = '[car page] check if car is returned';
+export const CHECK_IF_CAR_IS_RETURNED_ACTION_FAIL = '[car page] check if car is returned';
+export const CHECK_IF_CAR_IS_RETURNED_ACTION_SUCCESS = '[car page] check if car is returned success';
+
 export const loadCars = createAction(LOAD_CARS);
 export const loadCarsSuccess = createAction(LOAD_CARS_SUCCESS, props<{cars:Car[]}>());
 export const loadCarDetailsSuccess = createAction(LOAD_CAR_DETAILS_SUCCESS, props<{car:Car}>());
@@ -66,5 +70,9 @@ export const addFavoriteActionSuccess = createAction(ADD_FAVORITE_SUCCESS, props
 
 export const deleteFavoriteAction = createAction(DELETE_FAVORITE_ACTION, props<{userId:number, carId:number}>());
 export const deleteFavoriteActionSuccess = createAction(DELETE_FAVORITE_SUCCESS, props<{message:string, carId:number}>());
+
+export const checkIfCarIsReturned = createAction(CHECK_IF_CAR_IS_RETURNED_ACTION, props<{carId:number}>());
+export const checkIfCarIsReturnedSuccess = createAction(CHECK_IF_CAR_IS_RETURNED_ACTION_SUCCESS, props<{response:boolean}>())
+export const checkIfCarIsReturnedFail = createAction(CHECK_IF_CAR_IS_RETURNED_ACTION_FAIL, props<{response:boolean}>())
 
 
