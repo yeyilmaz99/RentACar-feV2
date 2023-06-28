@@ -39,3 +39,7 @@ export const checkFavorites = createSelector(getCarState,(state) =>{
 export const getUserRentals = createSelector(getCarState, (state) => {
     return state.userRentals
 })
+
+export const isReturned = createSelector(getCarState, (state)=> {
+    return state.isReturned
+})
