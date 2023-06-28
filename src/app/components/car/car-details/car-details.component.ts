@@ -3,14 +3,14 @@ import { Store } from '@ngrx/store';
 import { Observable, distinctUntilChanged } from 'rxjs';
 import { Car } from 'src/app/models/car.model';
 import { AppState } from 'src/app/store/app.state';
-import { checkFavorites, getCarById, getCarDetails, getCarImages, getFavorites } from '../state/car.selector';
+import { checkFavorites, getCarById, getCarDetails, getCarImages, getFavorites, isReturned } from '../state/car.selector';
 import { setLoadingSpinner } from 'src/app/store/shared/shared.actions';
 import { CarImage } from 'src/app/models/carImage';
 import { getUserId, isAdmin, isAuthenticated } from '../../auth/state/auth.selector';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CarDelete } from 'src/app/models/carDelete';
 import { getCurrentId } from 'src/app/router/router.selector';
-import { addFavoriteAction, deleteCarAction, deleteFavoriteAction, loadCars, loadFavoriteCars, updateCarAction } from '../state/car.actions';
+import { addFavoriteAction, checkIfCarIsReturned, deleteCarAction, deleteFavoriteAction, loadCars, loadFavoriteCars, updateCarAction } from '../state/car.actions';
 import { Router } from '@angular/router';
 import { Brand } from 'src/app/models/brand.model';
 import { Color } from 'src/app/models/color.model';
@@ -20,7 +20,7 @@ import { loadBrands } from '../../brand/state/brand.actions';
 import { loadColors } from '../../color/state/color.actions';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Favorite } from 'src/app/models/favorite';
-import { RentalModel } from 'src/app/models/RentalModel';
+import { RentalModel } from 'src/app/models/rentalModel';
 
 @Component({
   selector: 'app-car-details',
@@ -52,6 +52,7 @@ export class CarDetailsComponent implements OnInit {
     this.getBrands();
     this.getColors();
     this.getCars();
+    this.checkIfCarIsReturned();
   }
 
   getCurrentCarId(){
@@ -60,8 +61,12 @@ export class CarDetailsComponent implements OnInit {
     );
   }
 
-  getRentals(){
-    
+  checkIfCarIsReturned(){
+    this.store.select(isReturned).subscribe(response => {
+      this.checkIfCarIsReturnedClass = response
+    })
+    const carId = this.carId
+    this.store.dispatch(checkIfCarIsReturned({carId}))
   }
 
   getUserId(){
@@ -115,7 +120,6 @@ export class CarDetailsComponent implements OnInit {
       this.brands = response;
     })
     this.store.dispatch(loadBrands());
-
   }
 
   getColors(){
