@@ -4,7 +4,7 @@ import { Actions, act, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { catchError, filter, map, mergeMap, of, switchMap, tap } from "rxjs";
 import { AppState } from "src/app/store/app.state";
-import { addCar, addCarSuccess, addFavoriteAction, addFavoriteActionSuccess, deleteCarAction, deleteCarSuccess, deleteFavoriteAction, deleteFavoriteActionSuccess, loadCarDetailsSuccess, loadCarImages, loadCarImagesSuccess, loadCars, loadCarsSuccess, loadFavoriteCars, loadFavoriteCarsSuccess, loadUserRentals, loadUserRentalsSuccess, updateCarAction, updateCarSuccess } from "./car.actions";
+import { addCar, addCarSuccess, addFavoriteAction, addFavoriteActionSuccess, checkIfCarIsReturned, checkIfCarIsReturnedFail, checkIfCarIsReturnedSuccess, deleteCarAction, deleteCarSuccess, deleteFavoriteAction, deleteFavoriteActionSuccess, loadCarDetailsSuccess, loadCarImages, loadCarImagesSuccess, loadCars, loadCarsSuccess, loadFavoriteCars, loadFavoriteCarsSuccess, loadUserRentals, loadUserRentalsSuccess, updateCarAction, updateCarSuccess } from "./car.actions";
 import { CarService } from "src/app/services/car/car.service";
 import { setErrorMessage, setLoadingSpinner } from "src/app/store/shared/shared.actions";
 import { ROUTER_NAVIGATION, RouterNavigatedAction } from "@ngrx/router-store";
@@ -58,7 +58,41 @@ export class CarEffects {
         }))
     })
 
-    
+    checkIfCarIsReturned$ = createEffect(() => {
+        return this.actions$.pipe(ofType (checkIfCarIsReturned), mergeMap((action) => {
+            return this.rentalService.checkIfCarIsReturned(action.carId).pipe(map((resp)=> {
+                if(resp.success){
+                    const response = resp.success
+                    console.log(response);
+                    return checkIfCarIsReturnedSuccess({response});
+                }else{
+                    const response = false
+                    return checkIfCarIsReturnedFail({response})
+                }
+
+            }))
+        }))
+    })    
+
+
+    // checkIfCarIsReturned$ = createEffect(() => {
+    //     return this.actions$.pipe(
+    //       ofType(checkIfCarIsReturned),
+    //       mergeMap((action) => {
+    //         return this.rentalService.checkIfCarIsReturned(action.carId).pipe(
+    //           map((resp) => {
+    //             const response = resp.success;
+    //             console.log(response);
+    //             return checkIfCarIsReturnedSuccess({ response });
+    //           }),
+    //           catchError((errResp) => {
+    //             const response = false;
+    //             return of(checkIfCarIsReturnedFail({ response }));
+    //           })
+    //         );
+    //       })
+    //     );
+    //   },{dispatch:false}); 
     getSingleCar$ = createEffect(() => {
         return this.actions$.pipe(ofType(ROUTER_NAVIGATION), filter((r: RouterNavigatedAction) => {
             return r.payload.routerState.url.startsWith('/cars/car')
