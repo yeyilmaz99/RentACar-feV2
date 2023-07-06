@@ -36,5 +36,5 @@ jobs:
         PORT: ${{ secrets.SSH_PORT }}
         KEY: ${{ secrets.SSH_KEY }}
       with:
-        source: "."
+        source: "dist/."
         target: "/var/www/symfonyshop.org"
