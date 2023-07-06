@@ -37,4 +37,5 @@ jobs:
         KEY: ${{ secrets.SSH_KEY }}
       with:
         source: "dist/."
-        target: "/var/www/symfonyshop.org"
+        target: "/var/www/symfonyshop.org" 
+        
