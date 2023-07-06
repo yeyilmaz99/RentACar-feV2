@@ -34,7 +34,7 @@ jobs:
         HOST: ${{ secrets.SSH_HOST }}
         USERNAME: ${{ secrets.SSH_USER }}
         PORT: ${{ secrets.SSH_PORT }}
-        KEY: ${{ secrets.PRIVATE_KEY }}
+        KEY: ${{ secrets.SSH_KEY }}
       with:
         source: "dist/."
         target: "/var/www/symfonyshop.org" 
