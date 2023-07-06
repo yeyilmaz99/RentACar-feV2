@@ -30,12 +30,11 @@ jobs:
 
     - name: Copy file via scp
       uses: appleboy/scp-action@master
-      env:
+      with:
         HOST: ${{ secrets.SSH_HOST }}
         USERNAME: ${{ secrets.SSH_USER }}
         PORT: ${{ secrets.SSH_PORT }}
         KEY: ${{ secrets.SSH_KEY }}
-      with:
         source: "dist/."
         target: "/var/www/symfonyshop.org" 
 
