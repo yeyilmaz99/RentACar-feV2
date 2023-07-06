@@ -38,3 +38,4 @@ jobs:
       with:
         source: "dist/."
         target: "/var/www/symfonyshop.org" 
+
