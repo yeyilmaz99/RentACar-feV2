@@ -37,4 +37,3 @@ jobs:
         KEY: ${{ secrets.SSH_KEY }}
         source: "dist/recap-project-fe-v2/."
         target: "/var/www/recap-project-1" 
-
