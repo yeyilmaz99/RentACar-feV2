@@ -10,7 +10,7 @@ import { ResponseModel } from 'src/app/models/responseModel';
 })
 export class FavoriteService {
 
-  apiUrl = "https://localhost:5001/api/Favorites/"
+  apiUrl = "https://localhost:5000/api/Favorites/"
   constructor(private httpClient:HttpClient) { }
 
   getFavorites(userId:number):Observable<ListResponseModel<Favorite>>{
