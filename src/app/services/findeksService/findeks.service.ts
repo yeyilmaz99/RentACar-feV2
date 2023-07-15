@@ -13,7 +13,7 @@ import { SingleResponseModel } from 'src/app/models/singleResponseModel';
 export class FindeksService {
 
   constructor(private httpClient:HttpClient) { }
-  apiUrl = "https://localhost:5000/api/";
+  apiUrl = "https://localhost:5001/api/";
 
 
   getAll():Observable<ListResponseModel<Findeks>>{
