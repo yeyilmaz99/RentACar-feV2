@@ -9,7 +9,7 @@ import { ResponseModel } from '../models/responseModel';
   providedIn: 'root'
 })
 export class ColorService {
-  apiUrl = "http://localhost:5000/api/Colors/";
+  apiUrl = "https://localhost:5001/api/Colors/";
   constructor(private httpClient:HttpClient) { }
 
 

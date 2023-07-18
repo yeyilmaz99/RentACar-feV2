@@ -10,7 +10,7 @@ import { UserList } from 'src/app/models/userList';
   providedIn: 'root'
 })
 export class UserService {
-  apiUrl = "http://localhost:5000/api/Users/"
+  apiUrl = "https://localhost:5001/api/Users/"
   constructor(
     private httpClient: HttpClient
   ) { }
