@@ -9,7 +9,7 @@ import { ResponseModel } from 'src/app/models/responseModel';
   providedIn: 'root'
 })
 export class BrandService {
-  apiUrl = "http://localhost:5000/api/Brands/";
+  apiUrl = "https://apiv2.rentacar.yeyilmaz.online/api/Brands/";
   constructor(private httpClient:HttpClient) { }
 
   getBrands(): Observable<ListResponseModel<Brand>> {

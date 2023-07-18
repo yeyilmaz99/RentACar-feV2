@@ -10,7 +10,7 @@ import { UserList } from 'src/app/models/userList';
   providedIn: 'root'
 })
 export class UserService {
-  apiUrl = "https://localhost:5001/api/Users/"
+  apiUrl = "https://apiv2.rentacar.yeyilmaz.online/api/Users/"
   constructor(
     private httpClient: HttpClient
   ) { }
