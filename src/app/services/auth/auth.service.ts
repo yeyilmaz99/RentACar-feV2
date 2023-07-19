@@ -153,6 +153,15 @@ export class AuthService {
   }
 
   isAdmin():boolean{
+    let claims:Claims | undefined = this.getClaims();
+    if(claims.roles.includes("admin")){
+      return true
+    }else{
+      return false
+    }
+  }
+
+  checkIsAdmin():boolean{
     let isAdmin:boolean
     this.store.select(isAuthenticated).subscribe(response => {
       if(response === true){
