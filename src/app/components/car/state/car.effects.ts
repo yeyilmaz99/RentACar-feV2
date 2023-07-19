@@ -63,7 +63,6 @@ export class CarEffects {
             return this.rentalService.checkIfCarIsReturned(action.carId).pipe(map((resp)=> {
                 if(resp.success){
                     const response = resp.success
-                    console.log(response);
                     return checkIfCarIsReturnedSuccess({response});
                 }else{
                     const response = false
@@ -181,6 +180,7 @@ export class CarEffects {
                 const message = response.message
                 const carId = action.carId;
                 const userId = action.userId
+                this.toastrService.success(message);
                 const addFavoritesSuccess = addFavoriteActionSuccess({message,carId});
                 return of (addFavoritesSuccess, loadFavoriteCars({userId}))
             }))
