@@ -8,6 +8,7 @@ import { loadColors } from '../../color/state/color.actions';
 import { Color } from 'src/app/models/color.model';
 import { getColors } from '../../color/state/color.selector';
 import { Observable } from 'rxjs';
+import { isAdmin } from '../../auth/state/auth.selector';
 
 @Component({
   selector: 'app-brands',
@@ -15,6 +16,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./brands.component.css']
 })
 export class BrandsComponent implements OnInit {
+  isAdmin;
   brands:Brand[];
   colors:Color[];
   constructor(private store:Store<AppState>, ) { }
@@ -22,6 +24,7 @@ export class BrandsComponent implements OnInit {
   ngOnInit(): void {
     this.getBrands();
     this.getColors();
+    this.checkIsAdmin();
   }
 
   getBrands(){
@@ -41,7 +44,16 @@ export class BrandsComponent implements OnInit {
         this.store.dispatch(loadColors());
       }
     })
+  }
 
+  checkIsAdmin(){
+    this.store.select(isAdmin).subscribe(response => {
+      if(response === true){
+        this.isAdmin = response
+      }else {
+        this.isAdmin = false;
+      }
+    })
   }
 
 
