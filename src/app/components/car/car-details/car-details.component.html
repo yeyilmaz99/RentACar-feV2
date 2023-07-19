@@ -68,15 +68,15 @@
 
 
             <div class="card-body">
-              <button class="btn btn-success" [ngClass]="{'disabled' : !checkIfCarIsReturnedClass}"  [routerLink]="['rent', carId]">
+              <button class="btn btn-success" [ngClass]="{'disabled' : !checkIfCarIsReturnedClass}"  (click)="rentNavigate(carId)">
                 Kirala
               </button>
-              <button [ngClass]="{'d-none' : checkIfAlreadyAddedToFav}" class="btn btn-danger" *ngIf="isAuthenticated"  (click)="addToFavorites()" style="padding-bottom: 0px; margin-left: 30px;">
+              <button [ngClass]="{'d-none' : checkIfAlreadyAddedToFav}" class="btn btn-danger"  (click)="addToFavorites()" style="padding-bottom: 0px; margin-left: 30px;">
                 <span class="material-symbols-outlined">
                   favorite
                   </span>
               </button>
-              <button [ngClass]="{'d-none' : !checkIfAlreadyAddedToFav}" class="btn btn-danger" *ngIf="isAuthenticated" (click)="deleteFromFavorites(carId)" style="padding-bottom: 0px; margin-left: 30px;">
+              <button [ngClass]="{'d-none' : !checkIfAlreadyAddedToFav}" class="btn btn-danger"  (click)="deleteFromFavorites(carId)" style="padding-bottom: 0px; margin-left: 30px;">
                 <span class="material-symbols-outlined">
                   heart_broken
                   </span>
@@ -90,7 +90,7 @@
         </div>
       </div>
       <div class="col-md-1">
-        <div class="col" *ngIf="isAdmin()">
+        <div class="col" *ngIf="isAdmin">
           <button class="btn btn-primary" (click)="editForm()" style="float: right;">Edit</button>
         </div>
       </div>
