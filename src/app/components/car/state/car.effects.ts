@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Actions, act, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
-import { catchError, filter, map, mergeMap, of, switchMap, tap } from "rxjs";
+import { catchError, distinctUntilChanged, filter, map, mergeMap, of, switchMap, tap } from "rxjs";
 import { AppState } from "src/app/store/app.state";
 import { addCar, addCarSuccess, addFavoriteAction, addFavoriteActionSuccess, checkIfCarIsReturned, checkIfCarIsReturnedFail, checkIfCarIsReturnedSuccess, deleteCarAction, deleteCarSuccess, deleteFavoriteAction, deleteFavoriteActionSuccess, loadCarDetailsSuccess, loadCarImages, loadCarImagesSuccess, loadCars, loadCarsSuccess, loadFavoriteCars, loadFavoriteCarsSuccess, loadUserRentals, loadUserRentalsSuccess, updateCarAction, updateCarSuccess } from "./car.actions";
 import { CarService } from "src/app/services/car/car.service";
@@ -11,7 +11,6 @@ import { ROUTER_NAVIGATION, RouterNavigatedAction } from "@ngrx/router-store";
 import { Car } from "src/app/models/car.model";
 import { ToastrService } from "ngx-toastr";
 import { FavoriteService } from "src/app/services/favorite/favorite.service";
-import { merge } from "lodash";
 import { RentalService } from "src/app/services/rentalService/rental.service";
 
 @Injectable()
@@ -58,40 +57,41 @@ export class CarEffects {
         }))
     })
 
-    checkIfCarIsReturned$ = createEffect(() => {
-        return this.actions$.pipe(ofType (checkIfCarIsReturned), mergeMap((action) => {
-            return this.rentalService.checkIfCarIsReturned(action.carId).pipe(map((resp)=> {
-                if(resp.success){
-                    const response = resp.success
-                    return checkIfCarIsReturnedSuccess({response});
-                }else{
-                    const response = false
-                    return checkIfCarIsReturnedFail({response})
-                }
-
-            }))
-        }))
-    })    
-
-
     // checkIfCarIsReturned$ = createEffect(() => {
-    //     return this.actions$.pipe(
-    //       ofType(checkIfCarIsReturned),
-    //       mergeMap((action) => {
-    //         return this.rentalService.checkIfCarIsReturned(action.carId).pipe(
-    //           map((resp) => {
-    //             const response = resp.success;
-    //             console.log(response);
-    //             return checkIfCarIsReturnedSuccess({ response });
-    //           }),
-    //           catchError((errResp) => {
-    //             const response = false;
-    //             return of(checkIfCarIsReturnedFail({ response }));
-    //           })
-    //         );
-    //       })
-    //     );
-    //   },{dispatch:false}); 
+    //     return this.actions$.pipe(ofType (checkIfCarIsReturned), mergeMap((action) => {
+    //         return this.rentalService.checkIfCarIsReturned(action.carId).pipe(switchMap((resp)=> {
+    //                 const response = resp.success
+    //                 return checkIfCarIsReturnedSuccess({response});
+    //         },(responseError=> {
+    //                 const response = false
+    //                 return checkIfCarIsReturnedFail({response})
+    //         })))
+    //     }))
+    // })    
+
+
+    checkIfCarIsReturned$ = createEffect(() => {
+        return this.actions$.pipe(
+          ofType(checkIfCarIsReturned),
+          switchMap(action => {
+            return this.rentalService.checkIfCarIsReturned(action.carId).pipe(
+              map(resp => {
+                const response = resp.success;
+                const checkIfCarIsReturnedSuccessAction = checkIfCarIsReturnedSuccess({ response });
+                return checkIfCarIsReturnedSuccessAction;
+              }),
+              catchError(errResp => {
+                const response = false;
+                this.toastrService.error("Car is not returned yet");
+                return of(checkIfCarIsReturnedSuccess({ response }));
+              })
+            );
+          })
+        );
+      });
+
+
+    
     getSingleCar$ = createEffect(() => {
         return this.actions$.pipe(ofType(ROUTER_NAVIGATION), filter((r: RouterNavigatedAction) => {
             return r.payload.routerState.url.startsWith('/cars/car')
@@ -200,8 +200,6 @@ export class CarEffects {
     {dispatch:false}
     )
 
-
-
     updateCar$ = createEffect(() => {
         return this.actions$.pipe(ofType(updateCarAction), mergeMap((action => {
             return this.carService.updateCar(action.car).pipe(mergeMap(response => {
@@ -210,8 +208,5 @@ export class CarEffects {
             }))
         })))
     })
-
-
-
 
 }
