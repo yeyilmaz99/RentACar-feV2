@@ -21,6 +21,7 @@ import { loadColors } from '../../color/state/color.actions';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Favorite } from 'src/app/models/favorite';
 import { RentalModel } from 'src/app/models/rentalModel';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-car-details',
@@ -28,7 +29,9 @@ import { RentalModel } from 'src/app/models/rentalModel';
   styleUrls: ['./car-details.component.css']
 })
 export class CarDetailsComponent implements OnInit {
-  isAuthenticated:Observable<boolean>;
+  isAuthenticated;
+  isLoggedIn;
+  isAdmin;
   userId:number;
   allRentals:RentalModel[];
   carId:number;
@@ -41,11 +44,11 @@ export class CarDetailsComponent implements OnInit {
   favorites:Favorite[] = [];
   checkIfAlreadyAddedToFav:Boolean;
   checkIfCarIsReturnedClass:Boolean;
-  constructor(private store:Store<AppState>, private formBuilder:FormBuilder, private router:Router) { }
+  constructor(private store:Store<AppState>, private formBuilder:FormBuilder, private router:Router, private toastrService:ToastrService) { }
 
   ngOnInit(): void {
     this.getUserId()
-    this.isLoggedIn();
+    this.checkFavs();
     this.getCar();
     this.createUpdateForm();
     this.getCurrentCarId()
@@ -53,6 +56,7 @@ export class CarDetailsComponent implements OnInit {
     this.getColors();
     this.getCars();
     this.checkIfCarIsReturned();
+    this.checkAdmin();
   }
 
   getCurrentCarId(){
@@ -75,13 +79,43 @@ export class CarDetailsComponent implements OnInit {
     });
   }
 
-  isAdmin(){
-    return this.store.select(isAdmin);
+  checkAdmin(){
+    this.store.select(isAdmin).subscribe(response => {
+      if(response != null){
+        this.isAdmin = response;
+      }
+    });
   }
 
-  isLoggedIn() {
-    this.isAuthenticated = this.store.select(isAuthenticated);
-    if (this.isAuthenticated) {
+  checkIsLoggedIn(){
+    this.store.select(isAuthenticated).subscribe(response => {
+      this.isLoggedIn = response;
+      if(this.isLoggedIn != null){
+        this.router.navigate(['auth'])
+      }
+    })
+  }
+
+
+
+  checkFavs() {
+    // this.isAuthenticated = this.store.select(isAuthenticated);
+    // if (this.isAuthenticated != null) {
+    //     const userId = this.userId;
+    //     this.store.dispatch(loadFavoriteCars({ userId }));
+    //     this.store.select(getFavorites).subscribe(response => {
+    //       this.favorites = response
+    //       this.store.select(checkFavorites).subscribe(response => {
+    //         this.checkIfAlreadyAddedToFav = response;
+    //       });
+    //     })
+    // }
+
+    this.store.select(isAuthenticated).subscribe(response => {
+      this.isAuthenticated = response;
+      if(response === true){
+        this.isAuthenticated = response;
+        this.isAuthenticated = response
         const userId = this.userId;
         this.store.dispatch(loadFavoriteCars({ userId }));
         this.store.select(getFavorites).subscribe(response => {
@@ -90,7 +124,12 @@ export class CarDetailsComponent implements OnInit {
             this.checkIfAlreadyAddedToFav = response;
           });
         })
-    }
+      }
+
+
+    })
+
+
   }
 
   getCar(){
@@ -160,6 +199,10 @@ export class CarDetailsComponent implements OnInit {
   addToFavorites(){
     let newFavorite = {carId : this.carId, userId:this.userId}
     this.store.dispatch(addFavoriteAction(newFavorite));
+    if(this.userId ===null){
+      this.router.navigate(['auth'])
+      this.toastrService.info("You should Log in");
+    }
   }
 
   deleteFromFavorites(carId:number){
@@ -198,5 +241,17 @@ export class CarDetailsComponent implements OnInit {
       this.edit = false;
     }
   } 
+
+  rentNavigate(carId:number){
+    this.store.select(isAuthenticated).subscribe(response => {
+      this.isLoggedIn = response;
+      if(this.isLoggedIn != null && this.isLoggedIn === false){
+        this.router.navigate(['auth'])
+        this.toastrService.info("You should Log in");
+      }else{
+        this.router.navigate([`cars/car/${carId}/rent/${carId}`])
+      }
+    })
+  }
 }
 
