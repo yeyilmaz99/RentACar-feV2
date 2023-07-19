@@ -27,6 +27,9 @@ import { AdminDashboardComponent } from './components/admin/admin-dashboard/admi
 import { CarEffects } from './components/car/state/car.effects';
 import { FavoriteComponent } from './components/favorite/favorite.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { AboutUsComponent } from './components/about-us/about-us.component';
+import { ContactUsComponent } from './components/contact-us/contact-us.component';
+import { SubscribeFormComponent } from './components/shared/subscribe-form/subscribe-form.component';
 
 
 export function tokenGetter() {
@@ -43,6 +46,9 @@ export function tokenGetter() {
     FooterComponent,
     FavoriteComponent,
     UserProfileComponent,
+    AboutUsComponent,
+    ContactUsComponent,
+    SubscribeFormComponent,
   ],
   imports: [
     ReactiveFormsModule,
