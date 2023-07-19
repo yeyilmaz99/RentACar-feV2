@@ -16,6 +16,7 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { RentComponent } from "./car-details/rent/rent.component";
 import { MatNativeDateModule } from "@angular/material/core";
+import { LoginGuard } from "src/app/guards/login.guard";
 
 
 
@@ -28,7 +29,7 @@ const routes: Routes = [
             { path: '', component: CarsComponent },
             { path: 'add-car', component: AddCarComponent },
             { path: 'car/:id', component: CarDetailsComponent , children:[
-             {path: 'rent/:id', component:RentComponent} 
+             {path: 'rent/:id', component:RentComponent, canActivate:[LoginGuard]} 
             ] }
         ]
     }
