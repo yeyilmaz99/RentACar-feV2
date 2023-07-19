@@ -22,7 +22,6 @@ import { Register } from "src/app/models/register.model";
 
 export class AuthService {
   apiUrl = 'https://apiv2.rentacar.yeyilmaz.online/api/Auth/'
-  
   // apiUrl = 'https://localhost:5001/api/Auth/'
   timeoutInterval: any;
   constructor(private http: HttpClient, private store: Store<AppState>, private jwtHelper: JwtHelperService,
