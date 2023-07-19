@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable, distinctUntilChanged } from 'rxjs';
 import { Car } from 'src/app/models/car.model';
 import { AppState } from 'src/app/store/app.state';
-import { checkFavorites, getCarById, getCarDetails, getCarImages, getFavorites, isReturned } from '../state/car.selector';
+import { checkFavorites, getCarById, getCarDetails, getCarImages, getFavorites, getFindeksPoint, isReturned } from '../state/car.selector';
 import { setLoadingSpinner } from 'src/app/store/shared/shared.actions';
 import { CarImage } from 'src/app/models/carImage';
 import { getUserId, isAdmin, isAuthenticated } from '../../auth/state/auth.selector';
@@ -22,6 +22,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Favorite } from 'src/app/models/favorite';
 import { RentalModel } from 'src/app/models/rentalModel';
 import { ToastrService } from 'ngx-toastr';
+import { FindeksService } from 'src/app/services/findeksService/findeks.service';
 
 @Component({
   selector: 'app-car-details',
@@ -32,9 +33,11 @@ export class CarDetailsComponent implements OnInit {
   isAuthenticated;
   isLoggedIn;
   isAdmin;
+  fpSufficient:boolean;
   userId:number;
   allRentals:RentalModel[];
   carId:number;
+  carFindeksPoint:number;
   car:Observable<Car>
   carImages:Observable<CarImage[]>
   edit:Boolean =false;
@@ -44,7 +47,7 @@ export class CarDetailsComponent implements OnInit {
   favorites:Favorite[] = [];
   checkIfAlreadyAddedToFav:Boolean;
   checkIfCarIsReturnedClass:Boolean;
-  constructor(private store:Store<AppState>, private formBuilder:FormBuilder, private router:Router, private toastrService:ToastrService) { }
+  constructor(private store:Store<AppState>, private formBuilder:FormBuilder, private router:Router, private toastrService:ToastrService, private findeksService:FindeksService) { }
 
   ngOnInit(): void {
     this.getUserId()
@@ -57,6 +60,7 @@ export class CarDetailsComponent implements OnInit {
     this.getCars();
     this.checkIfCarIsReturned();
     this.checkAdmin();
+    this.getCarFindeksPoint()
   }
 
   getCurrentCarId(){
@@ -64,6 +68,8 @@ export class CarDetailsComponent implements OnInit {
       this.carId = response
     );
   }
+
+
 
   checkIfCarIsReturned(){
     this.store.select(isReturned).subscribe(response => {
@@ -115,7 +121,6 @@ export class CarDetailsComponent implements OnInit {
       this.isAuthenticated = response;
       if(response === true){
         this.isAuthenticated = response;
-        this.isAuthenticated = response
         const userId = this.userId;
         this.store.dispatch(loadFavoriteCars({ userId }));
         this.store.select(getFavorites).subscribe(response => {
@@ -125,11 +130,7 @@ export class CarDetailsComponent implements OnInit {
           });
         })
       }
-
-
     })
-
-
   }
 
   getCar(){
@@ -253,5 +254,79 @@ export class CarDetailsComponent implements OnInit {
       }
     })
   }
+
+
+  // checkIfFpSufficient(){
+  //   this.findeksService.checkIfFindeksSufficient(this.carFindeksPoint,this.userId).subscribe(response => {
+  //   },responseError =>{
+  //     if(!responseError.error.success){
+  //       Swal.fire({
+  //         title: 'Are you sure?',
+  //         text: "You Dont have enough Findeks Point. Do you still want to rent this car with insurance for 250$ extra?",
+  //         icon: 'warning',
+  //         showCancelButton: true,
+  //         confirmButtonColor: '#3085d6',
+  //         cancelButtonColor: '#d33',
+  //         confirmButtonText: 'Yes!'
+  //       }).then((result) => {
+  //         if (result.isDismissed) {
+  //           Swal.fire(
+  //             'OK!',
+  //             'Please select another car.',
+  //             'error'
+  //           )
+  //           this.router.navigate(['cars'])
+  //         }
+  //       })
+  //     }
+  //   })
+  // }
+
+
+
+  checkIfFpSufficientv1(){
+    this.findeksService.checkIfFindeksSufficient(this.carFindeksPoint,this.userId).subscribe(response => {
+      this.fpSufficient = response.success
+      return response.success
+    },responseError =>{
+      this.fpSufficient = responseError.error.success;
+      if(!responseError.error.success){
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You Dont have enough Findeks Point. Do you still want to rent this car with insurance for 250$ extra?",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes!'
+        }).then((result) => {
+          if (result.isDismissed) {
+            Swal.fire(
+              'OK!',
+              'Please select another car.',
+              'error'
+            )
+            this.router.navigate(['cars'])
+          }
+        })
+      }
+      return responseError.error.success
+    })
+  }
+
+  getCarFindeksPoint(){
+    this.store.select(getFindeksPoint).subscribe(response => {
+      this.carFindeksPoint = response
+      if(this.isAuthenticated ===true){
+        this.checkIfFpSufficientv1();
+      }
+    })
+  }
+
+
+
+
 }
+
+
 
