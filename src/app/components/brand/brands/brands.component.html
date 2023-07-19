@@ -1,11 +1,14 @@
 <div class="container">
     <div class="row justify-content-center" *ngIf="brands">
         <!-- <div class="card mt-4" *ngFor="let brand of brandData" style="width: 18rem;" routerLink="/cars/brand/{{brand.brandId}}"> -->
-        <div class="card mt-4" *ngFor="let brand of brands" style="width: 18rem;" routerLink="/brands/add">
+        <div class="card mt-4" *ngFor="let brand of brands" style="width: 18rem;">
             <img src="assets/images/DefaultImage.jpg" class="card-img-top" alt="...">
             <div class="card-body">
                 <h2 class="card-title">{{brand.brandName}}</h2>
             </div>
+        </div>
+        <div>
+            <button class="btn btn-primary" routerLink="add" *ngIf="isAdmin">Add</button>
         </div>
     </div>
 </div>
