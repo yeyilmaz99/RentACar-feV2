@@ -12,7 +12,7 @@ import { LocalStorageService } from "../localStorage/local-storage.service";
 import { Claims } from "src/app/models/claims";
 import { AuthResponseData } from "src/app/models/auth.ResponseData.model";
 import { SingleResponseModel } from "src/app/models/singleResponseModel";
-import { getToken } from "src/app/components/auth/state/auth.selector";
+import { getToken, isAuthenticated } from "src/app/components/auth/state/auth.selector";
 import { Register } from "src/app/models/register.model";
 
 
@@ -21,6 +21,7 @@ import { Register } from "src/app/models/register.model";
 })
 
 export class AuthService {
+  // apiUrl = 'https://apiv2.rentacar.yeyilmaz.online/api/Auth/'
   apiUrl = 'https://localhost:5001/api/Auth/'
   timeoutInterval: any;
   constructor(private http: HttpClient, private store: Store<AppState>, private jwtHelper: JwtHelperService,
@@ -152,14 +153,27 @@ export class AuthService {
   }
 
   isAdmin():boolean{
-    let claims:Claims | undefined = this.getClaims();
-    if(claims.roles.includes("admin")){
-      return true
-    }else{
-      return false
-    }
+    let isAdmin:boolean
+    this.store.select(isAuthenticated).subscribe(response => {
+      if(response === true){
+        isAdmin = response
+      }else {
+        isAdmin = false;
+      }
+    })
+    return isAdmin;
   }
 
-
+  isAuthenticated():boolean{
+    let isLoggedIn:boolean
+    this.store.select(isAuthenticated).subscribe(response => {
+      if(response === true){
+        isLoggedIn = response
+      }else {
+        isLoggedIn = false;
+      }
+    })
+    return isLoggedIn;
+  }
 
 }
