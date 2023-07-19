@@ -39,6 +39,7 @@ export class AuthEffects {
             const user = userData.user
             const isAdmin = userData.isAdmin
             this.authService.setUserInLocalStorage(user);
+            this.toastr.success("Successfully Logged In")
             return loginSuccess({ user, redirect:true, admin:isAdmin});
           }),
           catchError((errResp) => {
@@ -79,6 +80,7 @@ export class AuthEffects {
         const user = userData.user
         const isAdmin = userData.isAdmin
         this.authService.setUserInLocalStorage(user);
+        this.toastr.success("Successfully Registered & Logged In")
         return signupSuccess({user, redirect:true, admin:isAdmin})
       }),catchError((errResp) => {
         const errorMessage = errResp.error;
