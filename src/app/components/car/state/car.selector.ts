@@ -43,3 +43,8 @@ export const getUserRentals = createSelector(getCarState, (state) => {
 export const isReturned = createSelector(getCarState, (state)=> {
     return state.isReturned
 })
+
+export const getFindeksPoint = createSelector(getCars,getCurrentRoute,(cars:Car[],route:RouterStateUrl) => {
+    let car = cars.find((car:Car) => car.carId == route.params['id']);
+    return car.findeksPoint
+})
