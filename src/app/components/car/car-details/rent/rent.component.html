@@ -32,24 +32,24 @@
             <div class="card">
                 <form style="padding: 10px;" [formGroup]="paymentForm">
                     <div class="mb-3 form-group">
-                      <label for="cardName" class="form-label">Kart üzerindeki isim</label>
+                      <label for="cardName" class="form-label">Cardholder Name</label>
                       <input type="text" class="form-control"  formControlName="cardName" id="cardName">
                     </div>
                     <div class="mb-3 form-group">
-                      <label for="creditCardNumber" class="form-label">Kart Numarası</label>
+                      <label for="creditCardNumber" class="form-label">Card Number</label>
                       <input type="number" class="form-control" id="cardNumber" formControlName="cardNumber"  aria-describedby="emailHelp">
                     </div>
                     <div class="row">
                       <div class="mb-3 col-md-6 form-group">
-                        <label for="expirationDate" class="form-label">Son Kullanma Tarihi</label>
+                        <label for="expirationDate" class="form-label">Expiration Date</label>
                         <input type="number" class="form-control" id="expirationDate" formControlName="expirationDate" aria-describedby="emailHelp">
                       </div>
                       <div class="mb-3 col-md-6 form-group">
-                        <label for="securityCode" class="form-label">Güvenlik Kodu(CVC)</label>
+                        <label for="securityCode" class="form-label">Card Verification Code (CVC)</label>
                         <input type="number" class="form-control" id="securityCode" formControlName="securityCode" aria-describedby="emailHelp">
                       </div>
                     </div>
-                    <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="payment()" >Ödeme</button>
+                    <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="payment()" >Payment</button>
                   </form>
             </div>
         </div>
