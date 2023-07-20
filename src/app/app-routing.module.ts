@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'cars', loadChildren: () => import('./components/car/car.module').then(m => m.CarModule) },
   { path: 'brands', loadChildren:() => import('./components/brand/brand.module').then(m => m.BrandModule)},
   { path: 'colors', loadChildren:() => import('./components/color/color.module').then(m => m.ColorModule)},
-  { path: 'admin', component:AdminComponent, loadChildren:() => import ('./components/admin/admin.module').then(m => m.AdminModule),canActivate:[AdminGuard]},
+  { path: 'admin', component:AdminComponent,loadChildren:() => import ('./components/admin/admin.module').then(m => m.AdminModule),canActivate:[AdminGuard], canActivateChild:[AdminGuard]},
   { path: 'user',loadChildren:() => import('./components/user-profile/user.module').then (m=> m.UserModule),canActivate:[LoginGuard]},
   { path: 'about', component:AboutUsComponent},
   { path: 'contact', component:ContactUsComponent}
