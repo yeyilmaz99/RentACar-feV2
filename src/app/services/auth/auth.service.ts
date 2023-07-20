@@ -12,7 +12,7 @@ import { LocalStorageService } from "../localStorage/local-storage.service";
 import { Claims } from "src/app/models/claims";
 import { AuthResponseData } from "src/app/models/auth.ResponseData.model";
 import { SingleResponseModel } from "src/app/models/singleResponseModel";
-import { getToken, isAuthenticated } from "src/app/components/auth/state/auth.selector";
+import { getToken, isAuthenticated, isAdmin } from "src/app/components/auth/state/auth.selector";
 import { Register } from "src/app/models/register.model";
 
 
@@ -21,8 +21,8 @@ import { Register } from "src/app/models/register.model";
 })
 
 export class AuthService {
-  apiUrl = 'https://apiv2.rentacar.yeyilmaz.online/api/Auth/'
-  // apiUrl = 'https://localhost:5001/api/Auth/'
+  // apiUrl = 'https://apiv2.rentacar.yeyilmaz.online/api/Auth/'
+  apiUrl = 'https://localhost:5001/api/Auth/'
 
   
   timeoutInterval: any;
@@ -164,15 +164,18 @@ export class AuthService {
   }
 
   checkIsAdmin():boolean{
-    let isAdmin:boolean
-    this.store.select(isAuthenticated).subscribe(response => {
+    let adminCheck:boolean
+    this.store.select(isAdmin)
+    this.store.select(isAdmin).subscribe(response => {
       if(response === true){
-        isAdmin = response
+        adminCheck = response
+        console.log(response + "v1")
       }else {
-        isAdmin = false;
+        adminCheck = false;
+        console.log(response + "v2")
       }
     })
-    return isAdmin;
+    return adminCheck;
   }
 
   isAuthenticated():boolean{

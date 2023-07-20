@@ -8,15 +8,16 @@ import { ResponseModel } from 'src/app/models/responseModel';
   providedIn: 'root'
 })
 export class PaymentService {
-  apiUrl = "https://apiv2.rentacar.yeyilmaz.online/api/Payment/"
-  // apiUrl = "https://localhost:5001/api/Payment/"
+  // apiUrl = "https://apiv2.rentacar.yeyilmaz.online/api/Payment/"
+  apiUrl = "https://localhost:5001/api/Payment/"
 
   constructor(
     private httpClient:HttpClient
   ) { }
 
   add(payment:Payment):Observable<ResponseModel>{
-    return this.httpClient.post<ResponseModel>(this.apiUrl,payment);
+    let newUrl = this.apiUrl +"add"
+    return this.httpClient.post<ResponseModel>(newUrl,payment);
   }
 
 }

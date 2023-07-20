@@ -6,6 +6,7 @@ import { Findeks } from 'src/app/models/findeks';
 import { ListResponseModel } from 'src/app/models/listResponseModel';
 import { ResponseModel } from 'src/app/models/responseModel';
 import { SingleResponseModel } from 'src/app/models/singleResponseModel';
+import { UpdateFindeks } from 'src/app/models/updateFindeks';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,8 @@ import { SingleResponseModel } from 'src/app/models/singleResponseModel';
 export class FindeksService {
 
   constructor(private httpClient:HttpClient) { }
-  apiUrl = "https://apiv2.rentacar.yeyilmaz.online/api/";
-  // apiUrl = "https://localhost:5001/api/";
+  // apiUrl = "https://apiv2.rentacar.yeyilmaz.online/api/";
+  apiUrl = "https://localhost:5001/api/";
 
 
   getAll():Observable<ListResponseModel<Findeks>>{
@@ -53,7 +54,7 @@ export class FindeksService {
     return this.httpClient.post<ResponseModel>(this.apiUrl+"Findeks/add",findeks);
   }
 
-  updateFindeks(findeks:Findeks):Observable<ResponseModel>{
+  updateFindeks(findeks:UpdateFindeks):Observable<ResponseModel>{
     return this.httpClient.patch<ResponseModel>(this.apiUrl+"Findeks/update",findeks);
   }
 
