@@ -16,7 +16,8 @@ import { PaymentService } from 'src/app/services/paymentService/payment.service'
 import { Findeks } from 'src/app/models/findeks';
 import { FindeksService } from 'src/app/services/findeksService/findeks.service';
 import { UserService } from 'src/app/services/user-service/user-service.service';
-
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { UpdateFindeks } from 'src/app/models/updateFindeks';
 const today = new Date();
 const month = today.getMonth();
 const year = today.getFullYear();
@@ -44,6 +45,7 @@ export class RentComponent implements OnInit {
     this.createPaymentForm();
     this.datePicker();
     this.checkIfCarIsReturned();
+    this.getUsersFindeksPoint()
   }
 
   datePicker() {
@@ -78,7 +80,16 @@ export class RentComponent implements OnInit {
     if (this.campaignOne.valid) {
       let rent: Rent = Object.assign({}, this.campaignOne.value);
       rent.userId = this.userId;
-
+      this.rentalService.addRental(rent).subscribe(
+        (response) => {
+          Swal.fire(response.message,'','success');
+          this.checkIfAlreadyExists();
+          this.router.navigate(['/user/rentals'])
+        },
+        (responseError) => {
+          this.toastrService.error(responseError.error.message);
+        }
+      );
     }
   }
 
@@ -101,8 +112,14 @@ export class RentComponent implements OnInit {
 
 
   payment(){
+    console.log(this.campaignOne.value);
     if (this.paymentForm.valid){
-      let payment:Payment = Object.assign({},this.paymentForm.value);
+      let payment: Payment = {
+        ...this.paymentForm.value,
+        cardNumber: this.paymentForm.value.cardNumber.toString(),
+        securityCode: this.paymentForm.value.securityCode.toString(),
+        expirationDate: this.paymentForm.value.expirationDate.toString()
+      };
       this.paymentService.add(payment).subscribe( (response) => {
         this.toastrService.success("Payment Successful");
         this.rentACar();
@@ -116,7 +133,7 @@ export class RentComponent implements OnInit {
   }
 
   updateFindeksPoint(){
-    let findeks:Findeks = {userId:this.userId,id:0,findeksPoint:0};
+    let findeks:UpdateFindeks = {userId:this.userId,findeksPoint:0};
     this.getUsersFindeksPoint();
     findeks.findeksPoint = this.userFindeksPoint + 100;
     this.findeksService.updateFindeks(findeks).subscribe(response =>{
@@ -131,6 +148,7 @@ export class RentComponent implements OnInit {
       let findeksPoint:number;
       findeksPoint = response.data.findeksPoint ;
       this.userFindeksPoint = findeksPoint;
+      console.log(this.userFindeksPoint)
     })
   }
 
