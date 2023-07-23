@@ -15,6 +15,9 @@ const getCarState = createFeatureSelector<CarState>(CAR_STATE_NAME);
 export const getCars = createSelector(getCarState, (state) => {
     return state.cars;
 })
+export const getFilteredCars = createSelector(getCarState, (state) => {
+    return state.filteredCars;
+})
 
 export const getCarDetails = createSelector(getCarState, (state) => {
     return state.selectedCar
