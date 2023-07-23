@@ -13,6 +13,7 @@ export interface CarState {
     favorites:Favorite[];
     userRentals:Rental[];
     isReturned:boolean;
+    filteredCars:Car[];
 }
 
 export const initialState:CarState = {
@@ -21,5 +22,6 @@ export const initialState:CarState = {
     carImages:null,
     favorites:null,
     userRentals:null,
-    isReturned:null
+    isReturned:null,
+    filteredCars:null
 }
