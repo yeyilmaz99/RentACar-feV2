@@ -4,7 +4,7 @@ import { Actions, act, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { catchError, distinctUntilChanged, filter, map, mergeMap, of, switchMap, tap } from "rxjs";
 import { AppState } from "src/app/store/app.state";
-import { addCar, addCarSuccess, addFavoriteAction, addFavoriteActionSuccess, checkIfCarIsReturned, checkIfCarIsReturnedFail, checkIfCarIsReturnedSuccess, deleteCarAction, deleteCarSuccess, deleteFavoriteAction, deleteFavoriteActionSuccess, loadCarDetailsSuccess, loadCarImages, loadCarImagesSuccess, loadCars, loadCarsSuccess, loadFavoriteCars, loadFavoriteCarsSuccess, loadUserRentals, loadUserRentalsSuccess, updateCarAction, updateCarSuccess } from "./car.actions";
+import { addCar, addCarSuccess, addFavoriteAction, addFavoriteActionSuccess, checkIfCarIsReturned, checkIfCarIsReturnedFail, checkIfCarIsReturnedSuccess, deleteCarAction, deleteCarSuccess, deleteFavoriteAction, deleteFavoriteActionSuccess, loadCarDetailsSuccess, loadCarImages, loadCarImagesSuccess, loadCars, loadCarsSuccess, loadFavoriteCars, loadFavoriteCarsSuccess, loadFilteredCars, loadFilteredCarsSuccess, loadUserRentals, loadUserRentalsSuccess, updateCarAction, updateCarSuccess } from "./car.actions";
 import { CarService } from "src/app/services/car/car.service";
 import { setErrorMessage, setLoadingSpinner } from "src/app/store/shared/shared.actions";
 import { ROUTER_NAVIGATION, RouterNavigatedAction } from "@ngrx/router-store";
@@ -47,6 +47,25 @@ export class CarEffects {
             }))
         }))
     })
+
+    getFilteredCars$ = createEffect(() => {
+        this.store.dispatch(setLoadingSpinner({status:true}))
+        return this.actions$.pipe(ofType(loadFilteredCars), mergeMap((action => {
+            return this.carService.getCarsByBrandAndColorId(action.filter.colorId,action.filter.brandId).pipe(map(response => {
+                this.store.dispatch(setLoadingSpinner({status:false}))
+                const cars = response.data
+                console.log(response.data);
+                this.toastrService.success("Successfully filtered");
+                if(response.data.length == 0){
+                    this.toastrService.error("No suitable vehicle found for this filter")
+                }
+                return loadFilteredCarsSuccess({cars});
+            }))
+        })))
+    })
+
+
+
 
     loadUserRentasl$ = createEffect(()=> {
         return this.actions$.pipe(ofType(loadUserRentals), mergeMap((action)=> {
@@ -208,5 +227,8 @@ export class CarEffects {
             }))
         })))
     })
+
+
+
 
 }
