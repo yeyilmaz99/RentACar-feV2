@@ -4,6 +4,7 @@ import { CarAndImageDto } from "src/app/models/carAndImageDto";
 import { CarDelete } from "src/app/models/carDelete";
 import { CarImage } from "src/app/models/carImage";
 import { Favorite } from "src/app/models/favorite";
+import { FilterModel } from "src/app/models/filterModel";
 import { Rental } from "src/app/models/rental";
 
 
@@ -26,6 +27,8 @@ export const UPDATE_CAR_ACTION ='[car page] update car action';
 export const UPDATE_CAR_SUCCESS = '[car page] update car success';
 
 export const LOAD_CAR_DETAILS_SUCCESS = '[car page] load car details success';
+export const LOAD_FILTERED_CARS = '[car page] load filtered cars';
+export const LOAD_FILTERED_CARS_SUCCESS = '[car page] load filtered cars success';
 
 export const LOAD_FAVORITE_CARS = '[car page] load favorite cars';
 export const LOAD_FAVORITE_CARS_SUCCESS = '[car page] load favorite cars success';
@@ -46,6 +49,11 @@ export const CHECK_IF_CAR_IS_RETURNED_ACTION_SUCCESS = '[car page] check if car 
 export const loadCars = createAction(LOAD_CARS);
 export const loadCarsSuccess = createAction(LOAD_CARS_SUCCESS, props<{cars:Car[]}>());
 export const loadCarDetailsSuccess = createAction(LOAD_CAR_DETAILS_SUCCESS, props<{car:Car}>());
+
+
+export const loadFilteredCars = createAction(LOAD_FILTERED_CARS, props<{filter:FilterModel}>());
+export const loadFilteredCarsSuccess = createAction(LOAD_FILTERED_CARS, props<{cars:Car[]}>());
+
 
 export const loadFavoriteCars = createAction(LOAD_FAVORITE_CARS, props<{userId:number}>());
 export const loadFavoriteCarsSuccess = createAction(LOAD_FAVORITE_CARS_SUCCESS, props<{favorites:Favorite[]}>());
