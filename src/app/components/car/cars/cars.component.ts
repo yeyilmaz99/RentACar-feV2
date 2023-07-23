@@ -1,10 +1,10 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Car } from 'src/app/models/car.model';
-import { getCars } from '../state/car.selector';
+import { getCars, getFilteredCars } from '../state/car.selector';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
-import { loadCars } from '../state/car.actions';
+import { loadCars, loadFilteredCars } from '../state/car.actions';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { OrderByPipe } from 'src/app/pipes/order-by.pipe';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -14,6 +14,8 @@ import { getBrands } from '../../brand/state/brand.selector';
 import { getColors } from '../../color/state/color.selector';
 import { loadBrands } from '../../brand/state/brand.actions';
 import { loadColors } from '../../color/state/color.actions';
+import { FilterModel } from 'src/app/models/filterModel';
+import { CarService } from 'src/app/services/car/car.service';
 
 @Component({
   selector: 'app-cars',
@@ -28,7 +30,8 @@ export class CarsComponent implements OnInit {
   colors:Color[];
   carsSlice: Car[];
   filterText: string = '';
-  constructor(private store:Store<AppState>,private orderByPipe:OrderByPipe,private formBuilder: FormBuilder, ) { }
+  removeFilter:boolean=false;
+  constructor(private store:Store<AppState>,private orderByPipe:OrderByPipe,private formBuilder: FormBuilder, private carService:CarService) { }
 
   ngOnInit(): void {
     this.getCars();
@@ -107,6 +110,19 @@ export class CarsComponent implements OnInit {
 
 
   filter() {
+    if (this.carFilterForm.valid) {
+      const filter: FilterModel = Object.assign(
+        {},
+        this.carFilterForm.value
+      );
+      this.store.dispatch(loadFilteredCars({filter}));
+      this.store.select(getFilteredCars).subscribe(response =>{
+        this.cars = response
+        this.carsSlice = response.slice(0,12)
+        this.removeFilter = true;
+      } )
+    } else {
+    }
   }
 
   createCarFilterForm() {
@@ -114,6 +130,11 @@ export class CarsComponent implements OnInit {
       colorId: ['', Validators.required],
       brandId: ['', Validators.required],
     });
+  }
+
+  removeFilterbtn(){
+    this.getCars();
+    this.removeFilter = false;
   }
 
 
