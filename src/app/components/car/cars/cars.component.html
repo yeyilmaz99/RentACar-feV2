@@ -30,8 +30,12 @@
           </div>
           <div class="card-footer">
             <button class="btn btn-fill btn-primary" (click)="filter()">
-              Filtrele
+              Filter
             </button>
+            <button class="btn btn-fill btn-danger" *ngIf="removeFilter" (click)="removeFilterbtn()">
+              Remove Filter
+            </button>
+
           </div>
         </div>
       </div>
