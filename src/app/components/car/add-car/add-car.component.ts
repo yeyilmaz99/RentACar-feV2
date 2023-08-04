@@ -80,19 +80,9 @@ export class AddCarComponent implements OnInit {
   }
 
   addCar() {
-    if (this.carAddForm.valid && this.selectedImages) {
-      const formData: FormData = new FormData();
-      formData.append('id', '0');
-      formData.append('brandId', this.carAddForm.value.brandId);
-      formData.append('colorId', this.carAddForm.value.colorId);
-      formData.append('carName', this.carAddForm.value.carName);
-      formData.append('modelYear', this.carAddForm.value.modelYear);
-      formData.append('dailyPrice', this.carAddForm.value.dailyPrice);
-      formData.append('description', this.carAddForm.value.description);
-      formData.append('findeksPoint', this.carAddForm.value.findeksPoint);
-      formData.append('image', this.selectedImages);
-  
-      this.store.dispatch(addCar({ formData }));
+    if (this.carAddForm.valid) {
+      let car:Car = Object.assign({},this.carAddForm.value);
+      this.store.dispatch(addCar({ car }));
     }
   }
   

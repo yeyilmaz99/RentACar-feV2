@@ -64,7 +64,7 @@ export const loadUserRentalsSuccess = createAction(LOAD_USER_RENTALS_SUCCESS, pr
 export const loadCarImages = createAction(LOAD_CAR_IMAGES);
 export const loadCarImagesSuccess = createAction(LOAD_CAR_IMAGES_SUCCESS, props<{carImages:CarImage[]}>())
 
-export const addCar = createAction(ADD_CAR, props<{ formData: FormData }>());
+export const addCar = createAction(ADD_CAR, props<{ car:Car }>());
 export const addCarSuccess= createAction(ADD_CAR_SUCCESS, props<{message:string}>());
 
 export const deleteCarAction = createAction(DELETE_CAR_ACTION, props<{carToDelete:CarDelete, redirect:boolean}>());

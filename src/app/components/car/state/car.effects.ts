@@ -149,7 +149,7 @@ export class CarEffects {
         return this.actions$.pipe(
           ofType(addCar),
           mergeMap(action => {
-            return this.carService.addCar(action.formData).pipe(
+            return this.carService.addCar(action.car).pipe(
               mergeMap(response => {
                 const message = response.message;
                 this.toastrService.success(response.message);
