@@ -32,8 +32,8 @@ export class CarService {
     return this.httpClient.get<ListResponseModel<CarImage>>(newPath);
   }
 
-  addCar(formData: FormData): Observable<ResponseModel> {
-    return this.httpClient.post<ResponseModel>(this.apiUrl + "Cars/add", formData);
+  addCar(car: Car): Observable<ResponseModel> {
+    return this.httpClient.post<ResponseModel>(this.apiUrl + "Cars/add", car);
   }
 
   deleteCar(car:any):Observable<ResponseModel>{
