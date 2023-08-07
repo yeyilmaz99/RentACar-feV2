@@ -17,6 +17,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { RentComponent } from "./car-details/rent/rent.component";
 import { MatNativeDateModule } from "@angular/material/core";
 import { LoginGuard } from "src/app/guards/login.guard";
+import { ByteToImagePipe } from "src/app/pipes/byte-to-image-pipe.pipe";
 
 
 
@@ -45,6 +46,7 @@ const routes: Routes = [
         CarDetailsComponent,
         FilterPipe,
         RentComponent,
+        ByteToImagePipe
     ],
 
     imports: [
@@ -58,7 +60,8 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         EffectsModule.forFeature([CarEffects]),
         FormsModule,
-        StoreModule.forFeature(CAR_STATE_NAME,carReducer)
+        StoreModule.forFeature(CAR_STATE_NAME,carReducer),
+
     ],
     providers:[]
 })

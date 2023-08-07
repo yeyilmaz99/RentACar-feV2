@@ -84,12 +84,16 @@
           <div class="row row-cols-1 row-cols-md-4 g-4" *ngIf="cars">
             <div *ngFor="let car of carsSlice | filter:filterText " class="col">
               <div class="card" [routerLink]="['car', car.carId]">
-                <img
-                  
-                  src="assets/images/DefaultImage.jpg"
+                <img *ngIf="car.imageData != null"
+                  [src]="'data:image/jpg;base64,' + car.imageData" class="d-block w-100"
                   class="card-img-top"
                   alt="..."
                 />
+                <img *ngIf="car.imageData == null "
+                src="assets/images/DefaultImage.jpg"
+                class="card-img-top"
+                alt="..."
+              />
                 <div class="card-body">
                   <h5 class="card-title text-truncate">{{ car.carName }}</h5>
                   <p class="card-text text-truncate">{{ car.brandName }}</p>

@@ -23,11 +23,13 @@ import { Favorite } from 'src/app/models/favorite';
 import { RentalModel } from 'src/app/models/rentalModel';
 import { ToastrService } from 'ngx-toastr';
 import { FindeksService } from 'src/app/services/findeksService/findeks.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ByteToImagePipe } from 'src/app/pipes/byte-to-image-pipe.pipe';
 
 @Component({
   selector: 'app-car-details',
   templateUrl: './car-details.component.html',
-  styleUrls: ['./car-details.component.css']
+  styleUrls: ['./car-details.component.css'],
 })
 export class CarDetailsComponent implements OnInit {
   isAuthenticated;
@@ -39,15 +41,19 @@ export class CarDetailsComponent implements OnInit {
   carId:number;
   carFindeksPoint:number;
   car:Observable<Car>
-  carImages:Observable<CarImage[]>
+  carImages:CarImage[];
+  carImagesUrls:SafeResourceUrl[];
+  carImagesBase64: SafeResourceUrl[] = [];
   edit:Boolean =false;
   updateForm:FormGroup;
   brands:Brand[];
   colors:Color[];
+  defaultImage:boolean;
   favorites:Favorite[] = [];
   checkIfAlreadyAddedToFav:Boolean;
   checkIfCarIsReturnedClass:Boolean;
-  constructor(private store:Store<AppState>, private formBuilder:FormBuilder, private router:Router, private toastrService:ToastrService, private findeksService:FindeksService) { }
+  constructor(private store:Store<AppState>, private formBuilder:FormBuilder, private router:Router, private toastrService:ToastrService, private findeksService:FindeksService,
+    private sanitizer:DomSanitizer) { }
 
   ngOnInit(): void {
     this.getUserId()
@@ -133,10 +139,20 @@ export class CarDetailsComponent implements OnInit {
     })
   }
 
-  getCar(){
+  getCar() {
     this.car = this.store.select(getCarDetails);
-    this.carImages = this.store.select(getCarImages);
+    this.store.select(getCarImages).subscribe(response => {
+      this.carImages = response;
+      if(this.carImages[0].imageData === null){
+       this.defaultImage = true;
+      }else{
+        this.defaultImage = false;
+      }
+      console.log(this.carImages)
+    });
   }
+  
+
   getCars(){
     this.store.dispatch(loadCars())
   }
@@ -152,7 +168,6 @@ export class CarDetailsComponent implements OnInit {
       findeksPoint: ["",Validators.required],
     })
   }
-
 
 
   getBrands(){

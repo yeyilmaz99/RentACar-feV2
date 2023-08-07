@@ -3,6 +3,10 @@
       <div class="col-md-6">
         <form [formGroup]="carAddForm">
           <div class="mb-3">
+              <label for="imageData" class="form-label">Select Profile Photo</label>
+              <input id="imageData" formControlName="imageData" class="form-control" type="file" (change)="onFileSelected($event)">
+          </div>
+          <div class="mb-3">
             <h4>Select Brand</h4>
             <select
               class="form-select"

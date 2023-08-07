@@ -2,7 +2,7 @@ export interface CarImage {
   id: number;
   imageName: string;
   carId: number;
-  Image:null;
+  imageData:string;
   imagePath: string;
   date: Date;
 }

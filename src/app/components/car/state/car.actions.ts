@@ -20,6 +20,9 @@ export const LOAD_CARS_SUCCESS = '[car page] load cars success'
 export const ADD_CAR = '[car page] add car';
 export const ADD_CAR_SUCCESS = '[car page] add car success';
 
+export const ADD_CAR_IMAGE = '[car page] add car image';
+export const ADD_CAR_IMAGE_SUCCESS = '[car page] add car image success';
+
 export const DELETE_CAR_ACTION = '[car page] delete car action';
 export const DELETE_CAR_SUCCESS = '[car page] delete car success';
 
@@ -64,8 +67,11 @@ export const loadUserRentalsSuccess = createAction(LOAD_USER_RENTALS_SUCCESS, pr
 export const loadCarImages = createAction(LOAD_CAR_IMAGES);
 export const loadCarImagesSuccess = createAction(LOAD_CAR_IMAGES_SUCCESS, props<{carImages:CarImage[]}>())
 
-export const addCar = createAction(ADD_CAR, props<{ car:Car }>());
+export const addCar = createAction(ADD_CAR, props<{ formData:FormData }>());
 export const addCarSuccess= createAction(ADD_CAR_SUCCESS, props<{message:string}>());
+
+export const addCarImage = createAction(ADD_CAR, props<{ carId:number, formData:FormData }>());
+export const addCarImageSuccess= createAction(ADD_CAR_SUCCESS, props<{message:string}>());
 
 export const deleteCarAction = createAction(DELETE_CAR_ACTION, props<{carToDelete:CarDelete, redirect:boolean}>());
 export const deleteCarSuccess = createAction(DELETE_CAR_SUCCESS, props<{message:string, redirect:boolean, carId:number}>());

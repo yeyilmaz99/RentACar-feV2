@@ -1,46 +1,43 @@
 <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-6">
-        <div
-          id="carouselExampleControls"
-          class="carousel slide"
-          data-bs-ride="carousel"
-        >
-        <div class="carousel-inner" *ngIf="carImages | async as carImagesData">
-          <div class="carousel-item" *ngFor="let carImage of carImagesData; let i = index" [class.active]="i === 0">
-            <img
-              [src]="'assets/images/' + carImage?.imagePath"
-              class="d-block w-100"
-              alt="..."
-            />
+        <div class="container">
+          <div id="myCarousel" class="carousel slide" data-bs-ride="carousel"*ngIf="!defaultImage" >
+            <div class="carousel-inner" >
+              <div class="carousel-item" *ngFor="let carImage of carImages; let i = index;" [class.active]="i === 0">
+                <img [src]="'data:image/jpg;base64,' + carImage.imageData" class="d-block w-100">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
           </div>
-        </div>
-          <button
-            class="carousel-control-prev"
-            type="button"
-            data-bs-target="#carouselExampleControls"
-            data-bs-slide="prev"
-          >
-            <span
-              id="slideButton"
-              class="carousel-control-prev-icon"
-              aria-hidden="true"
-            ></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button
-            class="carousel-control-next"
-            type="button"
-            data-bs-target="#carouselExampleControls"
-            data-bs-slide="next"
-          >
-            <span
-              id="slideButton"
-              class="carousel-control-next-icon"
-              aria-hidden="true"
-            ></span>
-            <span class="visually-hidden">Next</span>
-          </button>
+
+          <div id="myCarousel" class="carousel slide" data-bs-ride="carousel" *ngIf="defaultImage">
+            <div class="carousel-inner" >
+              <div class="carousel-item" *ngFor="let carImage of carImages; let i = index;" [class.active]="i === 0">
+                <img src="assets/images/DefaultImage.jpg" class="d-block w-100" alt="photo">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+
+
+
+
+
         </div>
       </div>
   

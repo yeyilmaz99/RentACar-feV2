@@ -4,7 +4,7 @@ import { Actions, act, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { catchError, distinctUntilChanged, filter, map, mergeMap, of, switchMap, tap } from "rxjs";
 import { AppState } from "src/app/store/app.state";
-import { addCar, addCarSuccess, addFavoriteAction, addFavoriteActionSuccess, checkIfCarIsReturned, checkIfCarIsReturnedFail, checkIfCarIsReturnedSuccess, deleteCarAction, deleteCarSuccess, deleteFavoriteAction, deleteFavoriteActionSuccess, loadCarDetailsSuccess, loadCarImages, loadCarImagesSuccess, loadCars, loadCarsSuccess, loadFavoriteCars, loadFavoriteCarsSuccess, loadFilteredCars, loadFilteredCarsSuccess, loadUserRentals, loadUserRentalsSuccess, updateCarAction, updateCarSuccess } from "./car.actions";
+import { addCar, addCarImage, addCarImageSuccess, addCarSuccess, addFavoriteAction, addFavoriteActionSuccess, checkIfCarIsReturned, checkIfCarIsReturnedFail, checkIfCarIsReturnedSuccess, deleteCarAction, deleteCarSuccess, deleteFavoriteAction, deleteFavoriteActionSuccess, loadCarDetailsSuccess, loadCarImages, loadCarImagesSuccess, loadCars, loadCarsSuccess, loadFavoriteCars, loadFavoriteCarsSuccess, loadFilteredCars, loadFilteredCarsSuccess, loadUserRentals, loadUserRentalsSuccess, updateCarAction, updateCarSuccess } from "./car.actions";
 import { CarService } from "src/app/services/car/car.service";
 import { setErrorMessage, setLoadingSpinner } from "src/app/store/shared/shared.actions";
 import { ROUTER_NAVIGATION, RouterNavigatedAction } from "@ngrx/router-store";
@@ -12,6 +12,7 @@ import { Car } from "src/app/models/car.model";
 import { ToastrService } from "ngx-toastr";
 import { FavoriteService } from "src/app/services/favorite/favorite.service";
 import { RentalService } from "src/app/services/rentalService/rental.service";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Injectable()
 export class CarEffects {
@@ -22,7 +23,8 @@ export class CarEffects {
         private router: Router, 
         private toastrService:ToastrService,
         private favoriteService:FavoriteService,
-        private rentalService:RentalService
+        private rentalService:RentalService,
+        private sanitizer:DomSanitizer
         ) {    }
 
     loadCar$ = createEffect(() => {
@@ -135,7 +137,7 @@ export class CarEffects {
             this.store.dispatch(setLoadingSpinner({status:true}))
             return this.carService.getCarImagesByCarId(id).pipe(map((response) => {
                 this.store.dispatch(setLoadingSpinner({status:false}))
-                const carImages = response.data
+                const carImages = response.data;
                 return loadCarImagesSuccess({ carImages })
             }))
         })
@@ -149,10 +151,10 @@ export class CarEffects {
         return this.actions$.pipe(
           ofType(addCar),
           mergeMap(action => {
-            return this.carService.addCar(action.car).pipe(
+            return this.carService.addCar(action.formData).pipe(
               mergeMap(response => {
                 const message = response.message;
-                this.toastrService.success(response.message);
+                this.toastrService.success(response.message, "Successfully Added");
                 const addCarSuccessAction = addCarSuccess({ message });
                 return of(addCarSuccessAction, loadCars());
               }),
@@ -165,6 +167,27 @@ export class CarEffects {
           })
         );
       });
+
+
+    //   addCarImage$ = createEffect(() => {
+    //     return this.actions$.pipe(
+    //       ofType(addCarImage),
+    //       mergeMap(action => {
+    //         return this.carService.addCarImages(action.carId,action.formData).pipe(
+    //           map(response => {
+    //             const message = response.message;
+    //             this.toastrService.success(response.message);
+    //             return addCarImageSuccess({ message });
+    //           }),
+    //           catchError(errResp => {
+    //             const errorMessage = errResp.error;
+    //             this.toastrService.error(errResp.error.message, errResp.error.message);
+    //             return of(setErrorMessage({ message: errorMessage }));
+    //           })
+    //         );
+    //       })
+    //     );
+    //   });
 
 
 
@@ -227,6 +250,13 @@ export class CarEffects {
             }))
         })))
     })
+
+
+    // getImageUrlFromData(byteArray: number[], imageName:string) : string{
+    //     const uint8Array = new Uint8Array(byteArray);
+    //     const blob = new Blob([uint8Array]);
+    //     return URL.createObjectURL(blob);
+    // }
 
 
 
