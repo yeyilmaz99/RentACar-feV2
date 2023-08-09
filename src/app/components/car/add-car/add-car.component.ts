@@ -24,7 +24,7 @@ import { CarAddModel } from 'src/app/models/carAddModel';
 })
 export class AddCarComponent implements OnInit {
   carAddForm : FormGroup;
-  carImageForm: FormGroup;
+  carDetailImagesForm: FormGroup;
   selectedImages: File | null;
   brands:Brand[];
   colors:Color[];
@@ -32,7 +32,6 @@ export class AddCarComponent implements OnInit {
 
   ngOnInit(): void {
   this.createCarAddForm();
-  this.createCarImagesAddForm();
     this.getBrands();
     this.getColors();
 
@@ -54,12 +53,6 @@ export class AddCarComponent implements OnInit {
   }
 
 
-  createCarImagesAddForm(){
-    this.selectedImages = null; // selectedImages değişkenini başlatma
-    this.carImageForm = this.formBuilder.group({
-      carImages: [null, Validators.required]
-    });
-  }
 
 
 
@@ -72,14 +65,17 @@ export class AddCarComponent implements OnInit {
       dailyPrice: ['', Validators.required],
       description: ['', Validators.required],
       findeksPoint: ['', Validators.required],
-      imageData: ['', Validators.required]
+      imageData: ['', Validators.required],
+      detailImages: ['', Validators.required]
     });
   }
 
+
+
+
   addCar() {
     if (this.carAddForm.valid) {
-      let car: CarAddModel = Object.assign({}, this.carAddForm.value);
-      console.log(car);
+      let car: CarAddModel = Object.assign({}, this.carAddForm.value);      
       const formData = new FormData();
       formData.append('BrandId', car.brandId.toString());
       formData.append('ColorId', car.colorId.toString());
@@ -88,8 +84,19 @@ export class AddCarComponent implements OnInit {
       formData.append('DailyPrice', car.dailyPrice.toString());
       formData.append('Description', car.description);
       formData.append('FindeksPoint', car.findeksPoint.toString());
+      
       const blob = new Blob([car.imageData], { type: 'image/jpeg' }); 
       formData.append('ImageData', blob, 'car-image.png');
+  
+      const detailImages: FileList = this.carAddForm.get('detailImages').value;
+
+      for (let i = 0; i < detailImages.length; i++) {
+        const image = detailImages[i];
+        const blob = new Blob([image], { type: 'image/jpeg' });
+        formData.append(`DetailImages`, blob, `car-image-${i}.png`);
+      }
+  
+      console.log(this.carAddForm.value);
       this.store.dispatch(addCar({ formData }));
     }
   }
@@ -97,6 +104,11 @@ export class AddCarComponent implements OnInit {
   onFileSelected(event: any) {
     const file = event.target.files[0]
     this.carAddForm.patchValue({ imageData: file });
+  }
+
+  onFileSelectedForDetails(event: any) {
+    const files: FileList = event.target.files;
+    this.carAddForm.get('detailImages').setValue(files);
   }
   
 

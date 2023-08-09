@@ -9,7 +9,8 @@ import { RentalDetails } from "src/app/models/rentalDetails";
 export interface CarState {
     cars:Car[];
     selectedCar:Car
-    carImages:CarImage[];
+    carProfileImage:CarImage[];
+    carDetailImages:CarImage[];
     favorites:Favorite[];
     userRentals:Rental[];
     isReturned:boolean;
@@ -19,7 +20,8 @@ export interface CarState {
 export const initialState:CarState = {
     cars:null,
     selectedCar:null,
-    carImages:null,
+    carProfileImage:null,
+    carDetailImages:null,
     favorites:null,
     userRentals:null,
     isReturned:null,

@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable, distinctUntilChanged } from 'rxjs';
 import { Car } from 'src/app/models/car.model';
 import { AppState } from 'src/app/store/app.state';
-import { checkFavorites, getCarById, getCarDetails, getCarImages, getFavorites, getFindeksPoint, isReturned } from '../state/car.selector';
+import { checkFavorites, getCarById, getCarDetailImages, getCarDetails, getCarImages, getFavorites, getFindeksPoint, isReturned } from '../state/car.selector';
 import { setLoadingSpinner } from 'src/app/store/shared/shared.actions';
 import { CarImage } from 'src/app/models/carImage';
 import { getUserId, isAdmin, isAuthenticated } from '../../auth/state/auth.selector';
@@ -40,8 +40,8 @@ export class CarDetailsComponent implements OnInit {
   allRentals:RentalModel[];
   carId:number;
   carFindeksPoint:number;
-  car:Observable<Car>
-  carImages:CarImage[];
+  car:Car
+  carImages:string[] = [];
   carImagesUrls:SafeResourceUrl[];
   carImagesBase64: SafeResourceUrl[] = [];
   edit:Boolean =false;
@@ -53,7 +53,8 @@ export class CarDetailsComponent implements OnInit {
   checkIfAlreadyAddedToFav:Boolean;
   checkIfCarIsReturnedClass:Boolean;
   constructor(private store:Store<AppState>, private formBuilder:FormBuilder, private router:Router, private toastrService:ToastrService, private findeksService:FindeksService,
-    private sanitizer:DomSanitizer) { }
+    private sanitizer:DomSanitizer) {
+     }
 
   ngOnInit(): void {
     this.getUserId()
@@ -140,16 +141,21 @@ export class CarDetailsComponent implements OnInit {
   }
 
   getCar() {
-    this.car = this.store.select(getCarDetails);
-    this.store.select(getCarImages).subscribe(response => {
-      this.carImages = response;
-      if(this.carImages[0].imageData === null){
-       this.defaultImage = true;
-      }else{
-        this.defaultImage = false;
+    this.store.select(getCarDetails).subscribe(response => {
+      this.carImages = [];
+      this.car = response;
+      if(response){
+        this.carImages.push(this.car.imageData);
+        console.log(this.carImages)
       }
-      console.log(this.carImages)
     });
+    this.store.select(getCarDetailImages).subscribe(response => {
+      if(response){
+        response.forEach(image => {
+          this.carImages.push(image.imageData);
+        });
+      }
+    })
   }
   
 

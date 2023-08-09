@@ -27,8 +27,13 @@ export class CarService {
     return this.httpClient.get<SingleResponseModel<Car>>(newPath+id);
   }
 
-  getCarImagesByCarId(carId:number):Observable<ListResponseModel<CarImage>>{
+  getCarProfileImagesByCarId(carId:number):Observable<ListResponseModel<CarImage>>{
     let newPath = this.apiUrl + 'CarImages/getall?carId=' + carId;
+    return this.httpClient.get<ListResponseModel<CarImage>>(newPath);
+  }
+
+  getCarDetailImagesByCarId(carId:number):Observable<ListResponseModel<CarImage>>{
+    let newPath = this.apiUrl + 'CarDetailImages/getall?carId=' + carId;
     return this.httpClient.get<ListResponseModel<CarImage>>(newPath);
   }
 
@@ -51,8 +56,5 @@ export class CarService {
   getCarsByBrandAndColorId(colorId:number,brandId:number):Observable<ListResponseModel<Car>>{
     return this.httpClient.get<ListResponseModel<Car>>(this.apiUrl+"Cars/getbybrandidandcolorid?colorId="+colorId+"&brandId="+brandId);
   }
-
-
-
 
 }

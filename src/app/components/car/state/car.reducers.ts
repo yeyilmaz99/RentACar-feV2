@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { initialState } from "./car.state";
-import { addFavoriteActionSuccess, checkIfCarIsReturned, checkIfCarIsReturnedFail, checkIfCarIsReturnedSuccess, deleteCarSuccess, loadCarDetailsSuccess, loadCarImagesSuccess, loadCarsSuccess, loadFavoriteCarsSuccess, loadFilteredCarsSuccess, loadUserRentalsSuccess, updateCarSuccess } from "./car.actions";
+import { addFavoriteActionSuccess, checkIfCarIsReturned, checkIfCarIsReturnedFail, checkIfCarIsReturnedSuccess, deleteCarSuccess, loadCarDetailImagesSuccess, loadCarDetailsSuccess, loadCarImagesSuccess, loadCarsSuccess, loadFavoriteCarsSuccess, loadFilteredCarsSuccess, loadUserRentalsSuccess, updateCarSuccess } from "./car.actions";
 import { act } from "@ngrx/effects";
 
 
@@ -15,7 +15,7 @@ const _carReducer = createReducer(initialState,
     }), on(loadCarImagesSuccess, (state, action) => {
         return {
             ...state,
-            carImages:action.carImages
+            carProfileImage:action.carImages
         }
 
     }), on(updateCarSuccess, (state, action) => {
@@ -65,6 +65,12 @@ const _carReducer = createReducer(initialState,
         return {
             ...state,
             filteredCars:action.cars
+        }
+    }), on (loadCarDetailImagesSuccess, (state, action) => {
+        return {
+            ...state,
+            carDetailImages: action.carImages
+
         }
     })
 

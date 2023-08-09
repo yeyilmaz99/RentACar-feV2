@@ -7,6 +7,10 @@
               <input id="imageData" formControlName="imageData" class="form-control" type="file" (change)="onFileSelected($event)">
           </div>
           <div class="mb-3">
+            <label for="detailImages" class="form-label">Select 4 Images For Details</label>
+            <input formControlName="detailImages" class="form-control" type="file" id="detailImages" multiple (change)="onFileSelectedForDetails($event)">
+          </div>
+          <div class="mb-3">
             <h4>Select Brand</h4>
             <select
               class="form-select"

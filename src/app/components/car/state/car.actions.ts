@@ -1,4 +1,5 @@
 import { createAction, props } from "@ngrx/store";
+import { create } from "lodash";
 import { Car } from "src/app/models/car.model";
 import { CarAndImageDto } from "src/app/models/carAndImageDto";
 import { CarDelete } from "src/app/models/carDelete";
@@ -17,6 +18,12 @@ export const LOAD_CAR_IMAGES= '[car page] load images';
 export const LOAD_CAR_IMAGES_SUCCESS= '[car page] load images success'
 export const LOAD_CARS_SUCCESS = '[car page] load cars success'
 
+
+export const LOAD_CAR_DETAIL_IMAGES = "[car page] load car detail images";
+export const LOAD_CAR_DETAIL_IMAGES_SUCCESS = "[car page] load car detail images success";
+
+export const ADD_CAR_DETAIL_IMAGES = "[car page] add car detail images";
+export const ADD_CAR_DETAIL_IMAGES_SUCCESS = "[car page] add car detail images success";
 export const ADD_CAR = '[car page] add car';
 export const ADD_CAR_SUCCESS = '[car page] add car success';
 
@@ -66,6 +73,13 @@ export const loadUserRentalsSuccess = createAction(LOAD_USER_RENTALS_SUCCESS, pr
 
 export const loadCarImages = createAction(LOAD_CAR_IMAGES);
 export const loadCarImagesSuccess = createAction(LOAD_CAR_IMAGES_SUCCESS, props<{carImages:CarImage[]}>())
+
+export const loadCarDetailImages = createAction(LOAD_CAR_DETAIL_IMAGES);
+export const loadCarDetailImagesSuccess= createAction(LOAD_CAR_DETAIL_IMAGES_SUCCESS, props<{carImages:CarImage[]}>());
+
+
+export const addCarDetailImages = createAction(ADD_CAR_DETAIL_IMAGES, props<{formData:FormData}>());
+export const addCarDetailImagesSuccess = createAction(ADD_CAR_DETAIL_IMAGES, props<{message:string}>());
 
 export const addCar = createAction(ADD_CAR, props<{ formData:FormData }>());
 export const addCarSuccess= createAction(ADD_CAR_SUCCESS, props<{message:string}>());

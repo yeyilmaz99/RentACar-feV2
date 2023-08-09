@@ -4,7 +4,7 @@ import { Actions, act, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { catchError, distinctUntilChanged, filter, map, mergeMap, of, switchMap, tap } from "rxjs";
 import { AppState } from "src/app/store/app.state";
-import { addCar, addCarImage, addCarImageSuccess, addCarSuccess, addFavoriteAction, addFavoriteActionSuccess, checkIfCarIsReturned, checkIfCarIsReturnedFail, checkIfCarIsReturnedSuccess, deleteCarAction, deleteCarSuccess, deleteFavoriteAction, deleteFavoriteActionSuccess, loadCarDetailsSuccess, loadCarImages, loadCarImagesSuccess, loadCars, loadCarsSuccess, loadFavoriteCars, loadFavoriteCarsSuccess, loadFilteredCars, loadFilteredCarsSuccess, loadUserRentals, loadUserRentalsSuccess, updateCarAction, updateCarSuccess } from "./car.actions";
+import { addCar, addCarDetailImages, addCarImage, addCarImageSuccess, addCarSuccess, addFavoriteAction, addFavoriteActionSuccess, checkIfCarIsReturned, checkIfCarIsReturnedFail, checkIfCarIsReturnedSuccess, deleteCarAction, deleteCarSuccess, deleteFavoriteAction, deleteFavoriteActionSuccess, loadCarDetailImagesSuccess, loadCarDetailsSuccess, loadCarImages, loadCarImagesSuccess, loadCars, loadCarsSuccess, loadFavoriteCars, loadFavoriteCarsSuccess, loadFilteredCars, loadFilteredCarsSuccess, loadUserRentals, loadUserRentalsSuccess, updateCarAction, updateCarSuccess } from "./car.actions";
 import { CarService } from "src/app/services/car/car.service";
 import { setErrorMessage, setLoadingSpinner } from "src/app/store/shared/shared.actions";
 import { ROUTER_NAVIGATION, RouterNavigatedAction } from "@ngrx/router-store";
@@ -135,7 +135,7 @@ export class CarEffects {
             return r.payload.routerState['params']['id'];
         }), switchMap((id) => {
             this.store.dispatch(setLoadingSpinner({status:true}))
-            return this.carService.getCarImagesByCarId(id).pipe(map((response) => {
+            return this.carService.getCarProfileImagesByCarId(id).pipe(map((response) => {
                 this.store.dispatch(setLoadingSpinner({status:false}))
                 const carImages = response.data;
                 return loadCarImagesSuccess({ carImages })
@@ -145,6 +145,21 @@ export class CarEffects {
     },)
 
 
+    getCarDetailImages$ = createEffect(()=> {
+        return this.actions$.pipe(ofType(ROUTER_NAVIGATION), filter((r: RouterNavigatedAction) => {
+            return r.payload.routerState.url.startsWith('/cars/car')
+        }), map((r: RouterNavigatedAction) => {
+            return r.payload.routerState['params']['id'];
+        }), switchMap((id) => {
+            this.store.dispatch(setLoadingSpinner({status:true}))
+            return this.carService.getCarDetailImagesByCarId(id).pipe(map((response) => {
+                this.store.dispatch(setLoadingSpinner({status:false}))
+                const carImages = response.data;
+                return loadCarDetailImagesSuccess({ carImages })
+            }))
+        })
+        )
+    },)
 
 
     addCar$ = createEffect(() => {
@@ -169,11 +184,15 @@ export class CarEffects {
       });
 
 
-    //   addCarImage$ = createEffect(() => {
+
+
+
+
+    //   addCarDetailImage$ = createEffect(() => {
     //     return this.actions$.pipe(
-    //       ofType(addCarImage),
+    //       ofType(addCarDetailImages),
     //       mergeMap(action => {
-    //         return this.carService.addCarImages(action.carId,action.formData).pipe(
+    //         return this.carService.addCarImages(action.formData).pipe(
     //           map(response => {
     //             const message = response.message;
     //             this.toastrService.success(response.message);

@@ -5,7 +5,7 @@
           <div id="myCarousel" class="carousel slide" data-bs-ride="carousel"*ngIf="!defaultImage" >
             <div class="carousel-inner" >
               <div class="carousel-item" *ngFor="let carImage of carImages; let i = index;" [class.active]="i === 0">
-                <img [src]="'data:image/jpg;base64,' + carImage.imageData" class="d-block w-100">
+                <img [src]="'data:image/jpg;base64,' + carImage" class="d-block w-100">
               </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
@@ -41,24 +41,24 @@
         </div>
       </div>
   
-      <div class="col-md-5" *ngIf="car |async as carData" >
+      <div class="col-md-5" *ngIf="car" >
         <div class="right-content">
           <div class="card" style="width: 18rem">
             <div class="card-body">
               <div class="row mt-2 mb-2">
                 <div class="col">
-                  <h1  class="card-title">{{ carData?.carName }}</h1>
+                  <h1  class="card-title">{{ car?.carName }}</h1>
                 </div>
               </div>
   
               <p class="card-text"> 
-                <strong>Description:</strong> {{carData?.description}}
+                <strong>Description:</strong> {{car?.description}}
               </p>
             </div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">Brand : {{ carData?.brandName }}</li>
-              <li class="list-group-item">Color :{{ carData?.colorName }}</li>
-              <li class="list-group-item">Price : {{ carData?.dailyPrice }}</li>
+              <li class="list-group-item">Brand : {{ car?.brandName }}</li>
+              <li class="list-group-item">Color :{{ car?.colorName }}</li>
+              <li class="list-group-item">Price : {{ car?.dailyPrice }}</li>
             </ul>
 
 
