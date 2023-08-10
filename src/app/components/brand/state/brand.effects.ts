@@ -30,12 +30,11 @@ export class BrandEffects {
         return this.actions$.pipe(
             ofType(addBrand),
             mergeMap((action) => {
-                return this.brandService.addBrand(action.brand).pipe(
+                return this.brandService.addBrand(action.formData).pipe(
                     mergeMap((response) => {
                         const message = response.message;
-                        const brand = action.brand;
                         this.toastrService.success(message);
-                        const addBrandSuccessAction = addBrandSuccess({ message, brand });
+                        const addBrandSuccessAction = addBrandSuccess({ message });
                         return of(addBrandSuccessAction, loadBrands()); // loadColors eylemini çağırın
                     })
                 );
