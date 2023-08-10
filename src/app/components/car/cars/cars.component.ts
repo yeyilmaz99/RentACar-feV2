@@ -16,6 +16,7 @@ import { loadBrands } from '../../brand/state/brand.actions';
 import { loadColors } from '../../color/state/color.actions';
 import { FilterModel } from 'src/app/models/filterModel';
 import { CarService } from 'src/app/services/car/car.service';
+import { setLoadingSpinner } from 'src/app/store/shared/shared.actions';
 
 @Component({
   selector: 'app-cars',
@@ -110,6 +111,7 @@ export class CarsComponent implements OnInit {
 
 
   filter() {
+    this.store.dispatch(setLoadingSpinner({status:true}))
     if (this.carFilterForm.valid) {
       const filter: FilterModel = Object.assign(
         {},
