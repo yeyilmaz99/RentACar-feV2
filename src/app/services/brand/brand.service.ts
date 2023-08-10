@@ -11,7 +11,7 @@ import { SingleResponseModel } from 'src/app/models/singleResponseModel';
   providedIn: 'root'
 })
 export class BrandService {
-  apiUrl = "https://apiv2.rentacar.yeyilmaz.online/api/Brands/";
+  apiUrl = "https://apiv2.rentacar.yeyilmaz.online/api/";
   // apiUrl = "https://localhost:5001/api/";
   constructor(private httpClient:HttpClient) { }
 
