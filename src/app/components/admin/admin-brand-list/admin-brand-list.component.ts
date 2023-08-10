@@ -13,7 +13,7 @@ import { loadBrands } from '../../brand/state/brand.actions';
 export class AdminBrandListComponent implements OnInit {
   brands:Brand[] = [];
   dataLoaded:boolean = true;
-  brandToDelete:Brand = {brandId:0, brandName:''};
+  brandToDelete = {brandId:0, brandName:''};
   constructor(private store:Store<AppState>, ) { }
 
   ngOnInit(): void {
