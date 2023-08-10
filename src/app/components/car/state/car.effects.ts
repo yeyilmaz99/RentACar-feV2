@@ -28,12 +28,11 @@ export class CarEffects {
         ) {    }
 
     loadCar$ = createEffect(() => {
-
         return this.actions$.pipe(ofType(loadCars), mergeMap((action) => {
             this.store.dispatch(setLoadingSpinner({status:true}))
             return this.carService.getCars().pipe(map((response) => {
-                this.store.dispatch(setLoadingSpinner({status:false}))
                 const cars = response.data
+                this.store.dispatch(setLoadingSpinner({status:false}))
                 return loadCarsSuccess({ cars })
             }))
         }))
@@ -51,7 +50,6 @@ export class CarEffects {
     })
 
     getFilteredCars$ = createEffect(() => {
-        this.store.dispatch(setLoadingSpinner({status:true}))
         return this.actions$.pipe(ofType(loadFilteredCars), mergeMap((action => {
             return this.carService.getCarsByBrandAndColorId(action.filter.colorId,action.filter.brandId).pipe(map(response => {
                 this.store.dispatch(setLoadingSpinner({status:false}))
@@ -71,7 +69,9 @@ export class CarEffects {
 
     loadUserRentasl$ = createEffect(()=> {
         return this.actions$.pipe(ofType(loadUserRentals), mergeMap((action)=> {
+            this.store.dispatch(setLoadingSpinner({status:true}))
             return this.rentalService.getRentalsByUserId(action.userId).pipe(map((response) => {
+                this.store.dispatch(setLoadingSpinner({status:false}))
                 const rentals = response.data
                 return loadUserRentalsSuccess({rentals});
             }))
