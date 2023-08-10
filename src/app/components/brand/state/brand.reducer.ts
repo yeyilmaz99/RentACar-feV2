@@ -21,13 +21,7 @@ const _brandReducer = createReducer(initialState,
             ...state,
             brands: updatedBrands,
         }
-    }), on(addBrandSuccess, (state,action) =>{
-        let brand = {...action.brand};
-        return{
-            ...state,
-            brands: [...state.brands, brand]
-        }
-    } )   
+    })
     
     )
 
