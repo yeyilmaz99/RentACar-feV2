@@ -32,7 +32,8 @@ export class AddBrandComponent implements OnInit {
 
   createAddBrandForm(){
     this.brandForm = this.formBuilder.group({
-      brandName : ["", Validators.required]
+      brandName : ["", Validators.required],
+      imageData : [File, Validators.required]
     })
   }
 
@@ -52,8 +53,21 @@ export class AddBrandComponent implements OnInit {
       return;
     }
     // this.store.dispatch(setLoadingSpinner({status:true}))
-    const brand = Object.assign({},this.brandForm.value)
-    this.store.dispatch(addBrand({brand}))
+    let brand = Object.assign({},this.brandForm.value)
+    console.log(brand);
+    const formData = new FormData();
+    formData.append('BrandName', brand.brandName.toString());
+
+    const blob = new Blob([brand.imageData], { type: 'image/jpeg' }); 
+    formData.append('ImageData', blob, 'brand-image.png');
+
+    console.log(this.brandForm.value);
+    this.store.dispatch(addBrand({formData}))
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0]
+    this.brandForm.patchValue({ imageData: file });
   }
 
 
