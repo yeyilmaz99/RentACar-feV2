@@ -27,17 +27,23 @@ export class AdminUserListComponent implements OnInit {
   }
 
   getUsers(){
-    this.store.dispatch(loadUsers());
     this.store.select(getUsers).subscribe(response => {
       this.users = response;
+      if(this.users == null){
+        this.store.dispatch(loadUsers());
+      }
     })
   }
 
   getActiveUsers(){
-    this.store.dispatch(loadActiveUsers());
     this.store.select(getActiveUsers).subscribe(response => {
       this.activeUsers = response
+      if(this.users == null) {
+        this.store.dispatch(loadActiveUsers());
+      }
       })
+
+
   }
 
 
