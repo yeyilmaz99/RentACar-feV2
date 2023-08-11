@@ -27,7 +27,6 @@ export class AdminDashboardComponent implements OnInit {
     this.getColors();
     this.getCars();
     this.getBrands();
-    this.store.dispatch(loadCars())
   }
 
   getColors(){
@@ -36,7 +35,6 @@ export class AdminDashboardComponent implements OnInit {
       if(this.colors == null){
         this.store.dispatch(loadColors());
       }
-
     })
   }
   getCars(){
