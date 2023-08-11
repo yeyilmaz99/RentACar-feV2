@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import { getBrands } from '../../brand/state/brand.selector';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { setLoadingSpinner } from 'src/app/store/shared/shared.actions';
 
 @Component({
   selector: 'app-color-add',
@@ -40,7 +41,6 @@ export class ColorAddComponent implements OnInit {
     if(!this.colorForm.valid){
       return;
     }
-    // this.store.dispatch(setLoadingSpinner({status:true}))
     const color = Object.assign({},this.colorForm.value)
     this.store.dispatch(addColor({color}))
     this.resetForms();
