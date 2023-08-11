@@ -154,6 +154,8 @@ export class CarEffects {
                 return loadCarDetailImagesSuccess({ carImages })
             }))
         })
+
+        
         )
     },)
 
