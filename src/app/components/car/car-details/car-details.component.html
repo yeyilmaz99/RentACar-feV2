@@ -4,7 +4,7 @@
         <div class="container">
           <div id="myCarousel" class="carousel slide" data-bs-ride="carousel"*ngIf="!defaultImage" >
             <div class="carousel-inner" >
-              <div class="carousel-item" *ngFor="let carImage of carImages; let i = index;" [class.active]="i === 0">
+              <div class="carousel-item" *ngFor="let carImage of combinedImages; let i = index;" [class.active]="i === 0">
                 <img [src]="'data:image/jpg;base64,' + carImage" class="d-block w-100">
               </div>
             </div>
