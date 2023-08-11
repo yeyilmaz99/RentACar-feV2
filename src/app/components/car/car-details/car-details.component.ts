@@ -66,7 +66,7 @@ export class CarDetailsComponent implements OnInit {
     this.getCurrentCarId()
     this.getBrands();
     this.getColors();
-    this.getCars();
+    // this.getCars();
     this.checkIfCarIsReturned();
     this.checkAdmin();
     this.getCarFindeksPoint()
@@ -142,7 +142,6 @@ export class CarDetailsComponent implements OnInit {
   }
 
   getCar() {
-
     this.store.select(getCarDetails).subscribe(response => {
       this.carImages = [];
       this.car = response;
@@ -153,10 +152,8 @@ export class CarDetailsComponent implements OnInit {
             this.carDetailImages = [];
             response.forEach(image => {
               this.carDetailImages.push(image.imageData);
-              console.log(this.carImages);
             });
             this.combinedImages = [...this.carImages, ...this.carDetailImages];
-            console.log(this.combinedImages);
           }
         })
       }
