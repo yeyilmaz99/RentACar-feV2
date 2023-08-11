@@ -8,6 +8,7 @@ import { AppState } from "src/app/store/app.state"
 import { addColor, addColorSuccess, deleteColor, deleteColorSuccess, loadColors, loadColorsSuccess, updateColor, updateColorSuccess } from "./color.actions"
 import { mergeMap, map, switchMap, concatMap, of } from "rxjs"
 import { merge } from "lodash"
+import { setLoadingSpinner } from "src/app/store/shared/shared.actions"
 
 
 @Injectable()
@@ -16,9 +17,7 @@ export class ColorEffects {
 
   loadColors$ = createEffect(() => {
     return this.actions$.pipe(ofType(loadColors), mergeMap((action) => {
-
       return this.colorService.getColors().pipe(map((response) => {
-        // this.store.dispatch(setLoadingSpinner({status:false}))
         const colors = response.data
         return loadColorsSuccess({ colors })
       }))
