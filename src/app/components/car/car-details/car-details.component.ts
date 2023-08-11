@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, distinctUntilChanged } from 'rxjs';
+import { Observable, distinctUntilChanged, map } from 'rxjs';
 import { Car } from 'src/app/models/car.model';
 import { AppState } from 'src/app/store/app.state';
-import { checkFavorites, getCarById, getCarDetailImages, getCarDetails, getCarImages, getFavorites, getFindeksPoint, isReturned } from '../state/car.selector';
+import { checkFavorites, getCarById, getCarDetailImages, getCarDetails, getCarImages, getCars, getFavorites, getFindeksPoint, isReturned } from '../state/car.selector';
 import { setLoadingSpinner } from 'src/app/store/shared/shared.actions';
 import { CarImage } from 'src/app/models/carImage';
 import { getUserId, isAdmin, isAuthenticated } from '../../auth/state/auth.selector';
@@ -42,6 +42,8 @@ export class CarDetailsComponent implements OnInit {
   carFindeksPoint:number;
   car:Car
   carImages:string[] = [];
+  carDetailImages:string[] = [];
+  combinedImages:string[] = [];
   carImagesUrls:SafeResourceUrl[];
   carImagesBase64: SafeResourceUrl[] = [];
   edit:Boolean =false;
@@ -123,7 +125,6 @@ export class CarDetailsComponent implements OnInit {
     //       });
     //     })
     // }
-
     this.store.select(isAuthenticated).subscribe(response => {
       this.isAuthenticated = response;
       if(response === true){
@@ -141,26 +142,38 @@ export class CarDetailsComponent implements OnInit {
   }
 
   getCar() {
+
     this.store.select(getCarDetails).subscribe(response => {
       this.carImages = [];
       this.car = response;
       if(response){
         this.carImages.push(this.car.imageData);
-        console.log(this.carImages)
+        this.store.select(getCarDetailImages).subscribe(response => {
+          if(response){
+            this.carDetailImages = [];
+            response.forEach(image => {
+              this.carDetailImages.push(image.imageData);
+              console.log(this.carImages);
+            });
+            this.combinedImages = [...this.carImages, ...this.carDetailImages];
+            console.log(this.combinedImages);
+          }
+        })
       }
     });
-    this.store.select(getCarDetailImages).subscribe(response => {
-      if(response){
-        response.forEach(image => {
-          this.carImages.push(image.imageData);
-        });
-      }
-    })
+
+
   }
   
 
   getCars(){
-    this.store.dispatch(loadCars())
+    let cars;
+    this.store.select(getCars).subscribe(response => {
+      cars = response
+      if(cars == null){
+        this.store.dispatch(loadCars())
+      }
+    })
   }
 
   createUpdateForm(){
@@ -177,17 +190,25 @@ export class CarDetailsComponent implements OnInit {
 
 
   getBrands(){
+    let brands;
     this.store.select(getBrands).subscribe(response => {
       this.brands = response;
+      brands = response
+      if(brands == null){
+        this.store.dispatch(loadBrands());
+      }
     })
-    this.store.dispatch(loadBrands());
   }
 
   getColors(){
+    let colors;
     this.store.select(getColors).subscribe(response =>  {
       this.colors = response;
+      colors = response
+      if(colors == null){
+        this.store.dispatch(loadColors());
+      }
     });
-    this.store.dispatch(loadColors());
   }
 
 
