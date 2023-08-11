@@ -52,7 +52,7 @@ export class AddBrandComponent implements OnInit {
     if(!this.brandForm.valid){
       return;
     }
-    // this.store.dispatch(setLoadingSpinner({status:true}))
+    this.store.dispatch(setLoadingSpinner({status:true}))
     let brand = Object.assign({},this.brandForm.value)
     console.log(brand);
     const formData = new FormData();
