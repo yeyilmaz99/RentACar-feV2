@@ -50,7 +50,6 @@ export class CarsComponent implements OnInit {
         this.carsSlice = response.slice(0,12)
       }
       if(this.cars == null){
-
         this.store.dispatch(loadCars());
       }
     })
@@ -111,8 +110,8 @@ export class CarsComponent implements OnInit {
 
 
   filter() {
-    this.store.dispatch(setLoadingSpinner({status:true}))
     if (this.carFilterForm.valid) {
+      this.store.dispatch(setLoadingSpinner({status:true}))
       const filter: FilterModel = Object.assign(
         {},
         this.carFilterForm.value
