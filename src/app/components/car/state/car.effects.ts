@@ -65,8 +65,6 @@ export class CarEffects {
     })
 
 
-
-
     loadUserRentasl$ = createEffect(()=> {
         return this.actions$.pipe(ofType(loadUserRentals), mergeMap((action)=> {
             this.store.dispatch(setLoadingSpinner({status:true}))
@@ -95,6 +93,7 @@ export class CarEffects {
         return this.actions$.pipe(
           ofType(checkIfCarIsReturned),
           switchMap(action => {
+            this.store.dispatch(setLoadingSpinner({status:true}))
             return this.rentalService.checkIfCarIsReturned(action.carId).pipe(
               map(resp => {
                 const response = resp.success;
@@ -117,9 +116,9 @@ export class CarEffects {
         return this.actions$.pipe(ofType(ROUTER_NAVIGATION), filter((r: RouterNavigatedAction) => {
             return r.payload.routerState.url.startsWith('/cars/car')
         }), map((r: RouterNavigatedAction) => {
+            this.store.dispatch(setLoadingSpinner({status:true}))
             return r.payload.routerState['params']['id'];
         }), switchMap((id) => {
-            this.store.dispatch(setLoadingSpinner({status:true}))
             return this.carService.getCarById(id).pipe(map((response) => {
                 const car = response.data
                 return loadCarDetailsSuccess({ car })
@@ -134,9 +133,7 @@ export class CarEffects {
         }), map((r: RouterNavigatedAction) => {
             return r.payload.routerState['params']['id'];
         }), switchMap((id) => {
-            this.store.dispatch(setLoadingSpinner({status:true}))
             return this.carService.getCarProfileImagesByCarId(id).pipe(map((response) => {
-                this.store.dispatch(setLoadingSpinner({status:false}))
                 const carImages = response.data;
                 return loadCarImagesSuccess({ carImages })
             }))
@@ -151,7 +148,6 @@ export class CarEffects {
         }), map((r: RouterNavigatedAction) => {
             return r.payload.routerState['params']['id'];
         }), switchMap((id) => {
-            this.store.dispatch(setLoadingSpinner({status:true}))
             return this.carService.getCarDetailImagesByCarId(id).pipe(map((response) => {
                 this.store.dispatch(setLoadingSpinner({status:false}))
                 const carImages = response.data;
