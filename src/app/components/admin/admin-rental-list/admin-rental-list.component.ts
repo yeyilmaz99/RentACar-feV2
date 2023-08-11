@@ -19,10 +19,11 @@ export class AdminRentalListComponent implements OnInit {
   }
 
   getRentals(){
-    this.store.dispatch(loadRentals());
     this.store.select(getRentals).subscribe(response=> {
       this.rentals = response
-      console.log("hello")
+      if(this.rentals ==null){
+        this.store.dispatch(loadRentals());
+      }
     })
   }
 
