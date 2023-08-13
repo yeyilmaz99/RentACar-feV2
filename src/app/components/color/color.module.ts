@@ -9,6 +9,7 @@ import { COLOR_STATE_NAME } from "./state/color.selector";
 import { colorReducer } from "./state/color.reducer";
 import { StoreModule } from "@ngrx/store";
 import { ColorAddComponent } from './color-add/color-add.component';
+import { AdminGuard } from "src/app/guards/admin.guard";
 
 
 
@@ -17,7 +18,7 @@ const routes: Routes = [
 
     {path: '', children: [
         { path: '', pathMatch:'full', redirectTo:'settings'},
-        { path: 'settings', pathMatch:'full', component:ColorAddComponent}
+        { path: 'settings', pathMatch:'full', component:ColorAddComponent, canActivate:[AdminGuard]}
     ]}
 ]
 

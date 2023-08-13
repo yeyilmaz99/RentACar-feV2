@@ -1,0 +1,14 @@
+.image-container {
+    width: 100%; /* Container'ın genişliği yüzde olarak ayarlanır */
+    padding-bottom: 75%; /* Görüntü yüksekliğinin yüzde olarak ayarlanır (örneğin, 4:3 oranı için) */
+    position: relative;
+    overflow: hidden;
+}
+
+.image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+}

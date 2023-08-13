@@ -18,6 +18,7 @@ import { RentComponent } from "./car-details/rent/rent.component";
 import { MatNativeDateModule } from "@angular/material/core";
 import { LoginGuard } from "src/app/guards/login.guard";
 import { ByteToImagePipe } from "src/app/pipes/byte-to-image-pipe.pipe";
+import { AdminGuard } from "src/app/guards/admin.guard";
 
 
 
@@ -28,7 +29,7 @@ const routes: Routes = [
         path: '', children: [
             {path:'',pathMatch:"full",redirectTo:'cars'},
             { path: '', component: CarsComponent },
-            { path: 'add-car', component: AddCarComponent },
+            { path: 'add-car', component: AddCarComponent, canActivate:[AdminGuard]},
             { path: 'car/:id', component: CarDetailsComponent , children:[
              {path: 'rent/:id', component:RentComponent, canActivate:[LoginGuard]} 
             ] }

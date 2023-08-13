@@ -2,7 +2,10 @@
     <div class="row justify-content-center" *ngIf="brands">
         <!-- <div class="card mt-4" *ngFor="let brand of brandData" style="width: 18rem;" routerLink="/cars/brand/{{brand.brandId}}"> -->
         <div class="card mt-4" *ngFor="let brand of brands" style="width: 18rem;">
-            <img [src]="'data:image/jpg;base64,' + brand.imageData" class="d-block w-100" style="padding: 50px;">
+            <div class="image-container">
+                <img  [src]="'data:image/jpg;base64,' + brand.imageData" class="d-block w-100" style="padding: 50px;">
+            </div>
+            
             <div class="card-body">
                 <h2 class="card-title">{{brand.brandName}}</h2>
             </div>

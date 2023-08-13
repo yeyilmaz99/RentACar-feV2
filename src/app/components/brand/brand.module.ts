@@ -10,6 +10,7 @@ import { brandReducer } from "./state/brand.reducer";
 import { StoreModule } from "@ngrx/store";
 import { BrandsComponent } from "./brands/brands.component";
 import { AddBrandComponent } from "./add-brand/add-brand.component";
+import { AdminGuard } from "src/app/guards/admin.guard";
 
 
 
@@ -18,7 +19,7 @@ const routes: Routes = [
 
     {path: '', children: [
         { path:'' , pathMatch:'full', component:BrandsComponent},
-        { path: 'add', component:AddBrandComponent}
+        { path: 'add', component:AddBrandComponent, canActivate:[AdminGuard]}
     ]}
 
 
