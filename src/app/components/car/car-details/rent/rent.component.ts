@@ -22,6 +22,8 @@ const today = new Date();
 const month = today.getMonth();
 const year = today.getFullYear();
 
+declare var IyzipayCheckoutForm: any; // Iyzico JavaScript kütüphanesi
+
 @Component({
   selector: 'app-rent',
   templateUrl: './rent.component.html',
@@ -46,6 +48,8 @@ export class RentComponent implements OnInit {
     this.datePicker();
     this.checkIfCarIsReturned();
     this.getUsersFindeksPoint()
+
+
   }
 
   datePicker() {
@@ -112,7 +116,6 @@ export class RentComponent implements OnInit {
 
 
   payment(){
-    console.log(this.campaignOne.value);
     if (this.paymentForm.valid){
       let payment: Payment = {
         ...this.paymentForm.value,
@@ -129,6 +132,32 @@ export class RentComponent implements OnInit {
         this.toastrService.error(responseError.error.message);
       }
       )
+      console.log(payment)
+    }
+  }
+
+
+  limitInputLength(event: any) {
+    const maxLength = 16;
+    const input = event.target;
+    if (input.value.length > maxLength) {
+      input.value = input.value.slice(0, maxLength);
+    }
+  }
+
+  limitInputLengthDate(event: any) {
+    const maxLength = 4;
+    const input = event.target;
+    if (input.value.length > maxLength) {
+      input.value = input.value.slice(0, maxLength);
+    }
+  }
+
+  limitInputLengthCCV(event: any) {
+    const maxLength = 3;
+    const input = event.target;
+    if (input.value.length > maxLength) {
+      input.value = input.value.slice(0, maxLength);
     }
   }
 
@@ -148,7 +177,6 @@ export class RentComponent implements OnInit {
       let findeksPoint:number;
       findeksPoint = response.data.findeksPoint ;
       this.userFindeksPoint = findeksPoint;
-      console.log(this.userFindeksPoint)
     })
   }
 
