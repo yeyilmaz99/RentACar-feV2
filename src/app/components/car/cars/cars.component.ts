@@ -31,6 +31,7 @@ export class CarsComponent implements OnInit {
   colors:Color[];
   carsSlice: Car[];
   filterText: string = '';
+  filterTextBoolean: boolean = false;
   removeFilter:boolean=false;
   constructor(private store:Store<AppState>,private orderByPipe:OrderByPipe,private formBuilder: FormBuilder, private carService:CarService) { }
 
@@ -39,6 +40,14 @@ export class CarsComponent implements OnInit {
     this.getBrands();
     this.getColors();
     this.createCarFilterForm();
+  }
+
+  filterTextBooleanFunc(){
+    if(this.filterText.length>0){
+      this.filterTextBoolean = true
+    }else{
+      this.filterTextBoolean = false
+    }
   }
 
 
