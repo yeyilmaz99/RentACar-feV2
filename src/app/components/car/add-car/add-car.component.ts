@@ -95,8 +95,6 @@ export class AddCarComponent implements OnInit {
         const blob = new Blob([image], { type: 'image/jpeg' });
         formData.append(`DetailImages`, blob, `car-image-${i}.png`);
       }
-  
-      console.log(this.carAddForm.value);
       this.store.dispatch(addCar({ formData }));
     }
   }
