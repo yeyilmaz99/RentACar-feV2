@@ -44,7 +44,7 @@
           <div class="card-body">
               <label><h3>Search For a Car</h3></label>
               <div class="input-group mb-3">
-                <input [(ngModel)]="filterText" id="filterText" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                <input [(ngModel)]="filterText" (input)="filterTextBooleanFunc()" id="filterText" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
               </div>
               <div class="alert alert-primary" *ngIf="filterText">
                 Searched for {{ filterText }} 
@@ -80,9 +80,30 @@
     <div class="row justify-content-center">
   
       <div class="col">
-        <div class="container">
-          <div class="row row-cols-1 row-cols-md-4 g-4" *ngIf="cars">
-            <div *ngFor="let car of carsSlice | filter:filterText " class="col">
+        <div class="container"*ngIf="cars">
+          <div class="row row-cols-1 row-cols-md-4 g-4" *ngIf="!filterTextBoolean">
+            <div *ngFor="let car of carsSlice " class="col">
+              <div class="card" [routerLink]="['car', car.carId]">
+                <img *ngIf="car.imageData != null"
+                  [src]="'data:image/jpg;base64,' + car.imageData" class="d-block w-100"
+                  class="card-img-top"
+                  alt="..."
+                />
+                <img *ngIf="car.imageData == null "
+                src="assets/images/DefaultImage.jpg"
+                class="card-img-top"
+                alt="..."
+              />
+                <div class="card-body">
+                  <h5 class="card-title text-truncate">{{ car.carName }}</h5>
+                  <p class="card-text text-truncate">{{ car.brandName }}</p>
+                </div>
+              </div>
+            </div>
+          </div> 
+
+          <div class="row row-cols-1 row-cols-md-4 g-4" *ngIf="filterTextBoolean">
+            <div *ngFor="let car of cars | filter:filterText " class="col">
               <div class="card" [routerLink]="['car', car.carId]">
                 <img *ngIf="car.imageData != null"
                   [src]="'data:image/jpg;base64,' + car.imageData" class="d-block w-100"
@@ -109,11 +130,11 @@
             (page)="OnPageChange($event)"
           >
           </mat-paginator>
-        <!-- </div>
+        </div>
       </div>
   
   
-    </div> -->
+    </div>
   
   </div>
   
