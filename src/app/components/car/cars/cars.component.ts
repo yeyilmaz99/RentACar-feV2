@@ -111,7 +111,7 @@ export class CarsComponent implements OnInit {
 
   filter() {
     if (this.carFilterForm.valid) {
-      this.store.dispatch(setLoadingSpinner({status:true}))
+      this.store.dispatch(setLoadingSpinner({status:true, from:"get filtered car"}))
       const filter: FilterModel = Object.assign(
         {},
         this.carFilterForm.value
