@@ -29,10 +29,10 @@ export class CarEffects {
 
     loadCar$ = createEffect(() => {
         return this.actions$.pipe(ofType(loadCars), mergeMap((action) => {
-            this.store.dispatch(setLoadingSpinner({status:true}))
+            this.store.dispatch(setLoadingSpinner({status:true, from:"load car"}))
             return this.carService.getCars().pipe(map((response) => {
                 const cars = response.data
-                this.store.dispatch(setLoadingSpinner({status:false}))
+                this.store.dispatch(setLoadingSpinner({status:false, from:"load car success"}))
                 return loadCarsSuccess({ cars })
             }))
         }))
@@ -40,21 +40,23 @@ export class CarEffects {
 
     loadFavorite$ = createEffect(() => {
         return this.actions$.pipe(ofType(loadFavoriteCars), mergeMap((action) => {
-            this.store.dispatch(setLoadingSpinner({status:true}))
+            this.store.dispatch(setLoadingSpinner({status:true, from:"load favorites"}))
             return this.favoriteService.getFavorites(action.userId).pipe(map((response)=> {
-                this.store.dispatch(setLoadingSpinner({status:false}))
+                this.store.dispatch(setLoadingSpinner({status:false, from:"load favorites success"}))
                 const favorites = response.data
                 return loadFavoriteCarsSuccess({favorites})
-            }))
+            },catchError(errResp => {
+                const response = false;
+                return of(checkIfCarIsReturnedSuccess({ response }));
+              })))
         }))
     })
 
     getFilteredCars$ = createEffect(() => {
         return this.actions$.pipe(ofType(loadFilteredCars), mergeMap((action => {
             return this.carService.getCarsByBrandAndColorId(action.filter.colorId,action.filter.brandId).pipe(map(response => {
-                this.store.dispatch(setLoadingSpinner({status:false}))
+                this.store.dispatch(setLoadingSpinner({status:false, from:"get filtered car success"}))
                 const cars = response.data
-                console.log(response.data);
                 this.toastrService.success("Successfully filtered");
                 if(response.data.length == 0){
                     this.toastrService.error("No suitable vehicle found for this filter")
@@ -67,9 +69,9 @@ export class CarEffects {
 
     loadUserRentasl$ = createEffect(()=> {
         return this.actions$.pipe(ofType(loadUserRentals), mergeMap((action)=> {
-            this.store.dispatch(setLoadingSpinner({status:true}))
+            this.store.dispatch(setLoadingSpinner({status:true , from:"load user rentals"}))
             return this.rentalService.getRentalsByUserId(action.userId).pipe(map((response) => {
-                this.store.dispatch(setLoadingSpinner({status:false}))
+                this.store.dispatch(setLoadingSpinner({status:false, from:"load user rentals success"}))
                 const rentals = response.data
                 return loadUserRentalsSuccess({rentals});
             }))
@@ -93,7 +95,7 @@ export class CarEffects {
         return this.actions$.pipe(
           ofType(checkIfCarIsReturned),
           switchMap(action => {
-            this.store.dispatch(setLoadingSpinner({status:true}))
+            this.store.dispatch(setLoadingSpinner({status:true, from:"check if car is returned"}))
             return this.rentalService.checkIfCarIsReturned(action.carId).pipe(
               map(resp => {
                 const response = resp.success;
@@ -116,7 +118,7 @@ export class CarEffects {
         return this.actions$.pipe(ofType(ROUTER_NAVIGATION), filter((r: RouterNavigatedAction) => {
             return r.payload.routerState.url.startsWith('/cars/car')
         }), map((r: RouterNavigatedAction) => {
-            this.store.dispatch(setLoadingSpinner({status:true}))
+            this.store.dispatch(setLoadingSpinner({status:true, from:"get single car"}))
             return r.payload.routerState['params']['id'];
         }), switchMap((id) => {
             return this.carService.getCarById(id).pipe(map((response) => {
@@ -149,7 +151,7 @@ export class CarEffects {
             return r.payload.routerState['params']['id'];
         }), switchMap((id) => {
             return this.carService.getCarDetailImagesByCarId(id).pipe(map((response) => {
-                this.store.dispatch(setLoadingSpinner({status:false}))
+                this.store.dispatch(setLoadingSpinner({status:false, from:"get car detail images success"}))
                 const carImages = response.data;
                 return loadCarDetailImagesSuccess({ carImages })
             }))
