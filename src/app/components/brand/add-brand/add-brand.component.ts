@@ -52,16 +52,12 @@ export class AddBrandComponent implements OnInit {
     if(!this.brandForm.valid){
       return;
     }
-    this.store.dispatch(setLoadingSpinner({status:true}))
     let brand = Object.assign({},this.brandForm.value)
-    console.log(brand);
     const formData = new FormData();
     formData.append('BrandName', brand.brandName.toString());
 
     const blob = new Blob([brand.imageData], { type: 'image/jpeg' }); 
     formData.append('ImageData', blob, 'brand-image.png');
-
-    console.log(this.brandForm.value);
     this.store.dispatch(addBrand({formData}))
   }
 

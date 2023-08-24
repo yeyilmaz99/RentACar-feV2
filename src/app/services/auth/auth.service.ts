@@ -59,7 +59,6 @@ export class AuthService {
 
   // getToken() {
   //   const userData =  this.localStorageService.getItem('userData');
-  //   console.log(userData)
   //   return userData
     
   // }
@@ -169,10 +168,8 @@ export class AuthService {
     this.store.select(isAdmin).subscribe(response => {
       if(response === true){
         adminCheck = response
-        console.log(response + "v1")
       }else {
         adminCheck = false;
-        console.log(response + "v2")
       }
     })
     return adminCheck;

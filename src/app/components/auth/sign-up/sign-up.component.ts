@@ -33,7 +33,7 @@ export class SignUpComponent implements OnInit {
     const firstName = this.signUpForm.value.firstName;
     const lastName= this.signUpForm.value.lastName
     const register:Register = {email:email,password:password,firstName:firstName,lastName:lastName}
-    this.store.dispatch(setLoadingSpinner({status:true}))
+    this.store.dispatch(setLoadingSpinner({status:true, from:"signup start"}))
     this.store.dispatch(signupStart({register}))
   }
 

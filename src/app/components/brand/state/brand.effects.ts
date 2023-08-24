@@ -17,9 +17,9 @@ export class BrandEffects {
 
     loadBrands$ = createEffect(() => {
         return this.actions$.pipe(ofType(loadBrands), mergeMap((action) => {
-            this.store.dispatch(setLoadingSpinner({status:true}))
+            this.store.dispatch(setLoadingSpinner({status:true , from:"load brands"}))
             return this.brandService.getBrands().pipe(map((response) => {
-                this.store.dispatch(setLoadingSpinner({ status: false }))
+                this.store.dispatch(setLoadingSpinner({ status: false, from:"load brands success" }))
                 const brands = response.data
                 return loadBrandsSuccess({ brands })
             }))
@@ -31,13 +31,13 @@ export class BrandEffects {
         return this.actions$.pipe(
             ofType(addBrand),
             mergeMap((action) => {
-                this.store.dispatch(setLoadingSpinner({status:true}))
+                this.store.dispatch(setLoadingSpinner({status:true , from:"add brand"}))
                 return this.brandService.addBrand(action.formData).pipe(
                     mergeMap((response) => {
                         const message = response.message;
                         this.toastrService.success(message);
                         const addBrandSuccessAction = addBrandSuccess({ message });
-                        this.store.dispatch(setLoadingSpinner({status:false}))
+                        this.store.dispatch(setLoadingSpinner({status:false, from:"add brand success"}))
                         return of(addBrandSuccessAction, loadBrands());
                     })
                 );
@@ -48,10 +48,10 @@ export class BrandEffects {
 
     deleteBrand$ = createEffect(() => {
         return this.actions$.pipe(ofType(deleteBrand), switchMap((action) => {
-            this.store.dispatch(setLoadingSpinner({status:true}))
+            this.store.dispatch(setLoadingSpinner({status:true, from:"delete brand"}))
             return this.brandService.deleteBrand(action.brand).pipe(map((data) => {
                 const message = data.message;
-                this.store.dispatch(setLoadingSpinner({status:false}))
+                this.store.dispatch(setLoadingSpinner({status:false, from:"delete brand success"}))
                 return deleteBrandSuccess({ id: action.brand.brandId, message })
             }))
         }))
@@ -59,10 +59,10 @@ export class BrandEffects {
 
     updateBrand$ = createEffect(() => {
         return this.actions$.pipe(ofType(updateBrand), mergeMap((action) => {
-            this.store.dispatch(setLoadingSpinner({status:true}))
+            this.store.dispatch(setLoadingSpinner({status:true, from:"update brand"}))
           return this.brandService.updateBrand(action.brand).pipe(mergeMap((data) => {
             const updateBrandSuccessAction = updateBrandSuccess({brand:action.brand});
-            this.store.dispatch(setLoadingSpinner({status:false}))
+            this.store.dispatch(setLoadingSpinner({status:false, from:"update brand success"}))
             return of(updateBrandSuccessAction, loadBrands());
           }))
         }))

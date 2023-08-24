@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, distinctUntilChanged, map } from 'rxjs';
 import { Car } from 'src/app/models/car.model';
@@ -31,7 +31,7 @@ import { ByteToImagePipe } from 'src/app/pipes/byte-to-image-pipe.pipe';
   templateUrl: './car-details.component.html',
   styleUrls: ['./car-details.component.css'],
 })
-export class CarDetailsComponent implements OnInit {
+export class CarDetailsComponent implements OnInit, OnDestroy {
   isAuthenticated;
   isLoggedIn;
   isAdmin;
@@ -70,6 +70,12 @@ export class CarDetailsComponent implements OnInit {
     this.checkIfCarIsReturned();
     this.checkAdmin();
     this.getCarFindeksPoint()
+  }
+
+  ngOnDestroy(): void {
+    this.combinedImages = [];
+    this.carImages = [];
+    this.carDetailImages = [];
   }
 
   getCurrentCarId(){

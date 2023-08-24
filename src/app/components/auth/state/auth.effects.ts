@@ -32,7 +32,7 @@ export class AuthEffects {
       exhaustMap(action => {
         return this.authService.login(action.email, action.password).pipe(
           map((response) => {
-            this.store.dispatch(setLoadingSpinner({ status: false }));
+            this.store.dispatch(setLoadingSpinner({ status: false ,from : "login" }));
             this.store.dispatch(setErrorMessage({ message: '' }))
             this.localStorageService.setItem('token',response.data.token)
             const userData = this.authService.formatUser(response.data);
@@ -45,7 +45,7 @@ export class AuthEffects {
           catchError((errResp) => {
             const errorMessage = errResp.error;
             this.toastr.error(errResp.error,errResp.error)
-            this.store.dispatch(setLoadingSpinner({ status: false }));
+            this.store.dispatch(setLoadingSpinner({ status: false , from:" login error" }));
             return of(setErrorMessage({ message: errorMessage }));
           })
         );
@@ -75,7 +75,7 @@ export class AuthEffects {
   signUp$ = createEffect(() => {
     return this.actions$.pipe(ofType(signupStart),exhaustMap(action => {
       return this.authService.register(action.register).pipe(map(response =>{
-        this.store.dispatch(setLoadingSpinner({status:false}))
+        this.store.dispatch(setLoadingSpinner({status:false, from:"singUp"}))
         this.localStorageService.setItem('token',response.data.token)
         const userData = this.authService.formatUser(response.data);
         const user = userData.user
@@ -86,7 +86,7 @@ export class AuthEffects {
       }),catchError((errResp) => {
         const errorMessage = errResp.error;
         this.toastr.error(errResp.error,errResp.error)
-        this.store.dispatch(setLoadingSpinner({ status: false }));
+        this.store.dispatch(setLoadingSpinner({ status: false, from:"singUp error" }));
         return of(setErrorMessage({ message: errorMessage }));
       })
       );
