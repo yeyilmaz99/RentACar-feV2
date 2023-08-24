@@ -12,9 +12,9 @@ declare const $: any;
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  isAuthenticated:Observable<boolean>;
-  isAdmin:Observable<boolean>;
-  constructor(private store:Store<AppState>) { }
+  isAuthenticated: Observable<boolean>;
+  isAdmin: Observable<boolean>;
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
     this.isAuthenticated = this.store.select(isAuthenticated);
@@ -22,22 +22,23 @@ export class HeaderComponent implements OnInit {
   }
 
 
-  onLogout(event:Event){
-    $(document).on('click', '.js-menu-toggle', (e: Event) => {
-      const $this = $(e.currentTarget);
-      e.preventDefault();
-
-      if ($('body').hasClass('offcanvas-menu')) {
-        $('body').removeClass('offcanvas-menu');
-        $this.removeClass('active');
-      } else {
-        $('body').addClass('offcanvas-menu');
-        $this.addClass('active');
-      }
-    });
+  onLogout(event: Event) {
 
     this.store.dispatch(autoLogout())
-    
+
+    let element = document.querySelector(".mat-typography") as HTMLElement;
+    element.classList.toggle("offcanvas-menu");
+    console.log("çalıştı")
   }
 
+  menuToggle() {
+    let element = document.querySelector(".mat-typography") as HTMLElement;
+    element.classList.toggle("offcanvas-menu");
+    console.log("çalıştı")
+  }
+
+
+
+
 }
+
