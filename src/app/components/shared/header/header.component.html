@@ -39,7 +39,7 @@
             <li><a class="dropdown-item" (click)="menuToggle()" routerLink="/user/rentals">Rentals</a></li>
             <li><a class="dropdown-item" (click)="menuToggle()" *ngIf="(isAdmin | async)" routerLink="/admin">Admin Page</a>
             </li>
-            <li><a class="dropdown-item" (click)="onLogout($event)">Log Out</a></li>
+            <li><a class="dropdown-item" (click)="onLogoutWithToggle($event)">Log Out</a></li>
           </ul>
         </div>
       </li>
