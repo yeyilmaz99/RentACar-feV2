@@ -1,54 +1,102 @@
+<div class="site-mobile-menu site-navbar-target">
+  <div class="site-mobile-menu-header">
+    <div class="site-mobile-menu-close mt-3">
+      <span class="icon-close2 js-menu-toggle"></span>
+    </div>
+  </div>
+  <div>
+    <ul class="site-menu main-menu ml-auto" style="list-style-type: none;font-size: 20px">
+      <li class="nav-item mb-2">
+        <a class="nav-link js-menu-toggle" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active"
+          [routerLink]="'/'">Home</a>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link js-menu-toggle" routerLinkActive="active" [routerLink]="['/cars']">Cars</a>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link js-menu-toggle" routerLinkActive="active" [routerLink]="['/brands']">Brands</a>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link js-menu-toggle" routerLinkActive="active" [routerLink]="['/about']">About Us</a>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link js-menu-toggle" routerLinkActive="active" [routerLink]="['/contact']">Contact Us</a>
+      </li>
+      <li class="nav-item mb-2" *ngIf="!(isAuthenticated | async)">
+        <a class="nav-link js-menu-toggle" routerLinkActive="active" [routerLink]="['/auth']">Login</a>
+      </li>
+      <li class="nav-item mb-2" *ngIf="(isAuthenticated | async)">
+        <div class="dropdown-center">
+          <button class="btn btn-secondary dropdown-toggle" style="font-size: 0px;" type="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="material-symbols-outlined" style="font-size: 23px;">
+              person
+            </span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item js-menu-toggle" routerLink="/user">Profil</a></li>
+            <li><a class="dropdown-item js-menu-toggle" routerLink="/favorites">Favorites</a></li>
+            <li><a class="dropdown-item js-menu-toggle" routerLink="/user/rentals">Rentals</a></li>
+            <li><a class="dropdown-item js-menu-toggle" *ngIf="(isAdmin | async)" routerLink="/admin">Admin Page</a>
+            </li>
+            <li><a class="dropdown-item js-menu-toggle" (click)="onLogout($event)">Log Out</a></li>
+          </ul>
+        </div>
+      </li>
+    </ul>
 
-    <!-- Pre Header -->
-    <div id="pre-header">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <span>Suspendisse laoreet magna vel diam lobortis imperdiet</span>
-          </div>
+
+
+  </div>
+</div>
+
+<header class="site-navbar site-navbar-target" role="banner">
+
+  <div class="container">
+    <div class="row align-items-center position-relative">
+
+      <div class="col-3">
+        <div class="site-logo">
+          <a [routerLink]="'/'"><strong>MyRentACar</strong></a>
         </div>
       </div>
-    </div>
 
-    <!-- Navigation -->
-    <div class="container">
-      <div class="row justify-content-center mt-4 " style="text-align: center;">
-        <div class="col">
-          <a class="navbar-brand" href=""><img src="assets/images/myshop.png" style="max-width: 200px;" alt=""></a>
-        </div>
-      </div>
-    </div>
-    <hr style="margin-top: 30px;">
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <ul class="nav justify-content-center">
+      <div class="col-9  text-right">
+
+        <span class="d-inline-block d-lg-none"><a class=" site-menu-toggle js-menu-toggle py-5 "><span
+              class="icon-menu h3 text-black"></span></a></span>
+
+        <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
+          <ul class="site-menu main-menu js-clone-nav ml-auto ">
+
             <li class="nav-item">
-              <a class="nav-link" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" [routerLink]="'/'">Home</a>
+              <a class="nav-link" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active"
+                [routerLink]="'/'">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" [routerLink]="['/cars']" >Cars</a>
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/cars']">Cars</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" [routerLink]="['/brands']" >Brands</a>
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/brands']">Brands</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" [routerLink]="['/about']" >About Us</a>
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/about']">About Us</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" routerLinkActive="active" [routerLink]="['/contact']">Contact Us</a>
             </li>
             <li class="nav-item" *ngIf="!(isAuthenticated | async)">
-              <a class="nav-link" routerLinkActive="active" [routerLink]="['/auth']">Login</a>
+              <a class="nav-link js-clone-nav" routerLinkActive="active" [routerLink]="['/auth']">Login</a>
             </li>
             <li class="nav-item" *ngIf="(isAuthenticated | async)">
               <div class="dropdown-center">
-                <button class="btn btn-secondary dropdown-toggle" style="font-size: 0px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn btn-secondary dropdown-toggle" style="font-size: 0px;" type="button"
+                  data-bs-toggle="dropdown" aria-expanded="false">
                   <span class="material-symbols-outlined" style="font-size: 23px;">
                     person
-                    </span>
+                  </span>
                 </button>
-                <ul class="dropdown-menu" >
+                <ul class="dropdown-menu">
                   <li><a class="dropdown-item" routerLink="/user">Profil</a></li>
                   <li><a class="dropdown-item" routerLink="/favorites">Favorites</a></li>
                   <li><a class="dropdown-item" routerLink="/user/rentals">Rentals</a></li>
@@ -58,9 +106,11 @@
               </div>
             </li>
           </ul>
-        </div>
+        </nav>
       </div>
+
+
     </div>
+  </div>
 
-<hr>
-
+</header>

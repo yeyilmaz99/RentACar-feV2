@@ -30,6 +30,7 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { SubscribeFormComponent } from './components/shared/subscribe-form/subscribe-form.component';
+import { TestimonialsComponent } from './components/testimonials/testimonials.component';
 
 
 export function tokenGetter() {
@@ -49,6 +50,7 @@ export function tokenGetter() {
     AboutUsComponent,
     ContactUsComponent,
     SubscribeFormComponent,
+    TestimonialsComponent,
   ],
   imports: [
     ReactiveFormsModule,

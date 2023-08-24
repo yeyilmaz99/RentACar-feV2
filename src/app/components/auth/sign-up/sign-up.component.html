@@ -1,46 +1,63 @@
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <h3>SignUp</h3>
+<section class="" style="margin-top: 150px; margin-bottom: 150px;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex align-items-center justify-content-center h-100">
+        <div class="col-md-8 col-lg-7 col-xl-6">
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+            class="img-fluid" alt="Phone image">
+        </div>
+        <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+            <h3><strong>Sign Up</strong></h3>
             <form [formGroup]="signUpForm" (ngSubmit)="onSignUpSubmit()">
             <hr>
-
-            <div class="mb-3">
-                <label for="">FirstName</label>
-                <input type="text" class="form-control" formControlName="firstName">
-                <div *ngIf="signUpForm.get('firstName').touched && !signUpForm.get('firstName').valid">
-                    <!-- <div *ngIf="signUpForm.get('email').errors.required">Email is required </div>
-                    <div *ngIf="signUpForm.get('email').errors.email">Email is invalid </div> -->
+                <div class="mb-3">
+                    <label for="">FirstName</label>
+                    <input type="text" class="form-control" formControlName="firstName">
+                    <div *ngIf="signUpForm.get('firstName').touched && !signUpForm.get('firstName').valid">
+                        <!-- <div *ngIf="signUpForm.get('email').errors.required">Email is required </div>
+                        <div *ngIf="signUpForm.get('email').errors.email">Email is invalid </div> -->
+                    </div>
                 </div>
-            </div>
-            <div class="mb-3">
-                <label for="">LastName</label>
-                <input type="text" class="form-control" formControlName="lastName">
-                <div *ngIf="signUpForm.get('lastName').touched && !signUpForm.get('lastName').valid">
-                    <!-- <div *ngIf="signUpForm.get('email').errors.required">Email is required </div>
-                    <div *ngIf="signUpForm.get('email').errors.email">Email is invalid </div> -->
+                <div class="mb-3">
+                    <label for="">LastName</label>
+                    <input type="text" class="form-control" formControlName="lastName">
+                    <div *ngIf="signUpForm.get('lastName').touched && !signUpForm.get('lastName').valid">
+                        <!-- <div *ngIf="signUpForm.get('email').errors.required">Email is required </div>
+                        <div *ngIf="signUpForm.get('email').errors.email">Email is invalid </div> -->
+                    </div>
                 </div>
-            </div>
-            <div class="mb-3">
-                <label for="">Email</label>
-                <input type="text" class="form-control" formControlName="email">
-                <div *ngIf="signUpForm.get('email').touched && !signUpForm.get('email').valid">
-                    <!-- <div *ngIf="signUpForm.get('email').errors.required">Email is required </div>
-                    <div *ngIf="signUpForm.get('email').errors.email">Email is invalid </div> -->
+                <div class="mb-3">
+                    <label for="">Email</label>
+                    <input type="text" class="form-control" formControlName="email">
+                    <div *ngIf="signUpForm.get('email').touched && !signUpForm.get('email').valid">
+                        <!-- <div *ngIf="signUpForm.get('email').errors.required">Email is required </div>
+                        <div *ngIf="signUpForm.get('email').errors.email">Email is invalid </div> -->
+                    </div>
                 </div>
-            </div>
-            <div class="mb-3">
-                <label for="">Password</label>
-                <input type="password" class="form-control" formControlName="password">
-                <div *ngIf="signUpForm.get('password').touched && !signUpForm.get('password').valid">
-                    <!-- <div *ngIf="signUpForm.get('password').errors.required">password is required </div> -->
+                <div class="mb-3">
+                    <label for="">Password</label>
+                    <input type="password" class="form-control" formControlName="password">
+                    <div *ngIf="signUpForm.get('password').touched && !signUpForm.get('password').valid">
+                        <!-- <div *ngIf="signUpForm.get('password').errors.required">password is required </div> -->
+                    </div>
                 </div>
+  
+            
+            <button  type="submit" [disabled]="!signUpForm.valid" class="btn btn-primary btn-lg btn-block">Sign Up</button>
+  
+            <div class="divider d-flex align-items-center my-4">
+              <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
             </div>
-            <p><a href="#" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" routerLink="/auth/login"> You already have an account? Log in</a></p>
-            <div class="mb-3">
-                <button class="btn btn-primary" type="submit" [disabled]="!signUpForm.valid"> SignUp</button>
-            </div>
-        </form>
+  
+            <a class="btn btn-primary btn-lg btn-block" style="background-color: #3b5998" href="#!"
+              role="button">
+              <i class="fab fa-facebook-f me-2"></i>Continue with Facebook
+            </a>
+            <a class="btn btn-primary btn-lg btn-block" style="background-color: #55acee" href="#!"
+              role="button">
+              <i class="fab fa-twitter me-2"></i>Continue with Twitter</a>
+  
+          </form>
         </div>
+      </div>
     </div>
-</div>
+  </section>

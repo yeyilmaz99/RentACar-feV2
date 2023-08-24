@@ -11,6 +11,7 @@ import { AboutUsComponent } from './components/about-us/about-us.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { AdminGuard } from './guards/admin.guard';
 import { LoginGuard } from './guards/login.guard';
+import { TestimonialsComponent } from './components/testimonials/testimonials.component';
 
 const routes: Routes = [
   {
@@ -26,7 +27,8 @@ const routes: Routes = [
   { path: 'admin', component:AdminComponent,loadChildren:() => import ('./components/admin/admin.module').then(m => m.AdminModule),canActivate:[AdminGuard], canActivateChild:[AdminGuard]},
   { path: 'user',loadChildren:() => import('./components/user-profile/user.module').then (m=> m.UserModule),canActivate:[LoginGuard]},
   { path: 'about', component:AboutUsComponent},
-  { path: 'contact', component:ContactUsComponent}
+  { path: 'contact', component:ContactUsComponent},
+  {path: 'testimonials', component:TestimonialsComponent}
 ];
 
 @NgModule({

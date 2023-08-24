@@ -5,7 +5,7 @@ import { AppState } from 'src/app/store/app.state';
 import { autoLogout } from '../../auth/state/auth.actions';
 import { isAdmin, isAuthenticated } from '../../auth/state/auth.selector';
 
-
+declare const $: any;
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -23,8 +23,21 @@ export class HeaderComponent implements OnInit {
 
 
   onLogout(event:Event){
-    event.preventDefault();
+    $(document).on('click', '.js-menu-toggle', (e: Event) => {
+      const $this = $(e.currentTarget);
+      e.preventDefault();
+
+      if ($('body').hasClass('offcanvas-menu')) {
+        $('body').removeClass('offcanvas-menu');
+        $this.removeClass('active');
+      } else {
+        $('body').addClass('offcanvas-menu');
+        $this.addClass('active');
+      }
+    });
+
     this.store.dispatch(autoLogout())
+    
   }
 
 }

@@ -1,158 +1,120 @@
-<div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="container">
-          <div id="myCarousel" class="carousel slide" data-bs-ride="carousel"*ngIf="!defaultImage" >
-            <div class="carousel-inner" >
-              <div class="carousel-item" *ngFor="let carImage of combinedImages; let i = index;" [class.active]="i === 0">
-                <img [src]="'data:image/jpg;base64,' + carImage" class="d-block w-100">
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
-
-          <div id="myCarousel" class="carousel slide" data-bs-ride="carousel" *ngIf="defaultImage">
-            <div class="carousel-inner" >
-              <div class="carousel-item" *ngFor="let carImage of carImages; let i = index;" [class.active]="i === 0">
-                <img src="assets/images/DefaultImage.jpg" class="d-block w-100" alt="photo">
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
-
-
-
-
-
-        </div>
-      </div>
-  
-      <div class="col-md-5" *ngIf="car" >
-        <div class="right-content">
-          <div class="card" style="width: 18rem">
-            <div class="card-body">
-              <div class="row mt-2 mb-2">
-                <div class="col">
-                  <h1  class="card-title">{{ car?.carName }}</h1>
-                </div>
-              </div>
-  
-              <p class="card-text"> 
-                <strong>Description:</strong> {{car?.description}}
-              </p>
-            </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">Brand : {{ car?.brandName }}</li>
-              <li class="list-group-item">Color :{{ car?.colorName }}</li>
-              <li class="list-group-item">Price : {{ car?.dailyPrice }}</li>
+<div class="container mt-5 mb-5" *ngIf="car">
+  <div class="card">
+    <div class="row g-0">
+      <div class="col-md-6 border-end">
+        <div class="d-flex flex-column justify-content-center">
+          <div class="main_image"> <img [src]="'data:image/jpg;base64,' + combinedImages[0]" id="main_product_image"
+              width="600"> </div>
+          <div class="thumbnail_images">
+            <ul id="thumbnail">
+              <li *ngFor="let carImage of combinedImages; let i = index;"><img
+                  (click)="changeImage('data:image/jpg;base64,'+carImage)" [src]="'data:image/jpg;base64,' + carImage"
+                  width="70"></li>
             </ul>
-
-
-
-            <div class="card-body">
-              <button class="btn btn-success" [ngClass]="{'disabled' : !checkIfCarIsReturnedClass}"  (click)="rentNavigate(carId)">
-                Rent
-              </button>
-              <button [ngClass]="{'d-none' : checkIfAlreadyAddedToFav}" class="btn btn-danger"  (click)="addToFavorites()" style="padding-bottom: 0px; margin-left: 30px;">
-                <span class="material-symbols-outlined">
-                  favorite
-                  </span>
-              </button>
-              <button [ngClass]="{'d-none' : !checkIfAlreadyAddedToFav}" class="btn btn-danger"  (click)="deleteFromFavorites(carId)" style="padding-bottom: 0px; margin-left: 30px;">
-                <span class="material-symbols-outlined">
-                  heart_broken
-                  </span>
-              </button>
-
-              <div class="col-md-4">
-                <router-outlet></router-outlet>
-              </div>
-            </div>
           </div>
         </div>
       </div>
-      <div class="col-md-1">
-        <div class="col" *ngIf="isAdmin">
-          <button class="btn btn-primary" (click)="editForm()" style="float: right;">Edit</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-
-  
-  <div class="container mt-5" *ngIf="edit">
-    <div class="row">
-      <div class="col-md-6 card">
-        <h1>Update</h1>
-        <form [formGroup]="updateForm">
-          <div>
-            <h4>Enter New Car Name</h4>
-            <div class="input-group mb-3">
-              <input type="text" id="carName" formControlName="carName" class="form-control" placeholder="Enter Car Name">
-            </div>
-            <h4>Select Color</h4>
-            <select
-              id="colorIdandName"
-              formControlName="colorIdandName"
-              class="form-select mb-3"
-              aria-label="Default select example"
-            >
-              <option *ngFor="let color of colors" [ngValue]="{colorId: color?.colorId, colorName: color.colorName}" >
-                {{ color?.colorName }}
-              </option>
-            </select>
-            <h4>Select Brand</h4>
-            <select
-                id="brandIdandName"
-                formControlName="brandIdandName"
-                class="form-select mb-3"
-                aria-label="Default select example"
-              >
-                <option *ngFor="let brand of brands" [ngValue]="{brandId: brand?.brandId, brandName: brand.brandName}">
-                  {{ brand?.brandName }}
-                </option>
-              </select>
-              <h4>Enter Model Year</h4>
-              <div class="input-group mt-3 mb-3">
-                <input id="modelYear" formControlName="modelYear" type="number" class="form-control" placeholder="Model Year">
-              </div>
-              <h4>Enter Daily Price</h4>
-              <div class="input-group mt-3 mb-3">
-                <input id="dailyPrice" formControlName="dailyPrice" type="number" class="form-control" placeholder="Daily Price">
-              </div>
-              <h4>Enter Findeks Point</h4>
-              <div class="input-group mt-3 mb-3">
-                <input id="findeksPoint" formControlName="findeksPoint" type="number" class="form-control" placeholder="Findeks Point">
-              </div>
-              <h4>Enter Description</h4>
-              <div class="input-group">
-                <textarea id="description" formControlName="description" class="form-control" aria-label="With textarea" placeholder="Description"></textarea>
-              </div>
-  
-              <button class="btn btn-primary mt-2" (click)="updateCar()"> Update</button>
-              <button class="btn btn-danger mt-2" style="float: right;" (click)="delete()"> Delete This Car</button>
+      <div class="col-md-5">
+        <div class="p-3 mt-3 right-side">
+          <div class="d-flex justify-content-between align-items-center">
+            <h3> <strong>{{car.carName}}</strong> </h3>     
           </div>
-        </form>
+          <div class="col-md-1">
+            <div class="col" *ngIf="isAdmin">
+              <button class="btn btn-primary" (click)="editForm()" style="float: right;">Edit</button>
+            </div>
+          </div>
+          <div class="mt-2 pr-3 content">
+            <p>{{car.description}}</p>
+          </div>
+          <div class="mb-2"> <span class="fw-bold">Price:</span>
+            ${{car.dailyPrice}}
+          </div>
+          <div class="mb-2"> <span class="fw-bold">Color:</span>
+            {{car.colorName }}
+          </div>
+          <div class=""> <span class="fw-bold">Brand:</span>
+            {{car.brandName }}
+          </div>
+          <div class="buttons d-flex flex-row mt-5 gap-3">
+
+            <button [ngClass]="{'disabled' : !checkIfCarIsReturnedClass}" (click)="rentNavigate(carId)"
+              class="btn btn-outline-primary" style="color: black; border-color: black;">Buy Now</button>
+            <button [ngClass]="{'d-none' : checkIfAlreadyAddedToFav}" (click)="addToFavorites()"
+              class="btn btn-danger"><span class="material-symbols-outlined">
+                favorite
+              </span>
+            </button>
+            <button [ngClass]="{'d-none' : !checkIfAlreadyAddedToFav}" (click)="deleteFromFavorites(carId)"
+              class="btn btn-danger">
+              <span class="material-symbols-outlined">
+                heart_broken
+              </span>
+            </button>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-4">
+              <router-outlet></router-outlet>
+            </div>
+          </div>
+        </div>
+
+
       </div>
     </div>
   </div>
+</div>
 
 
+<div class="container mt-5" *ngIf="edit">
+  <div class="row">
+    <div class="col-md-6 card">
+      <h1>Update</h1>
+      <form [formGroup]="updateForm">
+        <div>
+          <h4>Enter New Car Name</h4>
+          <div class="input-group mb-3">
+            <input type="text" id="carName" formControlName="carName" class="form-control" placeholder="Enter Car Name">
+          </div>
+          <h4>Select Color</h4>
+          <select id="colorIdandName" formControlName="colorIdandName" class="form-select mb-3"
+            aria-label="Default select example">
+            <option *ngFor="let color of colors" [ngValue]="{colorId: color?.colorId, colorName: color.colorName}">
+              {{ color?.colorName }}
+            </option>
+          </select>
+          <h4>Select Brand</h4>
+          <select id="brandIdandName" formControlName="brandIdandName" class="form-select mb-3"
+            aria-label="Default select example">
+            <option *ngFor="let brand of brands" [ngValue]="{brandId: brand?.brandId, brandName: brand.brandName}">
+              {{ brand?.brandName }}
+            </option>
+          </select>
+          <h4>Enter Model Year</h4>
+          <div class="input-group mt-3 mb-3">
+            <input id="modelYear" formControlName="modelYear" type="number" class="form-control"
+              placeholder="Model Year">
+          </div>
+          <h4>Enter Daily Price</h4>
+          <div class="input-group mt-3 mb-3">
+            <input id="dailyPrice" formControlName="dailyPrice" type="number" class="form-control"
+              placeholder="Daily Price">
+          </div>
+          <h4>Enter Findeks Point</h4>
+          <div class="input-group mt-3 mb-3">
+            <input id="findeksPoint" formControlName="findeksPoint" type="number" class="form-control"
+              placeholder="Findeks Point">
+          </div>
+          <h4>Enter Description</h4>
+          <div class="input-group">
+            <textarea id="description" formControlName="description" class="form-control" aria-label="With textarea"
+              placeholder="Description"></textarea>
+          </div>
 
-
-  
+          <button class="btn btn-primary mt-2" (click)="updateCar()"> Update</button>
+          <button class="btn btn-danger mt-2" style="float: right;" (click)="delete()"> Delete This Car</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

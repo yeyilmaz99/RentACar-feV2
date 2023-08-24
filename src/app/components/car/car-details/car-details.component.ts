@@ -78,6 +78,13 @@ export class CarDetailsComponent implements OnInit {
     );
   }
 
+  changeImage(element: string): void {
+    const mainProductImage: HTMLImageElement | null = document.getElementById('main_product_image') as HTMLImageElement;
+
+    if (mainProductImage) {
+        mainProductImage.src = element;
+    }
+}
 
 
   checkIfCarIsReturned(){

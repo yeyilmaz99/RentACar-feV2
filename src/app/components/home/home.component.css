@@ -53,5 +53,8 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+    .hiw{
+      margin-left: 5px;
+    }
     
 }
