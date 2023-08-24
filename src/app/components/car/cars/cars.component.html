@@ -103,16 +103,10 @@
 
 </div> -->
 
-
-
-
-
-
-
 <div class="site-section bg-light">
   <div class="container">
-    <div class="row" style="margin-bottom: 100px;">
-      <div class="col-lg-6">
+    <div class="row">
+      <div class="col-lg-6 mb-3">
         <form class="trip-form" [formGroup]="carFilterForm">
 
           <div class="row align-items-center">
@@ -138,7 +132,8 @@
             </div>
 
             <div class="mb-3 mb-md-0 col-md-4">
-              <input type="submit" value="Remove Filter" *ngIf="removeFilter" (click)="removeFilterbtn()" class="btn btn-danger btn-block py-3">
+              <input type="submit" value="Remove Filter" *ngIf="removeFilter" (click)="removeFilterbtn()"
+                class="btn btn-danger btn-block py-3">
             </div>
 
 
@@ -147,57 +142,59 @@
 
         </form>
       </div>
-      <div class="site-section">
+      <div class="col-lg-6" style="padding-right: 30px; padding-left: 30px;">
+        <div class="row align-items-center">
+          <div class="trip-form" >
+            <div class="input-group" style="padding-bottom: 19px; " >
+              <input placeholder="Enter a name" [(ngModel)]="filterText" id="filterText" type="text"
+                class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div class="alert alert-primary mt-2" *ngIf="filterText">
+              Searched for {{ filterText }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="site-section" style="margin-top: 0px; padding-top: 0px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-7">
+        <h2 class="section-heading"><strong>Car Listings</strong></h2>
+        <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+      </div>
+      <div class="featured-page mt-0 pt-0">
         <div class="container">
-          <div class="col-lg-6">
-            <div class="row align-items-center">
-              <div class="trip-form">
-                <div class="input-group">
-                  <input placeholder="Enter a name" [(ngModel)]="filterText" id="filterText" type="text"
-                    class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                </div>
-                <div class="alert alert-primary mt-2" *ngIf="filterText">
-                  Searched for {{ filterText }}
-                </div>
+          <div class="row">
+            <div class="col-md-4 col-sm-12">
+              <div class="section-heading">
+                <div class="line-dec"></div>
+                <h1>Featured Items</h1>
               </div>
             </div>
-    
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="featured-page mt-0 pt-0">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4 col-sm-12">
-            <div class="section-heading">
-              <div class="line-dec"></div>
-              <h1>Featured Items</h1>
-            </div>
-          </div>
-          <div class="col-md-8 col-sm-12">
-            <div id="filters" class="button-group">
-              <button class="btn btn-primary" (click)="sortAll()"> All</button>
-              <button class="btn btn-primary" (click)="sortLow()"> Low Price</button>
-              <button class="btn btn-primary" (click)="sortHigh()"> Hight Price</button>
+            <div class="col-md-8 col-sm-12">
+              <div id="filters" class="button-group">
+                <button class="btn btn-primary" (click)="sortAll()"> All</button>
+                <button class="btn btn-primary" (click)="sortLow()"> Low Price</button>
+                <button class="btn btn-primary" (click)="sortHigh()"> Hight Price</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-
-
     <div class="row" *ngIf="cars">
       <div *ngFor="let car of carsSlice | filter:filterText " class="col" class="col-md-6 col-lg-4 mb-4">
         <div class="listing d-block  align-items-stretch">
           <div class="listing-img h-100 mr-4">
             <img *ngIf="car.imageData != null" [src]="'data:image/jpg;base64,' + car.imageData" class="d-block w-100"
-                class="card-img-top img-fluid" alt="..." />
-              <img *ngIf="car.imageData == null " src="assets/images/DefaultImage.jpg" class="card-img-top img-fluid" alt="..." />
+              class="card-img-top img-fluid" alt="..." />
+            <img *ngIf="car.imageData == null " src="assets/images/DefaultImage.jpg" class="card-img-top img-fluid"
+              alt="..." />
           </div>
           <div class="listing-contents h-100">
             <h3> {{car.carName}} </h3>
@@ -220,14 +217,14 @@
             </div>
             <div>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos eos at eum, voluptatem quibusdam.</p>
-              <p><a [routerLink]="['car', car.carId]"  class="btn btn-primary btn-sm">Rent Now</a></p>
+              <p><a [routerLink]="['car', car.carId]" class="btn btn-primary btn-sm">Rent Now</a></p>
             </div>
           </div>
         </div>
       </div>
       <mat-paginator [length]="paginatorLength()" [pageSize]="12" aria-label="Select page"
-      (page)="OnPageChange($event)">
-    </mat-paginator>
+        (page)="OnPageChange($event)">
+      </mat-paginator>
     </div>
   </div>
 </div>
