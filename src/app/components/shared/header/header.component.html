@@ -1,29 +1,29 @@
 <div class="site-mobile-menu site-navbar-target">
   <div class="site-mobile-menu-header">
     <div class="site-mobile-menu-close mt-3">
-      <span class="icon-close2 js-menu-toggle"></span>
+      <span class="icon-close2" (click)="menuToggle()"></span>
     </div>
   </div>
   <div>
     <ul class="site-menu main-menu ml-auto" style="list-style-type: none;font-size: 20px">
       <li class="nav-item mb-2">
-        <a class="nav-link js-menu-toggle" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active"
+        <a class="nav-link" (click)="menuToggle()" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active"
           [routerLink]="'/'">Home</a>
       </li>
       <li class="nav-item mb-2">
-        <a class="nav-link js-menu-toggle" routerLinkActive="active" [routerLink]="['/cars']">Cars</a>
+        <a class="nav-link" (click)="menuToggle()" routerLinkActive="active" [routerLink]="['/cars']">Cars</a>
       </li>
       <li class="nav-item mb-2">
-        <a class="nav-link js-menu-toggle" routerLinkActive="active" [routerLink]="['/brands']">Brands</a>
+        <a class="nav-link" (click)="menuToggle()" routerLinkActive="active" [routerLink]="['/brands']">Brands</a>
       </li>
       <li class="nav-item mb-2">
-        <a class="nav-link js-menu-toggle" routerLinkActive="active" [routerLink]="['/about']">About Us</a>
+        <a class="nav-link" (click)="menuToggle()" routerLinkActive="active" [routerLink]="['/about']">About Us</a>
       </li>
       <li class="nav-item mb-2">
-        <a class="nav-link js-menu-toggle" routerLinkActive="active" [routerLink]="['/contact']">Contact Us</a>
+        <a class="nav-link" (click)="menuToggle()" routerLinkActive="active" [routerLink]="['/contact']">Contact Us</a>
       </li>
       <li class="nav-item mb-2" *ngIf="!(isAuthenticated | async)">
-        <a class="nav-link js-menu-toggle" routerLinkActive="active" [routerLink]="['/auth']">Login</a>
+        <a class="nav-link" (click)="menuToggle()" routerLinkActive="active" [routerLink]="['/auth']">Login</a>
       </li>
       <li class="nav-item mb-2" *ngIf="(isAuthenticated | async)">
         <div class="dropdown-center">
@@ -34,12 +34,12 @@
             </span>
           </button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item js-menu-toggle" routerLink="/user">Profil</a></li>
-            <li><a class="dropdown-item js-menu-toggle" routerLink="/favorites">Favorites</a></li>
-            <li><a class="dropdown-item js-menu-toggle" routerLink="/user/rentals">Rentals</a></li>
-            <li><a class="dropdown-item js-menu-toggle" *ngIf="(isAdmin | async)" routerLink="/admin">Admin Page</a>
+            <li><a class="dropdown-item" (click)="menuToggle()" routerLink="/user">Profil</a></li>
+            <li><a class="dropdown-item" (click)="menuToggle()" routerLink="/favorites">Favorites</a></li>
+            <li><a class="dropdown-item" (click)="menuToggle()" routerLink="/user/rentals">Rentals</a></li>
+            <li><a class="dropdown-item" (click)="menuToggle()" *ngIf="(isAdmin | async)" routerLink="/admin">Admin Page</a>
             </li>
-            <li><a class="dropdown-item js-menu-toggle" (click)="onLogout($event)">Log Out</a></li>
+            <li><a class="dropdown-item" (click)="onLogout($event)">Log Out</a></li>
           </ul>
         </div>
       </li>
@@ -57,13 +57,13 @@
 
       <div class="col-3">
         <div class="site-logo">
-          <a [routerLink]="'/'"><strong>MyRentACar</strong></a>
+          <a routerLink="/" ><strong>MyRentACar</strong></a>
         </div>
       </div>
 
       <div class="col-9  text-right">
 
-        <span class="d-inline-block d-lg-none"><a class=" site-menu-toggle js-menu-toggle py-5 "><span
+        <span (click)="menuToggle()" class="d-inline-block d-lg-none"><a class=" site-menu-toggle  py-5 "><span
               class="icon-menu h3 text-black"></span></a></span>
 
         <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
