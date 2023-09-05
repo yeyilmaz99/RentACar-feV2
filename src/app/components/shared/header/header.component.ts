@@ -26,13 +26,11 @@ export class HeaderComponent implements OnInit {
     this.store.dispatch(autoLogout())
     let element = document.querySelector(".mat-typography") as HTMLElement;
     element.classList.toggle("offcanvas-menu");
-    console.log("çalıştı")
   }
 
   menuToggle() {
     let element = document.querySelector(".mat-typography") as HTMLElement;
     element.classList.toggle("offcanvas-menu");
-    console.log("çalıştı")
   }
 
   onLogout(event:Event){

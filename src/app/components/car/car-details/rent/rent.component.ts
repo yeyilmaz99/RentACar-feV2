@@ -132,7 +132,6 @@ export class RentComponent implements OnInit {
         this.toastrService.error(responseError.error.message);
       }
       )
-      console.log(payment)
     }
   }
 
