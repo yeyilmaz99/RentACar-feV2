@@ -1,3 +1,23 @@
 .card{
     cursor: pointer;
 }
+.media-query-2{
+    display: none;
+}
+
+@media screen and (max-width: 992px) {
+    .media-query{
+        display: none;
+    }
+    .media-query-search{
+        padding-bottom: 0px;
+    }
+    .trip-form-query{
+        padding-bottom: 0px;
+        padding-top: 15px;
+    }
+    .media-query-2{
+        display: flex;
+    }
+
+  }
