@@ -164,8 +164,48 @@
         </div>
       </div>
     </div>
-    <div class="row" *ngIf="cars">
+    <div class="row" *ngIf="cars&&!filterText">
       <div *ngFor="let car of carsSlice | filter:filterText " class="col" class="col-md-6 col-lg-4 mb-4">
+        <div class="listing d-block  align-items-stretch">
+          <div class="listing-img h-100 mr-4">
+            <img *ngIf="car.imageData != null" [src]="'data:image/jpg;base64,' + car.imageData" class="d-block w-100"
+              class="card-img-top img-fluid" alt="..." />
+            <img *ngIf="car.imageData == null " src="assets/images/DefaultImage.jpg" class="card-img-top img-fluid"
+              alt="..." />
+          </div>
+          <div class="listing-contents h-100">
+            <h3> {{car.carName}} </h3>
+            <div class="rent-price">
+              <strong> ${{car.dailyPrice}} </strong><span class="mx-1">/</span>day
+            </div>
+            <div class="d-block d-md-flex mb-3 border-bottom pb-3">
+              <div class="listing-feature pr-4">
+                <span class="caption">Luggage:</span>
+                <span class="number">8</span>
+              </div>
+              <div class="listing-feature pr-4">
+                <span class="caption">Doors:</span>
+                <span class="number">4</span>
+              </div>
+              <div class="listing-feature pr-4">
+                <span class="caption">Passenger:</span>
+                <span class="number">4</span>
+              </div>
+            </div>
+            <div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos eos at eum, voluptatem quibusdam.</p>
+              <p><a [routerLink]="['car', car.carId]" class="btn btn-primary btn-sm">Rent Now</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <mat-paginator [length]="paginatorLength()" [pageSize]="12" aria-label="Select page"
+        (page)="OnPageChange($event)">
+      </mat-paginator>
+    </div>
+
+    <div class="row" *ngIf="cars&&filterText">
+      <div *ngFor="let car of cars | filter:filterText " class="col" class="col-md-6 col-lg-4 mb-4">
         <div class="listing d-block  align-items-stretch">
           <div class="listing-img h-100 mr-4">
             <img *ngIf="car.imageData != null" [src]="'data:image/jpg;base64,' + car.imageData" class="d-block w-100"
