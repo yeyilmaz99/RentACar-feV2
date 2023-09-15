@@ -3,8 +3,8 @@
     <div class="row g-0">
       <div class="col-md-6 border-end">
         <div class="d-flex flex-column justify-content-center">
-          <div class="main_image"> <img [src]="'data:image/jpg;base64,' + combinedImages[0]" id="main_product_image"
-              width="600"> </div>
+          <div class="main_image"> <img class="imageWidth" [src]="'data:image/jpg;base64,' + combinedImages[0]" id="main_product_image">
+          </div>
           <div class="thumbnail_images">
             <ul id="thumbnail">
               <li *ngFor="let carImage of combinedImages; let i = index;"><img
@@ -39,7 +39,7 @@
           <div class="buttons d-flex flex-row mt-5 gap-3">
 
             <button [ngClass]="{'disabled' : !checkIfCarIsReturnedClass}" (click)="rentNavigate(carId)"
-              class="btn btn-outline-primary" style="color: black; border-color: black;">Buy Now</button>
+              class="btn btn-outline-primary" style="color: black; border-color: black;">Rent Now</button>
             <button [ngClass]="{'d-none' : checkIfAlreadyAddedToFav}" (click)="addToFavorites()"
               class="btn btn-danger"><span class="material-symbols-outlined">
                 favorite
