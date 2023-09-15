@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-6 mb-3">
-        <form class="trip-form" [formGroup]="carFilterForm">
+        <form class="trip-form media-query" [formGroup]="carFilterForm">
 
           <div class="row align-items-center">
             <div class="mb-3 mb-md-0 col-md-4">
@@ -37,15 +37,15 @@
 
         </form>
       </div>
-      <div class="col-lg-6" style="padding-right: 30px; padding-left: 30px;">
+      <div class="col-lg-6 " style="padding-right: 30px; padding-left: 30px;">
         <div class="row align-items-center">
-          <div class="trip-form" >
-            <div class="input-group" style="padding-bottom: 19px; " >
-              <input placeholder="Enter a name" [(ngModel)]="filterText" id="filterText" type="text"
+          <div class="trip-form trip-form-query">
+            <div class="input-group media-query-search" style="padding-bottom: 19px; "  >
+              <input placeholder="Enter a car name" [(ngModel)]="filterText" id="filterText" type="text"
                 class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
             </div>
             <div class="alert alert-primary mt-2" *ngIf="filterText">
-              Searched for {{ filterText }}
+              Searched for car name {{ filterText }}
             </div>
           </div>
         </div>
@@ -59,20 +59,102 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-7">
-        <h2 class="section-heading mt-2"><strong>Car Listings</strong></h2>
-        <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+
       </div>
       <div class="featured-page mt-0 pt-0">
         <div class="container">
           <div class="row">
             <div class="col-md-4 col-sm-12">
               <div class="section-heading">
-                <div class="line-dec"></div>
+                <div class="line-dec mt-4"></div>
                 <h1>Featured Items</h1>
               </div>
             </div>
-            <div class="col-md-8 col-sm-12">
-              <div id="filters" class="button-group">
+            <div class="row media-query-2">
+              <div class="col text-center">
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Sort By
+                  </button>
+                  <ul id="filters" class="dropdown-menu button-group">
+                    <li><button class="btn btn-primary" (click)="sortAll()"> All</button></li>
+                    <li><button class="btn btn-primary" (click)="sortLow()"> Low Price</button></li>
+                    <li><button class="btn btn-primary" (click)="sortHigh()"> Hight Price</button></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col text-center">
+                <button type="button" style="padding-bottom: 7px; padding-top: 7px; padding-right: 17px; padding-left:17px;" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                  Filter By
+                </button>
+              </div>
+            </div>
+
+
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalToggleLabel">Ödeme Bilgileri</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row justify-content-center">
+                      <div class="card">
+                        <form class="trip-form" [formGroup]="carFilterForm">
+
+                          <div class="row align-items-center">
+                            <div class="mb-3 mb-md-0 col-md-4">
+                              <select class="form-select" id="brandId" formControlName="brandId" aria-label="Default select example">
+                                <option value="">Select Brand</option>
+                                <option *ngFor="let brand of brands" [ngValue]=brand.brandId>
+                                  {{ brand.brandName }}
+                                </option>
+                              </select>
+                            </div>
+                            <div class="mb-3 mb-md-0 col-md-4">
+                              <select class="form-select" id="colorId" formControlName="colorId" aria-label="Default select example">
+                                <option value="">Select Color</option>
+                                <option *ngFor="let color of colors" [ngValue]=color.colorId>
+                                  {{ color.colorName }}
+                                </option>
+                              </select>
+                            </div>
+                
+                            <div class="mb-3 mb-md-0 col-md-4">
+                              <input type="submit" value="Filter" (click)="filter()" class="btn btn-primary btn-block py-3">
+                            </div>
+                
+                            <div class="mb-3 mb-md-0 col-md-4">
+                              <input type="submit" value="Remove Filter" *ngIf="removeFilter" (click)="removeFilterbtn()"
+                                class="btn btn-danger btn-block py-3">
+                            </div>
+                
+                
+                
+                          </div>
+                
+                        </form>
+                      </div>
+                  </div>
+                  </div>
+                  <div class="modal-footer">
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+            
+
+
+
+            <div class="col-md-8 col-sm-12 media-query mt-3" >
+              <div id="filters" class="button-group" style="text-align: end;">
                 <button class="btn btn-primary" (click)="sortAll()"> All</button>
                 <button class="btn btn-primary" (click)="sortLow()"> Low Price</button>
                 <button class="btn btn-primary" (click)="sortHigh()"> Hight Price</button>
