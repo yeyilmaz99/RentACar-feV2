@@ -114,6 +114,7 @@ export class CarsComponent implements OnInit {
       endIndex = this.cars.length;
     }
     this.carsSlice = this.cars.slice(startIndex, endIndex);
+    window.scrollTo(0,0);
   }
 
 
