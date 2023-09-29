@@ -208,7 +208,7 @@
       <div *ngFor="let car of cars | filter:filterText " class="col" class="col-md-6 col-lg-4 mb-4">
         <div class="listing d-block  align-items-stretch">
           <div class="listing-img h-100 mr-4">
-            <img style="height: 200px; object-fit: contain;" style="max-height: 150px;" *ngIf="car.imageData != null" [src]="'data:image/jpg;base64,' + car.imageData" class="d-block w-100"
+            <img style="height: 200px;" *ngIf="car.imageData != null" [src]="'data:image/jpg;base64,' + car.imageData" class="d-block w-100"
               class="card-img-top img-fluid" alt="..." />
             <img *ngIf="car.imageData == null " src="assets/images/DefaultImage.jpg" class="card-img-top img-fluid"
               alt="..." />
