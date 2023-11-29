@@ -9,6 +9,8 @@ import { getBrands } from '../../brand/state/brand.selector';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { setLoadingSpinner } from 'src/app/store/shared/shared.actions';
+import { PaymentService } from 'src/app/services/paymentService/payment.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-color-add',
@@ -20,13 +22,30 @@ export class ColorAddComponent implements OnInit {
   colorUpdateForm:FormGroup
   colors:Color[];
   colorToDeleteForm:FormGroup;
-  constructor( private formBuilder:FormBuilder, private store:Store<AppState>, private toastrService:ToastrService ) { }
+  paymentValue;
+  unTrustedUrl;
+  trustedUrl;
+  constructor( private sanitizer: DomSanitizer,private formBuilder:FormBuilder, private store:Store<AppState>, private toastrService:ToastrService ,private paymentService:PaymentService ) {
+    
+   }
+  
 
   ngOnInit(): void {
     this.createColorForm();
     this.createColorToDeleteForm();
     this.createColorUpdateForm();
     this.getColors();
+    this.getForm();
+  }
+
+
+  getForm(){
+    this.paymentService.paymentForm().subscribe(response => {
+      this.paymentValue = response
+      this.unTrustedUrl = this.paymentValue.checkoutFormContent;
+      this.trustedUrl = this.sanitizer.bypassSecurityTrustHtml(this.unTrustedUrl);
+      console.log(response);
+    })
   }
 
   getColors(){
