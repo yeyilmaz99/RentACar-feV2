@@ -36,6 +36,7 @@ export class RentComponent implements OnInit {
   isReturned:any;
   userId:number;
   paymentForm:FormGroup;
+  paymentValue;
   constructor( private formBuilder:FormBuilder, private store:Store<AppState>,    private router: Router, private toastrService:ToastrService, private rentalService:RentalService,
     private paymentService:PaymentService,
     private userService:UserService,
@@ -48,8 +49,16 @@ export class RentComponent implements OnInit {
     this.datePicker();
     this.checkIfCarIsReturned();
     this.getUsersFindeksPoint()
+    this.getForm()
 
+  }
 
+  getForm(){
+
+    this.paymentService.paymentForm().subscribe(response => {
+      this.paymentValue = response
+      console.log(response);
+    })
   }
 
   datePicker() {
@@ -133,6 +142,10 @@ export class RentComponent implements OnInit {
       }
       )
     }
+  }
+
+  payment1(){
+
   }
 
 
