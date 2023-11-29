@@ -14,7 +14,7 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { CustomSerializer } from './router/custom-serializer';
 import { HomeComponent } from './components/home/home.component';
 import { JwtModule } from '@auth0/angular-jwt';
-import { AuthTokenInterceptor } from './interceptors/auth.interceptor';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { HeaderComponent } from './components/shared/header/header.component';
 import { LoadingSpinnerComponent } from './components/shared/loading-spinner/loading-spinner.component';
 import { ToastrModule } from 'ngx-toastr';
@@ -70,7 +70,7 @@ export function tokenGetter() {
       },
     }),
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass:AuthTokenInterceptor, multi:true}],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
