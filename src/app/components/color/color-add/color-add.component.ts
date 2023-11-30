@@ -35,7 +35,6 @@ export class ColorAddComponent implements OnInit {
     this.createColorToDeleteForm();
     this.createColorUpdateForm();
     this.getColors();
-    this.getForm();
   }
 
 
