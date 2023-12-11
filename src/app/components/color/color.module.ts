@@ -10,6 +10,7 @@ import { colorReducer } from "./state/color.reducer";
 import { StoreModule } from "@ngrx/store";
 import { ColorAddComponent } from './color-add/color-add.component';
 import { AdminGuard } from "src/app/guards/admin.guard";
+import { SafeHtmlPipe } from "src/app/pipes/example.pipe";
 
 
 
@@ -18,7 +19,7 @@ const routes: Routes = [
 
     {path: '', children: [
         { path: '', pathMatch:'full', redirectTo:'settings'},
-        { path: 'settings', pathMatch:'full', component:ColorAddComponent, canActivate:[AdminGuard]}
+        { path: 'settings', pathMatch:'full', component:ColorAddComponent, } //canActivate:[AdminGuard]
     ]}
 ]
 
@@ -26,7 +27,8 @@ const routes: Routes = [
 
 @NgModule({
     declarations: [
-    ColorAddComponent
+    ColorAddComponent,
+    SafeHtmlPipe
   ],
     imports: [
         CommonModule,
