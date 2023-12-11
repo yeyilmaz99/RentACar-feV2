@@ -31,6 +31,10 @@ import { AboutUsComponent } from './components/about-us/about-us.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { SubscribeFormComponent } from './components/shared/subscribe-form/subscribe-form.component';
 import { TestimonialsComponent } from './components/testimonials/testimonials.component';
+import { SuccessComponent } from './components/payment/success/success.component';
+import { FailComponent } from './components/payment/fail/fail.component';
+import { RedirectInterceptor } from './interceptors/redirect.interceptor';
+import { SafeHtmlPipe } from './pipes/example.pipe';
 
 
 export function tokenGetter() {
@@ -51,6 +55,8 @@ export function tokenGetter() {
     ContactUsComponent,
     SubscribeFormComponent,
     TestimonialsComponent,
+    SuccessComponent,
+    FailComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -70,7 +76,7 @@ export function tokenGetter() {
       },
     }),
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi:true}],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi:true},{provide:HTTP_INTERCEPTORS,useClass:RedirectInterceptor,multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
