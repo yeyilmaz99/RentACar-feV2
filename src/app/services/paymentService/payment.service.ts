@@ -21,7 +21,7 @@ export class PaymentService {
     return this.httpClient.post<ResponseModel>(newUrl,payment);
   }
   paymentForm(price:string):Observable<CheckoutForm>{
-    console.log(price);
+
     let newUrl = this.apiUrl+"initializeCheckoutForm";
     return this.httpClient.post<CheckoutForm>(newUrl, `"${price}"`, {
       headers: { 'Content-Type': 'application/json' }
