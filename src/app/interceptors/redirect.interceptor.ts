@@ -19,7 +19,7 @@ export class RedirectInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     // Burada isteğin URL'sini loglayarak kontrol edebilirsiniz
-    console.log('Request URL:', req.url);
+
 
     return next.handle(req).pipe(
       tap((event) => {
