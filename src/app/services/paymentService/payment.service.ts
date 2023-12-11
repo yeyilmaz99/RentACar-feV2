@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { CheckoutForm } from 'src/app/models/checkoutForm.model';
 import { Payment } from 'src/app/models/payment';
 import { ResponseModel } from 'src/app/models/responseModel';
 
@@ -19,9 +20,12 @@ export class PaymentService {
     let newUrl = this.apiUrl +"add"
     return this.httpClient.post<ResponseModel>(newUrl,payment);
   }
-  paymentForm():Observable<ResponseModel>{
+  paymentForm(price:string):Observable<CheckoutForm>{
+    console.log(price);
     let newUrl = this.apiUrl+"initializeCheckoutForm";
-    return this.httpClient.post<ResponseModel>(newUrl, {})
+    return this.httpClient.post<CheckoutForm>(newUrl, `"${price}"`, {
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 
 }
