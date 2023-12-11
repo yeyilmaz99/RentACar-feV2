@@ -12,9 +12,19 @@ export class SignalRService {
 
   constructor() { }
 
+  // startConnection = ()=>{
+  //   this.hubConnection = new signalR.HubConnectionBuilder()
+  //                               .withUrl("https://localhost:5001/pay-hub")
+  //                               .build();
+
+  //   this.hubConnection
+  //     .start()
+  //     .then(()=> console.log("Connection started"))
+  //     .catch((err:any)=> console.log(err));
+  // }
   startConnection = ()=>{
     this.hubConnection = new signalR.HubConnectionBuilder()
-                                .withUrl("https://localhost:5001/pay-hub")
+                                .withUrl("https://apiv2.rentacar.yeyilmaz.online/api/pay-hub")
                                 .build();
 
     this.hubConnection
