@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { getUserId } from 'src/app/components/auth/state/auth.selector';
@@ -7,7 +7,7 @@ import { RentalModel } from 'src/app/models/rentalModel';
 import { getCurrentId } from 'src/app/router/router.selector';
 import { AppState } from 'src/app/store/app.state';
 import { checkIfCarIsReturned } from '../../state/car.actions';
-import { isReturned } from '../../state/car.selector';
+import { getCarById, getCarDetails, isReturned } from '../../state/car.selector';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { RentalService } from 'src/app/services/rentalService/rental.service';
@@ -18,6 +18,8 @@ import { FindeksService } from 'src/app/services/findeksService/findeks.service'
 import { UserService } from 'src/app/services/user-service/user-service.service';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { UpdateFindeks } from 'src/app/models/updateFindeks';
+import { SignalRService } from 'src/app/services/signal-r/signal-r.service';
+import { DomSanitizer } from '@angular/platform-browser';
 const today = new Date();
 const month = today.getMonth();
 const year = today.getFullYear();
@@ -30,17 +32,29 @@ declare var IyzipayCheckoutForm: any; // Iyzico JavaScript kütüphanesi
   styleUrls: ['./rent.component.css']
 })
 export class RentComponent implements OnInit {
+  @ViewChild('myModal') modalElement!: ElementRef;
   campaignOne: FormGroup;
   carId:number;
   userFindeksPoint:number
   isReturned:any;
   userId:number;
   paymentForm:FormGroup;
+  success:string = "Payment Success";
+  isPaymentSuccess:boolean = false;;
   paymentValue;
+  unTrustedUrl;
+  trustedUrl;
+  price:number;
   constructor( private formBuilder:FormBuilder, private store:Store<AppState>,    private router: Router, private toastrService:ToastrService, private rentalService:RentalService,
     private paymentService:PaymentService,
     private userService:UserService,
-    private findeksService:FindeksService) { }
+    private findeksService:FindeksService,
+    private signalR:SignalRService,
+    private sanitizer:DomSanitizer
+    ) {    this.store.select(getCarDetails).subscribe(resp=>{
+      this.price = resp.dailyPrice
+      console.log(this.price)
+    }) }
   returnDate:Date = null;
   ngOnInit(): void {
     this.getCarId();
@@ -49,17 +63,29 @@ export class RentComponent implements OnInit {
     this.datePicker();
     this.checkIfCarIsReturned();
     this.getUsersFindeksPoint()
-    this.getForm()
-
+    this.signalR.startConnection();
+    this.signalR.paymentResult((data:any) => {
+      if(data.status ==="success"){
+        this.isPaymentSuccess = true;
+        this.rentACar();
+      }
+      console.log(data);
+    });
   }
 
-  getForm(){
-
-    this.paymentService.paymentForm().subscribe(response => {
-      this.paymentValue = response
+  getForm() {
+    this.paymentService.paymentForm(this.price.toString()).subscribe(response => {
+      this.signalR.registerTransactionId(response.token)
+      this.paymentValue = response;
+      this.unTrustedUrl = response.checkoutFormContent;
+      this.trustedUrl = this.sanitizer.bypassSecurityTrustHtml(this.unTrustedUrl);
       console.log(response);
-    })
+    }, error => {
+      console.error(error);
+    });
   }
+
+
 
   datePicker() {
     this.campaignOne = this.formBuilder.group({
@@ -95,7 +121,7 @@ export class RentComponent implements OnInit {
       rent.userId = this.userId;
       this.rentalService.addRental(rent).subscribe(
         (response) => {
-          Swal.fire(response.message,'','success');
+          Swal.fire("Payment Successful",'','success');
           this.checkIfAlreadyExists();
           this.router.navigate(['/user/rentals'])
         },
@@ -148,30 +174,6 @@ export class RentComponent implements OnInit {
 
   }
 
-
-  limitInputLength(event: any) {
-    const maxLength = 16;
-    const input = event.target;
-    if (input.value.length > maxLength) {
-      input.value = input.value.slice(0, maxLength);
-    }
-  }
-
-  limitInputLengthDate(event: any) {
-    const maxLength = 4;
-    const input = event.target;
-    if (input.value.length > maxLength) {
-      input.value = input.value.slice(0, maxLength);
-    }
-  }
-
-  limitInputLengthCCV(event: any) {
-    const maxLength = 3;
-    const input = event.target;
-    if (input.value.length > maxLength) {
-      input.value = input.value.slice(0, maxLength);
-    }
-  }
 
   updateFindeksPoint(){
     let findeks:UpdateFindeks = {userId:this.userId,findeksPoint:0};
