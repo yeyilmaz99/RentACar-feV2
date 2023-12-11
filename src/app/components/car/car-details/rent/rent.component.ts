@@ -53,7 +53,6 @@ export class RentComponent implements OnInit {
     private sanitizer:DomSanitizer
     ) {    this.store.select(getCarDetails).subscribe(resp=>{
       this.price = resp.dailyPrice
-      console.log(this.price)
     }) }
   returnDate:Date = null;
   ngOnInit(): void {
@@ -69,7 +68,7 @@ export class RentComponent implements OnInit {
         this.isPaymentSuccess = true;
         this.rentACar();
       }
-      console.log(data);
+
     });
   }
 
@@ -79,7 +78,6 @@ export class RentComponent implements OnInit {
       this.paymentValue = response;
       this.unTrustedUrl = response.checkoutFormContent;
       this.trustedUrl = this.sanitizer.bypassSecurityTrustHtml(this.unTrustedUrl);
-      console.log(response);
     }, error => {
       console.error(error);
     });
