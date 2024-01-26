@@ -11,6 +11,7 @@ import { ResponseModel } from '../models/responseModel';
 export class ColorService {
   apiUrl = "https://apiv2.rentacar.yeyilmaz.online/api/Colors/";
   // apiUrl = "https://localhost:5001/api/Colors/";
+  // apiUrl = "https://localhost:44345/api/Colors/";
   constructor(private httpClient:HttpClient) { }
 
 
