@@ -12,6 +12,7 @@ import { UserList } from 'src/app/models/userList';
 export class UserService {
   apiUrl = "https://apiv2.rentacar.yeyilmaz.online/api/Users/"
   // apiUrl = "https://localhost:5001/api/Users/"
+  // apiUrl = "https://localhost:44345/api/Users/"
   constructor(
     private httpClient: HttpClient
   ) { }
