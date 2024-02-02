@@ -12,8 +12,8 @@ import { SingleResponseModel } from 'src/app/models/singleResponseModel';
   providedIn: 'root'
 })
 export class CarService {
-  // apiUrl = 'https://apiv2.rentacar.yeyilmaz.online/api/';
-  apiUrl = 'https://localhost:5001/api/';
+  apiUrl = 'https://apiv2.rentacar.yeyilmaz.online/api/';
+  // apiUrl = 'https://localhost:5001/api/';
   // apiUrl = "https://localhost:44345/api/";
   constructor(private httpClient: HttpClient) { }
 
