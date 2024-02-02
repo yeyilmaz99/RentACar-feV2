@@ -11,8 +11,8 @@ import { ResponseModel } from 'src/app/models/responseModel';
   providedIn: 'root'
 })
 export class RentalService {
-  // apiUrl = "https://apiv2.rentacar.yeyilmaz.online/api/Rentals/";
-  apiUrl = "https://localhost:5001/api/Rentals/";
+  apiUrl = "https://apiv2.rentacar.yeyilmaz.online/api/Rentals/";
+  // apiUrl = "https://localhost:5001/api/Rentals/";
   // apiUrl = "https://localhost:44345/api/Rentals/";
   constructor(private httpClient: HttpClient) { }
 
